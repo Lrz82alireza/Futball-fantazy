@@ -8,26 +8,31 @@ using namespace std;
 
 enum
 {
-    GK,
+    GK = 1,
     DF,
     MD,
     FW
 };
 
+typedef struct PERFORMANCE
+{
+    bool injured;
+    bool yellow_card;
+    bool red_card;
+    float score;
+} Performance;
+
 class Player
 {
 private:
     string name;
-    vector<float> score_in_week;
+    vector<Performance> week_performance;
     int role;
+
 public:
-    Player(/* args */);
+    Player(const int &role_, const string &name_);
     ~Player();
 };
-
-Player::Player(/* args */)
-{
-}
 
 Player::~Player()
 {
