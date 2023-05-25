@@ -17,11 +17,21 @@ const string MATCH_SEPERATOR_CHAR = ":";
 
 typedef vector<vector<vector<string>>> CSS_input;
 
-typedef struct MATCH_
+typedef struct PLAYER_SCORE
+{
+    string name;
+    float score;
+}Player_score;
+
+typedef struct MATCH
 {
     pair<Team *,Team *> team;
-    pair<int, int> goal;
-}MATCH;
+    pair<int, int> result;
+    pair <vector<string>, vector<string>> injureds;
+    pair <vector<string>, vector<string>> yellow_cards;
+    pair <vector<string>, vector<string>> red_cards;
+    pair <vector<Player_score>, vector<Player_score>> players_score; 
+}Match;
 
 typedef struct ARG_MATCH_INPUT
 {
@@ -31,15 +41,16 @@ typedef struct ARG_MATCH_INPUT
     vector<string> yellow_cards;
     vector<string> red_cards;
     vector<pair<string, float>> players_score;
-}Arg_MATCH_input;
+}Arg_match_input;
 
 
 class Week
 {
 private:
-    vector<MATCH *> matches;
+    vector<Match *> matches;
+
+    Arg_match_input make_Arg_match_input(const vector<vector<string>> &match_input);
 public:
-    Arg_MATCH_input make_Arg_week_input(const vector<vector<string>> &match_input);
 
     Week(const CSS_input &week_input);
     ~Week();

@@ -14,19 +14,10 @@ enum
     FW
 };
 
-typedef struct PERFORMANCE
-{
-    bool injured;
-    bool yellow_card;
-    bool red_card;
-    float score;
-} Performance;
-
 class Player
 {
 private:
     string name;
-    vector<Performance> week_performance;
     int role;
 
 public:

@@ -1,8 +1,8 @@
 #include "Week.hpp"
 
-Arg_MATCH_input Week::make_Arg_week_input(const vector<vector<string>> &match_input)
+Arg_match_input Week::make_Arg_match_input(const vector<vector<string>> &match_input)
 {
-    Arg_MATCH_input arg;
+    Arg_match_input arg;
     
     vector<string> teams_ = seperate_words(match_input[ARG_MATCH_WEEK][0], MATCH_SEPERATOR_CHAR); 
     arg.teams.first = teams_[0];
@@ -38,8 +38,12 @@ Week::Week(const CSS_input &week_input)
 {
     for (int i = 0; i < week_input.size(); i++)
     {
-        MATCH *temp = new MATCH;
+        Match *temp = new Match;
+        Arg_match_input arg = make_Arg_match_input(week_input[i]);
 
+        temp->result = arg.result;
+
+        // gharare pare sham.......
 
         matches.push_back(temp);
     }
