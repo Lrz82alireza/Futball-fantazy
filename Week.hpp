@@ -19,7 +19,7 @@ typedef vector<vector<vector<string>>> CSS_input;
 
 typedef struct PLAYER_SCORE
 {
-    string name;
+    const Player *player;
     float score;
 }Player_score;
 
@@ -27,10 +27,10 @@ typedef struct MATCH
 {
     pair<Team *,Team *> team;
     pair<int, int> result;
-    pair <vector<string>, vector<string>> injureds;
-    pair <vector<string>, vector<string>> yellow_cards;
-    pair <vector<string>, vector<string>> red_cards;
-    pair <vector<Player_score>, vector<Player_score>> players_score; 
+    pair <vector<const Player *>, vector<const Player *>> injureds;
+    pair <vector<const Player *>, vector<const Player *>> yellow_cards;
+    pair <vector<const Player *>, vector<const Player *>> red_cards;
+    pair <vector<const Player *>, vector<const Player *>> players_score; 
 }Match;
 
 typedef struct ARG_MATCH_INPUT
