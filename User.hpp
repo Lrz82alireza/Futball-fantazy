@@ -12,10 +12,3 @@ public:
     ~User();
 };
 
-User::User(/* args */)
-{
-}
-
-User::~User()
-{
-}

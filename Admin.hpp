@@ -10,11 +10,3 @@ public:
     Admin(/* args */);
     ~Admin();
 };
-
-Admin::Admin(/* args */)
-{
-}
-
-Admin::~Admin()
-{
-}

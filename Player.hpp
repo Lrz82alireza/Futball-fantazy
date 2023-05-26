@@ -21,10 +21,7 @@ private:
     int role;
 
 public:
+    string get_name() { return this->name; }
     Player(const int &role_, const string &name_);
     ~Player();
 };
-
-Player::~Player()
-{
-}

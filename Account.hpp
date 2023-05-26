@@ -15,11 +15,3 @@ public:
     Account(/* args */);
     ~Account();
 };
-
-Account::Account(/* args */)
-{
-}
-
-Account::~Account()
-{
-}

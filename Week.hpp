@@ -56,6 +56,3 @@ public:
     ~Week();
 };
 
-Week::~Week()
-{
-}

@@ -31,12 +31,14 @@ Arg_match_input Week::make_Arg_match_input(const vector<vector<string>> &match_i
     {
         vector<string> player_score_ = seperate_words(player_score, MATCH_SEPERATOR_CHAR);
         arg.players_score.push_back(pair<string, float> (player_score_[0], stof(player_score_[1])));
-    }   
+    }
+
+    return arg;   
 }
 
 Week::Week(const CSS_input &week_input)
 {
-    for (int i = 0; i < week_input.size(); i++)
+    for (CSS_input::size_type i = 0; i < week_input.size(); i++)
     {
         Match *temp = new Match;
         Arg_match_input arg = make_Arg_match_input(week_input[i]);
@@ -44,6 +46,7 @@ Week::Week(const CSS_input &week_input)
         temp->result = arg.result;
 
         // gharare pare sham.......
+        
 
         matches.push_back(temp);
     }
