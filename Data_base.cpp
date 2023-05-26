@@ -9,6 +9,6 @@ Data_base::Data_base(const CSS_input &league_input, const vector<CSS_input> &wee
 
     for (vector<CSS_input>::size_type i = 0; i < weeks_input.size(); i++)
     {
-        ///////////
+        this->weeks.push_back(new Week(weeks_input[i], this->teams));
     }
 }

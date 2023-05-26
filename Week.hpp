@@ -21,17 +21,23 @@ typedef struct PLAYER_SCORE
 {
     const Player *player;
     float score;
-}Player_score;
+} Player_score;
+
+typedef struct TEAM_MATCH
+{
+    Team *team;
+    int goals;
+    vector<const Player *> injureds;
+    vector<const Player *> yellow_cards;
+    vector<const Player *> red_cards;
+    vector<const Player_score *> players_score;
+}Team_match;
 
 typedef struct MATCH
 {
-    pair<Team *,Team *> team;
+    pair<Team_match, Team_match> teams_match;
     pair<int, int> result;
-    pair <vector<const Player *>, vector<const Player *>> injureds;
-    pair <vector<const Player *>, vector<const Player *>> yellow_cards;
-    pair <vector<const Player *>, vector<const Player *>> red_cards;
-    pair <vector<const Player *>, vector<const Player *>> players_score; 
-}Match;
+} Match;
 
 typedef struct ARG_MATCH_INPUT
 {
@@ -41,8 +47,7 @@ typedef struct ARG_MATCH_INPUT
     vector<string> yellow_cards;
     vector<string> red_cards;
     vector<pair<string, float>> players_score;
-}Arg_match_input;
-
+} Arg_match_input;
 
 class Week
 {
@@ -50,9 +55,9 @@ private:
     vector<Match *> matches;
 
     Arg_match_input make_Arg_match_input(const vector<vector<string>> &match_input);
+    void fill_team_match_field(Team *team, vector<const Player *> &team_match_field, vector<string> &players_name);
+    void fill_team_match_fields(Team_match *team, Arg_match_input &arg);
 public:
-
-    Week(const CSS_input &week_input);
+    Week(const CSS_input &week_input, vector<Team *> &teams);
     ~Week();
 };
-
