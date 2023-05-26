@@ -1,6 +1,6 @@
 #include "Team.hpp"
 
-Player *Team::find_player(string player_name)
+shared_ptr<Player> Team::find_player(string player_name)
 {
     return find_by_name<Player>(this->players, player_name);
 }
@@ -13,7 +13,7 @@ Team::Team(vector<vector<string>> input)
     {
         for (vector<string>::size_type j = 0; j < input[i].size(); j++)
         {
-            players.push_back(new Player((int)i, input[i][j]));
+            players.push_back(make_shared<Player>((int)i, input[i][j]));
         }
     }
 }

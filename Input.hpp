@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 #include "Functions.hpp"
+#include <memory>
 
 using namespace std;
 
@@ -13,8 +14,8 @@ public:
     void clear();
 
     bool is_running_() { return is_running; }
-    string* command_() { return &command; }
-    vector<string>* value_() { return &value; }
+    shared_ptr<string> command_() { return (shared_ptr<string>)&command; }
+    shared_ptr<vector<string>> value_() { return (shared_ptr<vector<string>>)&value; }
 private:
     string command;
     vector<string> value;

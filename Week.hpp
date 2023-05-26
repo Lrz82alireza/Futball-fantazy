@@ -2,6 +2,7 @@
 
 #include "Team.hpp"
 #include "Functions.hpp"
+#include <memory>
 
 enum
 {
@@ -15,22 +16,28 @@ enum
 
 const string MATCH_SEPERATOR_CHAR = ":";
 
-typedef vector<vector<vector<string>>> CSS_input;
+typedef vector<vector<vector<string>>> CSV_input;
 
 typedef struct PLAYER_SCORE
 {
-    const Player *player;
+    shared_ptr<Player> player;
     float score;
+
+    PLAYER_SCORE(shared_ptr<Player> player_, float score_)
+    {
+        player = player_;
+        score = score_;
+    }
 } Player_score;
 
 typedef struct TEAM_MATCH
 {
-    Team *team;
+    shared_ptr<Team> team;
     int goals;
-    vector<const Player *> injureds;
-    vector<const Player *> yellow_cards;
-    vector<const Player *> red_cards;
-    vector<const Player_score *> players_score;
+    vector<shared_ptr<const Player>> injureds;
+    vector<shared_ptr<const Player>> yellow_cards;
+    vector<shared_ptr<const Player>> red_cards;
+    vector<shared_ptr<const Player_score>> players_score;
 }Team_match;
 
 typedef struct MATCH
@@ -52,12 +59,11 @@ typedef struct ARG_MATCH_INPUT
 class Week
 {
 private:
-    vector<Match *> matches;
+    vector<shared_ptr<Match>> matches;
 
     Arg_match_input make_Arg_match_input(const vector<vector<string>> &match_input);
-    void fill_team_match_field(Team *team, vector<const Player *> &team_match_field, vector<string> &players_name);
-    void fill_team_match_fields(Team_match *team, Arg_match_input &arg);
+    void fill_team_match_field(shared_ptr<Team> team, vector<shared_ptr<const Player>> &team_match_field, vector<string> &players_name);
+    void fill_team_match_fields(shared_ptr<Team_match> team, Arg_match_input &arg);
 public:
-    Week(const CSS_input &week_input, vector<Team *> &teams);
-    ~Week();
+    Week(const CSV_input &week_input, vector<shared_ptr<Team>> &teams);
 };

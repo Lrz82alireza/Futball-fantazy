@@ -2,11 +2,12 @@
 
 #include "Account.hpp"
 #include "Team.hpp"
+#include <memory>
 
 class User : public Account
 {
 private:
-    Team *team;
+    shared_ptr<Team> team;
 public:
     User(/* args */);
     ~User();

@@ -1,14 +1,14 @@
 #include "Data_base.hpp"
 
-Data_base::Data_base(const CSS_input &league_input, const vector<CSS_input> &weeks_input)
+Data_base::Data_base(const CSV_input &league_input, const vector<CSV_input> &weeks_input)
 {
-    for (CSS_input::size_type i = 0; i < league_input.size(); i++)
+    for (CSV_input::size_type i = 0; i < league_input.size(); i++)
     {
-        teams.push_back(new Team(league_input[i]));
+        teams.push_back(make_shared<Team>(league_input[i]));
     }
 
-    for (vector<CSS_input>::size_type i = 0; i < weeks_input.size(); i++)
+    for (vector<CSV_input>::size_type i = 0; i < weeks_input.size(); i++)
     {
-        this->weeks.push_back(new Week(weeks_input[i], this->teams));
+        this->weeks.push_back(make_shared<Week>(weeks_input[i], this->teams));
     }
 }

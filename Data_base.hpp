@@ -9,10 +9,10 @@
 class Data_base
 {
 private:
-    vector<Week *> weeks;
-    vector<Team *> teams;
-    vector<Account *> accounts;
+    vector<shared_ptr<Week>> weeks;
+    vector<shared_ptr<Team>> teams;
+    vector<shared_ptr<Account>> accounts;
 public:
-    Data_base(const CSS_input &league_input, const vector<CSS_input> &weeks_input);
+    Data_base(const CSV_input &league_input, const vector<CSV_input> &weeks_input);
     ~Data_base();
 };
