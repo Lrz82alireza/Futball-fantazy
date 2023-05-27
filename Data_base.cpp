@@ -77,22 +77,25 @@ void Data_base::manage_command(pair<string, string> &command, vector<string> &ar
 {
     pair<int, int> command_code = make_command_code(command);
 
-    switch (prem_state)
+    //////////////
+    // default commands
+    //////////////
+    if (in_acc)
     {
-    case ADMIN:
-        switch ()
+        // in_acc default
+        switch (prem_state)
         {
-        case:
+        case ADMIN:
             /* code */
             break;
-
-        default:
+        case USER:
+            // code
             break;
         }
-    case USER:
-
-    default:
-        break;
+    }
+    else
+    {
+        // out of acc commands
     }
 }
 

@@ -54,6 +54,7 @@ private:
     vector<shared_ptr<Account>> accounts;
 
     int prem_state = DEFAULT;
+    bool in_acc = false;
 
     pair<int, int> make_command_code(pair<string, string> &command);
 public:
