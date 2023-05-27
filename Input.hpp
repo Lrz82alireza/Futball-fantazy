@@ -14,10 +14,10 @@ public:
     void clear();
 
     bool is_running_() { return is_running; }
-    shared_ptr<string> command_() { return (shared_ptr<string>)&command; }
-    shared_ptr<vector<string>> value_() { return (shared_ptr<vector<string>>)&value; }
+    pair<string, string> command_() { return command; }
+    vector<string> value_() { return value; }
 private:
-    string command;
+    pair<string, string> command;
     vector<string> value;
     bool is_running = true;
 };
