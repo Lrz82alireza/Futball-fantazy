@@ -4,6 +4,7 @@
 #include "Team.hpp"
 #include "Admin.hpp"
 #include "User.hpp"
+#include <map>
 
 enum
 {
@@ -46,6 +47,12 @@ enum
     DEFAULT,
 };
 
+class Data_base;
+
+typedef void (Data_base::*Command_func_ptr)(vector<string> &);
+
+typedef map<pair<int, int>, Command_func_ptr> Command_map;
+
 class Data_base
 {
 private:
@@ -53,13 +60,20 @@ private:
     vector<shared_ptr<Team>> teams;
     vector<shared_ptr<Account>> accounts;
 
+    vector<Command_map> command_maps;
+    void init_command_map();
+    bool call_command_func(pair<int, int> &key, Command_map &command_map, vector<string> &arg);
+
     int prem_state = DEFAULT;
     bool in_acc = false;
 
     pair<int, int> make_command_code(pair<string, string> &command);
+
+
 public:
     void manage_command(pair<string, string> &command, vector<string> &arg);
 
     Data_base(const CSV_input &league_input, const vector<CSV_input> &weeks_input);
     ~Data_base();
 };
+

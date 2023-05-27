@@ -1,5 +1,44 @@
 #include "Data_base.hpp"
 
+void Data_base::init_command_map()
+{
+    Command_map temp;
+
+    // ADMIN
+    // temp[pair<int, int> (2, 2)] = &Data_base::signup;
+    this->command_maps.push_back(temp);
+    temp.clear();
+
+    // USER
+    //
+    this->command_maps.push_back(temp);
+    temp.clear();
+
+    // IN_ACC
+    //
+    this->command_maps.push_back(temp);
+    temp.clear();
+
+    // NO_ACC
+    //
+    this->command_maps.push_back(temp);
+    temp.clear();
+
+    // DEFAULT
+    //
+    this->command_maps.push_back(temp);
+    temp.clear();
+}
+
+bool Data_base::call_command_func(pair<int, int> &key, Command_map &command_map, vector<string> &arg)
+{
+    auto it = command_map.find(key);
+    if (it == command_map.end())
+        return false;
+    (*this.*command_map[key])(arg);
+    return true;
+}
+
 pair<int, int> Data_base::make_command_code(pair<string, string> &command)
 {
     pair<int, int> command_code = {-1, -1};
@@ -77,25 +116,26 @@ void Data_base::manage_command(pair<string, string> &command, vector<string> &ar
 {
     pair<int, int> command_code = make_command_code(command);
 
-    //////////////
-    // default commands
-    //////////////
+    call_command_func(command_code, this->command_maps[DEFAULT], arg);
     if (in_acc)
     {
-        // in_acc default
+        call_command_func(command_code, this->command_maps[IN_ACC], arg);
         switch (prem_state)
         {
         case ADMIN:
-            /* code */
+            if (!call_command_func(command_code, this->command_maps[ADMIN], arg))
+                throw runtime_error("Permission Denied");
             break;
         case USER:
-            // code
+            if (!call_command_func(command_code, this->command_maps[USER], arg))
+                throw runtime_error("Permission Denied");
             break;
         }
     }
     else
     {
-        // out of acc commands
+        if (!call_command_func(command_code, this->command_maps[NO_ACC], arg))
+            throw runtime_error("Permission Denied");
     }
 }
 
@@ -110,4 +150,6 @@ Data_base::Data_base(const CSV_input &league_input, const vector<CSV_input> &wee
     {
         this->weeks.push_back(make_shared<Week>(weeks_input[i], this->teams));
     }
+
+    init_command_map();
 }
