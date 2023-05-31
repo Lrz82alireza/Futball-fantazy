@@ -9,13 +9,15 @@
 
 using namespace std;
 
+const string LEAGUE = "./data/premier_league.csv";
+const string WEEKS_ADDRESS = "./data/weeks_stats/week_";
+
 typedef vector<vector<vector<string>>> CSV_input;
 
 class Input
 {
 public:
-
-    Input() {init_csv_data();};
+    Input() { init_csv_data(); };
     void set();
     void init_csv_data();
     void clear();

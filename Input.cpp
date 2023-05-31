@@ -55,8 +55,6 @@ shared_ptr<CSV_input> Input::read_info_from_scv(string file_name)
 
 void Input::init_csv_data()
 {
-    const string LEAGUE = "premier_league";
-    const string WEEKS_ADDRESS = "./weeks_stats/week_";
     try
     {
         string file_name;
@@ -66,7 +64,7 @@ void Input::init_csv_data()
         while (true)
         {
             ifstream file;
-            file_name = WEEKS_ADDRESS + to_string(week_num);
+            file_name = WEEKS_ADDRESS + to_string(week_num) + ".csv";
             file.open(file_name);
             if (!file)
                 return;
