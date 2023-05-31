@@ -40,7 +40,6 @@ shared_ptr<CSV_input> Input::read_info_from_scv(string file_name)
         stringstream lineStream(line);
         string cell;
         vector<string> words;
-        int role = 0;
 
         while (getline(lineStream, cell, ','))
         {
@@ -48,7 +47,6 @@ shared_ptr<CSV_input> Input::read_info_from_scv(string file_name)
             if (words.size() == 0)
                 words.push_back("");
             (*input)[row].push_back(words);
-            role++;
         }
         row++;
     }
