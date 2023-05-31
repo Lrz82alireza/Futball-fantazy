@@ -27,6 +27,8 @@ public:
     vector<string> value_() { return value; }
     shared_ptr<CSV_input> read_info_from_scv(string file_name);
 
+    void show() {cout << (*weeks[18])[9][4][0] << endl;};
+
 private:
     pair<string, string> command;
     vector<string> value;

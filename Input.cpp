@@ -40,12 +40,17 @@ shared_ptr<CSV_input> Input::read_info_from_scv(string file_name)
         stringstream lineStream(line);
         string cell;
         vector<string> words;
+        int role = 0;
 
         while (getline(lineStream, cell, ','))
         {
             words = seperate_words(cell, ";");
+            if (words.size() == 0)
+                words.push_back("");
             (*input)[row].push_back(words);
+            role++;
         }
+        row++;
     }
     if (input->size() == 0)
         throw runtime_error("empty input file!");
@@ -61,6 +66,7 @@ void Input::init_csv_data()
         int week_num = 1;
 
         league = read_info_from_scv(LEAGUE);
+
         while (true)
         {
             ifstream file;
@@ -71,6 +77,7 @@ void Input::init_csv_data()
             shared_ptr<CSV_input> week = read_info_from_scv(file_name);
             weeks.push_back(week);
             file.close();
+            week_num++;
         }
     }
     catch(runtime_error & ex)
