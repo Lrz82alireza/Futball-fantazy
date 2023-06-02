@@ -9,6 +9,7 @@ void Data_base::init_command_map()
     this->command_maps.push_back(temp);
     temp.clear();
 
+
     // USER
     //
     this->command_maps.push_back(temp);
@@ -117,10 +118,10 @@ void Data_base::manage_command(pair<string, string> &command, vector<string> &ar
     pair<int, int> command_code = make_command_code(command);
 
     call_command_func(command_code, this->command_maps[DEFAULT], arg);
-    if (in_acc)
+    if (this->current.in_acc)
     {
         call_command_func(command_code, this->command_maps[IN_ACC], arg);
-        switch (prem_state)
+        switch (this->current.prem_state)
         {
         case ADMIN:
             if (!call_command_func(command_code, this->command_maps[ADMIN], arg))
