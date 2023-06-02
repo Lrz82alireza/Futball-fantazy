@@ -16,5 +16,4 @@ public:
     bool check_pass(string pass) {return password == pass;}
 
     Account(string &username_, string &pass);
-    ~Account();
 };

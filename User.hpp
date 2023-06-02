@@ -10,6 +10,5 @@ private:
     shared_ptr<Team> team;
 public:
     User(string &username_, string &pass);
-    ~User();
 };
 

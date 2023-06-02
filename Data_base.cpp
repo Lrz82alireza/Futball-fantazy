@@ -156,7 +156,7 @@ void Data_base::signup(vector<string> &arg)
 
 void Data_base::check_signup_arg(vector<string> &arg)
 {
-    if (this->current.acc != NULL)
+    if (this->current.acc != nullptr)
         throw runtime_error(ERR_PERM);
     if (arg[0] != ARG_CHAR)
         throw runtime_error(ERR_BAD_REQ);
