@@ -4,7 +4,11 @@
 #include "Team.hpp"
 #include "Admin.hpp"
 #include "User.hpp"
+#include "Functions.hpp"
+
 #include <map>
+
+
 
 enum
 {
@@ -47,6 +51,18 @@ enum
     DEFAULT,
 };
 
+enum
+{
+    ARG_T_NAME_SIGN = 1,
+    ARG_T_NAME_IN_SIGN,
+    ARG_PASS_SIGN,
+    ARG_PASS_IN_SIGN,
+};
+
+const string ARG_CHAR = "?";
+const string ERR_PERM = "Permission Denied";
+const string ERR_BAD_REQ = "Bad Request";
+
 class Data_base;
 
 typedef void (Data_base::*Command_func_ptr)(vector<string> &);
@@ -55,11 +71,10 @@ typedef map<pair<int, int>, Command_func_ptr> Command_map;
 
 typedef struct CURRENT
 {
-    int week;
+    int week = 0;
     int prem_state = DEFAULT;
-    bool in_acc = false;
-}Current;
-
+    shared_ptr<Account> acc = nullptr;
+} Current;
 
 class Data_base
 {
@@ -77,10 +92,15 @@ private:
 
     pair<int, int> make_command_code(pair<string, string> &command);
 
+    // Commands
+    void signup(vector<string> &arg);
+    void check_signup(vector<string> &arg);
+
+    // Accessories
+
+
 public:
     void manage_command(pair<string, string> &command, vector<string> &arg);
 
-    Data_base(const CSV_input &league_input, const vector<CSV_input> &weeks_input);
-    ~Data_base();
+    Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input);
 };
-

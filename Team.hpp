@@ -18,4 +18,5 @@ public:
 
     shared_ptr<Player> find_player(string player_name);
     Team(vector<vector<string>> input);
+    Team(string name_);
 };

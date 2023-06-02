@@ -17,3 +17,8 @@ Team::Team(vector<vector<string>> input)
         }
     }
 }
+
+Team::Team(string name_)
+{
+    this->name = name_;
+}

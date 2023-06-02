@@ -5,10 +5,9 @@ void Data_base::init_command_map()
     Command_map temp;
 
     // ADMIN
-    // temp[pair<int, int> (2, 2)] = &Data_base::signup;
+    temp[pair<int, int> (POST, SIGNUP)] = &Data_base::signup;
     this->command_maps.push_back(temp);
     temp.clear();
-
 
     // USER
     //
@@ -118,7 +117,7 @@ void Data_base::manage_command(pair<string, string> &command, vector<string> &ar
     pair<int, int> command_code = make_command_code(command);
 
     call_command_func(command_code, this->command_maps[DEFAULT], arg);
-    if (this->current.in_acc)
+    if (this->current.acc != nullptr)
     {
         call_command_func(command_code, this->command_maps[IN_ACC], arg);
         switch (this->current.prem_state)
@@ -140,17 +139,45 @@ void Data_base::manage_command(pair<string, string> &command, vector<string> &ar
     }
 }
 
-Data_base::Data_base(const CSV_input &league_input, const vector<CSV_input> &weeks_input)
+// Commands
+
+void Data_base::signup(vector<string> &arg)
+{
+    check_signup(arg);
+
+    this->users.push_back(make_shared<User>(arg[ARG_T_NAME_IN_SIGN], arg[ARG_PASS_IN_SIGN]));
+    this->current.acc = users.back();
+    this->current.prem_state = USER;
+}
+
+void Data_base::check_signup(vector<string> &arg)
+{
+    if (this->current.acc != NULL)
+        throw runtime_error(ERR_PERM);
+    if (arg[0] != ARG_CHAR)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_T_NAME_SIGN] != "team_name")
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_PASS_SIGN] != "password")
+        throw runtime_error(ERR_BAD_REQ);
+
+    if (find_by_name<User>(this->users, arg[ARG_T_NAME_IN_SIGN]) != nullptr)
+        throw runtime_error(ERR_BAD_REQ);
+}
+
+Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)
 {
     for (CSV_input::size_type i = 0; i < league_input.size(); i++)
     {
         teams.push_back(make_shared<Team>(league_input[i]));
     }
 
-    for (vector<CSV_input>::size_type i = 0; i < weeks_input.size(); i++)
+    for (vector<shared_ptr<CSV_input>>::size_type i = 0; i < weeks_input.size(); i++)
     {
-        this->weeks.push_back(make_shared<Week>(weeks_input[i], this->teams));
+        this->weeks.push_back(make_shared<Week>(*weeks_input[i], this->teams));
     }
+
+    // make admin
 
     init_command_map();
 }

@@ -9,7 +9,7 @@ class User : public Account
 private:
     shared_ptr<Team> team;
 public:
-    User(/* args */);
+    User(string &username_, string &pass);
     ~User();
 };
 

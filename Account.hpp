@@ -12,6 +12,8 @@ private:
     string username;
     string password;
 public:
-    Account(/* args */);
+    string get_name() {return this->username;}
+
+    Account(string &username_, string &pass);
     ~Account();
 };
