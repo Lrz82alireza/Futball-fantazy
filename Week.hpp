@@ -74,5 +74,5 @@ public:
     void update_team(shared_ptr<Team_match> team_match, int goals_for_, int goals_against_);
     void update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_);
     
-    map <string , float> team_of_the_week();
+    map<string, shared_ptr<Player_score>> team_of_the_week();
 };

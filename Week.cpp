@@ -159,11 +159,10 @@ shared_ptr<Player_score> find_best_player_by_role(vector<shared_ptr<Player_score
     return target_player;
 }
 
-map<string, float> Week::team_of_the_week()
+map<string, shared_ptr<Player_score>> Week::team_of_the_week()
 {
-    map<string, float> tmp;
+    map<string, shared_ptr<Player_score>> tmp;
     vector<shared_ptr<Player_score>> players;
-    vector<shared_ptr<Player_score>> target_players;
     for (auto x : matches)
     {
         for (auto y : x->teams_match.first->players_score)
@@ -171,13 +170,11 @@ map<string, float> Week::team_of_the_week()
         for (auto z : x->teams_match.second->players_score)
             players.push_back(z);
     }
-    target_players.push_back(find_best_player_by_role(players, GK));
-    target_players.push_back(find_best_player_by_role(players, DF));
-    target_players.push_back(find_best_player_by_role(players, DF));
-    target_players.push_back(find_best_player_by_role(players, MD));
-    target_players.push_back(find_best_player_by_role(players, FW));
-    for (auto x : target_players)
-        tmp[x->player->get_name()] = x->score;
+    tmp["GK"] = find_best_player_by_role(players, GK);
+    tmp["DF1"] = find_best_player_by_role(players, DF);
+    tmp["DF2"] = find_best_player_by_role(players, DF);
+    tmp["MD"] = find_best_player_by_role(players, MD);
+    tmp["FW"] = find_best_player_by_role(players, FW);
     return tmp;
 }
 
