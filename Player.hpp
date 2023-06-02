@@ -27,6 +27,7 @@ public:
     };
 
     string get_name() { return this->name; }
+    int get_role() {return role;};
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
 
     Player(const int &role_, const string &name_);

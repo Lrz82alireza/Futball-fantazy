@@ -120,7 +120,7 @@ void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> p
         player_week_info.red_card = true;
 
     shared_ptr<Player_score> player_score_ = *find_if(team_match->players_score.begin(), team_match->players_score.end(), [&](shared_ptr<Player_score> t)
-                                        { return t->player == player_; });
+                                                      { return t->player == player_; });
 
     if (player_score_->player == player_)
         player_week_info.score = player_score_->score;
@@ -135,6 +135,50 @@ void Week::update()
         update_team(i->teams_match.first, i->result.first, i->result.second);
         update_team(i->teams_match.second, i->result.second, i->result.first);
     }
+}
+
+shared_ptr<Player_score> find_best_player_by_role(vector<shared_ptr<Player_score>> &players, int role)
+{
+    shared_ptr<Player_score> target_player = nullptr;
+    float most_score = 0;
+    for (int i = 0; i < players.size(); i++)
+    {
+        if (players[i]->player->get_role() == role)
+        {
+            if (players[i]->score >= most_score)
+            {
+                most_score = players[i]->score;
+                target_player = players[i];
+            }
+        }
+    }
+    for (int i = 0; i < players.size(); i++)
+        if (players[i] == target_player)
+            players.erase(players.begin() + i);
+
+    return target_player;
+}
+
+map<string, float> Week::team_of_the_week()
+{
+    map<string, float> tmp;
+    vector<shared_ptr<Player_score>> players;
+    vector<shared_ptr<Player_score>> target_players;
+    for (auto x : matches)
+    {
+        for (auto y : x->teams_match.first->players_score)
+            players.push_back(y);
+        for (auto z : x->teams_match.second->players_score)
+            players.push_back(z);
+    }
+    target_players.push_back(find_best_player_by_role(players, GK));
+    target_players.push_back(find_best_player_by_role(players, DF));
+    target_players.push_back(find_best_player_by_role(players, DF));
+    target_players.push_back(find_best_player_by_role(players, MD));
+    target_players.push_back(find_best_player_by_role(players, FW));
+    for (auto x : target_players)
+        tmp[x->player->get_name()] = x->score;
+    return tmp;
 }
 
 // accessories
