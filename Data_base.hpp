@@ -64,6 +64,9 @@ const string ERR_PERM = "Permission Denied";
 const string ERR_BAD_REQ = "Bad Request";
 const string ERR_NOT_FOUND = "Not Found";
 
+const string ADMIN_NAME = "admin";
+const string ADMIN_PASS = "123456";
+
 
 class Data_base;
 
@@ -81,6 +84,7 @@ typedef struct CURRENT
 class Data_base
 {
 private:
+
     vector<shared_ptr<Week>> weeks;
     vector<shared_ptr<Team>> teams;
     vector<shared_ptr<User>> users;
@@ -113,4 +117,5 @@ public:
     void manage_command(pair<string, string> &command, vector<string> &arg);
 
     Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input);
+
 };

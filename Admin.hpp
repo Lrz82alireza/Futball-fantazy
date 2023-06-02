@@ -7,6 +7,6 @@ class Admin : public Account
 private:
     /* data */
 public:
-    Admin(/* args */);
-    ~Admin();
+
+    Admin(string username_, string pass);
 };

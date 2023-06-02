@@ -246,7 +246,7 @@ Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_
         this->weeks.push_back(make_shared<Week>(*weeks_input[i], this->teams));
     }
 
-    // make admin
+    this->admin = make_shared<Admin>(ADMIN_NAME, ADMIN_PASS); 
 
     init_command_map();
 }

@@ -44,6 +44,8 @@ typedef struct MATCH
 {
     pair<Team_match, Team_match> teams_match;
     pair<int, int> result;
+
+    // tarif tavabe jadid baraye dastresi be team match
 } Match;
 
 typedef struct ARG_MATCH_INPUT
