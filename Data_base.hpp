@@ -104,6 +104,8 @@ private:
     void register_admin(vector<string> &arg);
     void check_register_admin_arg(vector<string> &arg);
 
+    void logout(vector<string> &arg);
+    void check_logout_arg(vector<string> &arg);
     // Accessories
 
 

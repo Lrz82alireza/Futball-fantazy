@@ -5,24 +5,26 @@ void Data_base::init_command_map()
     Command_map temp;
 
     // ADMIN
-    temp[pair<int, int> (POST, SIGNUP)] = &Data_base::signup;
-    temp[pair<int, int> (POST, LOGIN)] = &Data_base::login;
-
+    
     this->command_maps.push_back(temp);
     temp.clear();
 
     // USER
-    //
+
     this->command_maps.push_back(temp);
     temp.clear();
 
     // IN_ACC
-    //
+    temp[pair<int, int> (POST, LOGOUT)] = &Data_base::logout;
+
     this->command_maps.push_back(temp);
     temp.clear();
 
     // NO_ACC
-    //
+    temp[pair<int, int> (POST, SIGNUP)] = &Data_base::signup;
+    temp[pair<int, int> (POST, LOGIN)] = &Data_base::login;
+    temp[pair<int, int> (POST, REGISTER_ADMIN)] = &Data_base::register_admin;
+
     this->command_maps.push_back(temp);
     temp.clear();
 
@@ -216,6 +218,20 @@ void Data_base::check_register_admin_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ); 
     if (admin->check_pass(arg[ARG_PASS_IN_REGISTER]))
         throw runtime_error(ERR_BAD_REQ); 
+}
+
+void Data_base::logout(vector<string> &arg)
+{
+    check_logout_arg(arg);
+
+    this->current.acc = nullptr;
+    this->current.prem_state = NO_ACC;
+}
+
+void Data_base::check_logout_arg(vector<string> &arg)
+{
+    if (current.acc == nullptr)
+        throw runtime_error(ERR_BAD_REQ);
 }
 
 Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)
