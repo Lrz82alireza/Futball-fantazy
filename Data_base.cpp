@@ -234,6 +234,12 @@ void Data_base::check_logout_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
 }
 
+void Data_base::update_current_week()
+{
+    current.week++;
+    this->weeks[current.week + 1]->update();
+}
+
 Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)
 {
 

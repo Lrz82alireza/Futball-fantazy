@@ -119,5 +119,7 @@ public:
         }
     }
 
+    void update_current_week();
+
     Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input);
 };
