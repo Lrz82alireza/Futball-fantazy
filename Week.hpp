@@ -34,18 +34,17 @@ typedef struct TEAM_MATCH
 {
     shared_ptr<Team> team;
     int goals;
-    vector<shared_ptr<const Player>> injureds;
-    vector<shared_ptr<const Player>> yellow_cards;
-    vector<shared_ptr<const Player>> red_cards;
-    vector<shared_ptr<const Player_score>> players_score;
+    vector<shared_ptr<Player>> injureds;
+    vector<shared_ptr<Player>> yellow_cards;
+    vector<shared_ptr<Player>> red_cards;
+    vector<shared_ptr<Player_score>> players_score;
 }Team_match;
 
 typedef struct MATCH
 {
-    pair<Team_match, Team_match> teams_match;
+    pair<shared_ptr<Team_match>, shared_ptr<Team_match>> teams_match;
     pair<int, int> result;
 
-    // tarif tavabe jadid baraye dastresi be team match
 } Match;
 
 typedef struct ARG_MATCH_INPUT
@@ -64,7 +63,7 @@ private:
     vector<shared_ptr<Match>> matches;
 
     Arg_match_input make_Arg_match_input(const vector<vector<string>> &match_input);
-    void fill_team_match_field(shared_ptr<Team> team, vector<shared_ptr<const Player>> &team_match_field, vector<string> &players_name);
+    void fill_team_match_field(shared_ptr<Team> team, vector<shared_ptr<Player>> &team_match_field, vector<string> &players_name);
     void fill_team_match_fields(shared_ptr<Team_match> team, Arg_match_input &arg);
 public:
     Week(const CSV_input &week_input, vector<shared_ptr<Team>> &teams);

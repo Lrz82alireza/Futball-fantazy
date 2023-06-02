@@ -8,8 +8,6 @@
 
 #include <map>
 
-
-
 enum
 {
     POST,
@@ -67,7 +65,6 @@ const string ERR_NOT_FOUND = "Not Found";
 const string ADMIN_NAME = "admin";
 const string ADMIN_PASS = "123456";
 
-
 class Data_base;
 
 typedef void (Data_base::*Command_func_ptr)(vector<string> &);
@@ -84,7 +81,6 @@ typedef struct CURRENT
 class Data_base
 {
 private:
-
     vector<shared_ptr<Week>> weeks;
     vector<shared_ptr<Team>> teams;
     vector<shared_ptr<User>> users;
@@ -112,10 +108,16 @@ private:
     void check_logout_arg(vector<string> &arg);
     // Accessories
 
-
 public:
     void manage_command(pair<string, string> &command, vector<string> &arg);
 
-    Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input);
+    void show()
+    {
+        for (auto i : teams)
+        {
+            cout << i->get_name() << endl;
+        }
+    }
 
+    Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input);
 };

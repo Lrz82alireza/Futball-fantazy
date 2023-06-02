@@ -38,7 +38,7 @@ Arg_match_input Week::make_Arg_match_input(const vector<vector<string>> &match_i
     return arg;
 }
 
-void Week::fill_team_match_field(shared_ptr<Team> team, vector<shared_ptr<const Player>> &team_match_field, vector<string> &players_name)
+void Week::fill_team_match_field(shared_ptr<Team> team, vector<shared_ptr<Player>> &team_match_field, vector<string> &players_name)
 {
     for_each(players_name.begin(), players_name.end(), [&](string player_name)
              {
@@ -72,15 +72,18 @@ Week::Week(const CSV_input &week_input, vector<shared_ptr<Team>> &teams)
         shared_ptr<Match> temp_match (new Match);
         Arg_match_input arg = make_Arg_match_input(week_input[i]);
 
+        temp_match->teams_match.first = make_shared<Team_match>();
+        temp_match->teams_match.second = make_shared<Team_match>();
+
         temp_match->result = arg.result;
-        temp_match->teams_match.first.goals = arg.result.first;
-        temp_match->teams_match.second.goals = arg.result.second;
+        temp_match->teams_match.first->goals = arg.result.first;
+        temp_match->teams_match.second->goals = arg.result.second;
 
-        temp_match->teams_match.first.team = find_by_name<Team>(teams, arg.teams.first);
-        temp_match->teams_match.second.team = find_by_name<Team>(teams, arg.teams.second);
+        temp_match->teams_match.first->team = find_by_name<Team>(teams, arg.teams.first);
+        temp_match->teams_match.second->team = find_by_name<Team>(teams, arg.teams.second);
 
-        fill_team_match_fields((shared_ptr<Team_match>)&temp_match->teams_match.first, arg);
-        fill_team_match_fields((shared_ptr<Team_match>)&temp_match->teams_match.second, arg);
+        fill_team_match_fields(temp_match->teams_match.first, arg);
+        fill_team_match_fields(temp_match->teams_match.second, arg);
 
         matches.push_back(temp_match);
     }

@@ -128,18 +128,18 @@ void Data_base::manage_command(pair<string, string> &command, vector<string> &ar
         {
         case ADMIN:
             if (!call_command_func(command_code, this->command_maps[ADMIN], arg))
-                throw runtime_error("Permission Denied");
+                throw runtime_error(ERR_PERM);
             break;
         case USER:
             if (!call_command_func(command_code, this->command_maps[USER], arg))
-                throw runtime_error("Permission Denied");
+                throw runtime_error(ERR_PERM);
             break;
         }
     }
     else
     {
         if (!call_command_func(command_code, this->command_maps[NO_ACC], arg))
-            throw runtime_error("Permission Denied");
+            throw runtime_error(ERR_PERM);
     }
 }
 
@@ -236,6 +236,7 @@ void Data_base::check_logout_arg(vector<string> &arg)
 
 Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)
 {
+
     for (CSV_input::size_type i = 0; i < league_input.size(); i++)
     {
         teams.push_back(make_shared<Team>(league_input[i]));

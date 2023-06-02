@@ -25,7 +25,7 @@ void Input::clear()
     value.clear();
 }
 
-shared_ptr<CSV_input> Input::read_info_from_scv(string file_name)
+shared_ptr<CSV_input> Input::read_info_from_csv(string file_name)
 {
     ifstream data(file_name);
     shared_ptr<CSV_input> input = make_shared<CSV_input>();
@@ -63,7 +63,7 @@ void Input::init_csv_data()
         string file_name;
         int week_num = 1;
 
-        league = read_info_from_scv(LEAGUE);
+        league = read_info_from_csv(LEAGUE);
 
         while (true)
         {
@@ -72,7 +72,7 @@ void Input::init_csv_data()
             file.open(file_name);
             if (!file)
                 return;
-            shared_ptr<CSV_input> week = read_info_from_scv(file_name);
+            shared_ptr<CSV_input> week = read_info_from_csv(file_name);
             weeks.push_back(week);
             file.close();
             week_num++;

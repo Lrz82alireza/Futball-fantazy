@@ -16,9 +16,19 @@ enum
 
 class Player
 {
+    struct Week_info
+    {
+        float score = 0;
+        bool injured = false;
+        bool yellow_card = false;
+        bool red_card = false;
+    };
+
 private:
     string name;
     int role;
+
+    vector<Week_info> weeks_info;
 
 public:
     string get_name() { return this->name; }
