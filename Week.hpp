@@ -67,4 +67,9 @@ private:
     void fill_team_match_fields(shared_ptr<Team_match> team, Arg_match_input &arg);
 public:
     Week(const CSV_input &week_input, vector<shared_ptr<Team>> &teams);
+
+    // accessories
+    void update();
+    void update_team(shared_ptr<Team_match> team_match, int goals_for_, int goals_against_);
+    void update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_);
 };

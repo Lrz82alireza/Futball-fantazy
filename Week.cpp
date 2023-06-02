@@ -53,13 +53,14 @@ void Week::fill_team_match_fields(shared_ptr<Team_match> team_match, Arg_match_i
     fill_team_match_field(team_match->team, team_match->yellow_cards, arg.yellow_cards);
     fill_team_match_field(team_match->team, team_match->red_cards, arg.red_cards);
     for_each(arg.players_score.begin(), arg.players_score.end(),
-             [&](pair<string, float> player_score_) {
-                shared_ptr<Player> temp_player = team_match->team->find_player(player_score_.first);
-                if (temp_player != nullptr)
-                {
-                    shared_ptr<Player_score> temp (new Player_score(temp_player, player_score_.second));
-                    team_match->players_score.push_back(temp);
-                }
+             [&](pair<string, float> player_score_)
+             {
+                 shared_ptr<Player> temp_player = team_match->team->find_player(player_score_.first);
+                 if (temp_player != nullptr)
+                 {
+                     shared_ptr<Player_score> temp(new Player_score(temp_player, player_score_.second));
+                     team_match->players_score.push_back(temp);
+                 }
              });
 }
 
@@ -69,7 +70,7 @@ Week::Week(const CSV_input &week_input, vector<shared_ptr<Team>> &teams)
 {
     for (CSV_input::size_type i = 0; i < week_input.size(); i++)
     {
-        shared_ptr<Match> temp_match (new Match);
+        shared_ptr<Match> temp_match(new Match);
         Arg_match_input arg = make_Arg_match_input(week_input[i]);
 
         temp_match->teams_match.first = make_shared<Team_match>();
@@ -88,3 +89,52 @@ Week::Week(const CSV_input &week_input, vector<shared_ptr<Team>> &teams)
         matches.push_back(temp_match);
     }
 }
+
+void Week::update_team(shared_ptr<Team_match> team_match, int goals_for_, int goals_against_)
+{
+    vector<shared_ptr<Player>> team_players = team_match->team->get_players();
+
+    for (auto i : team_players)
+    {
+        update_player(team_match, i);
+    }
+
+    Team::Week_info team_week_info;
+    // calculate score (algoritmesh yokhty)
+    team_week_info.goals_for = goals_for_;
+    team_week_info.goals_against = goals_against_;
+
+    team_match->team->new_week(team_week_info);
+}
+
+void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_)
+{
+    Player::Week_info player_week_info;
+    if (*find(team_match->injureds.begin(), team_match->injureds.end(), player_) == player_)
+        player_week_info.injured = true;
+
+    if (*find(team_match->yellow_cards.begin(), team_match->yellow_cards.end(), player_) == player_)
+        player_week_info.yellow_card = true;
+
+    if (*find(team_match->red_cards.begin(), team_match->red_cards.end(), player_) == player_)
+        player_week_info.red_card = true;
+
+    shared_ptr<Player_score> player_score_ = *find_if(team_match->players_score.begin(), team_match->players_score.end(), [&](shared_ptr<Player_score> t)
+                                        { return t->player == player_; });
+
+    if (player_score_->player == player_)
+        player_week_info.score = player_score_->score;
+
+    player_->new_week(player_week_info);
+}
+
+void Week::update()
+{
+    for (auto i : matches)
+    {
+        update_team(i->teams_match.first, i->result.first, i->result.second);
+        update_team(i->teams_match.second, i->result.second, i->result.first);
+    }
+}
+
+// accessories
