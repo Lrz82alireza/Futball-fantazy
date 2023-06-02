@@ -6,6 +6,8 @@ void Data_base::init_command_map()
 
     // ADMIN
     temp[pair<int, int> (POST, SIGNUP)] = &Data_base::signup;
+    temp[pair<int, int> (POST, LOGIN)] = &Data_base::login;
+
     this->command_maps.push_back(temp);
     temp.clear();
 
@@ -143,26 +145,77 @@ void Data_base::manage_command(pair<string, string> &command, vector<string> &ar
 
 void Data_base::signup(vector<string> &arg)
 {
-    check_signup(arg);
+    check_signup_arg(arg);
 
-    this->users.push_back(make_shared<User>(arg[ARG_T_NAME_IN_SIGN], arg[ARG_PASS_IN_SIGN]));
+    this->users.push_back(make_shared<User>(arg[ARG_T_NAME_IN_REGISTER], arg[ARG_PASS_IN_REGISTER]));
     this->current.acc = users.back();
     this->current.prem_state = USER;
 }
 
-void Data_base::check_signup(vector<string> &arg)
+void Data_base::check_signup_arg(vector<string> &arg)
 {
     if (this->current.acc != NULL)
         throw runtime_error(ERR_PERM);
     if (arg[0] != ARG_CHAR)
         throw runtime_error(ERR_BAD_REQ);
-    if (arg[ARG_T_NAME_SIGN] != "team_name")
+    if (arg[ARG_T_NAME_REGISTER] != "team_name")
         throw runtime_error(ERR_BAD_REQ);
-    if (arg[ARG_PASS_SIGN] != "password")
+    if (arg[ARG_PASS_REGISTER] != "password")
         throw runtime_error(ERR_BAD_REQ);
 
-    if (find_by_name<User>(this->users, arg[ARG_T_NAME_IN_SIGN]) != nullptr)
+    if (find_by_name<User>(this->users, arg[ARG_T_NAME_IN_REGISTER]) != nullptr)
         throw runtime_error(ERR_BAD_REQ);
+}
+
+void Data_base::login(vector<string> &arg)
+{
+    check_login_arg(arg);
+
+    this->current.prem_state = USER;
+    this->current.acc = find_by_name<User>(this->users, arg[ARG_T_NAME_IN_REGISTER]);
+}
+
+void Data_base::check_login_arg(vector<string> &arg)
+{
+    if (this->current.acc == nullptr)
+        throw runtime_error(ERR_PERM);
+    if (arg[0] != ARG_CHAR)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_T_NAME_REGISTER] != "team_name")
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_PASS_REGISTER] != "password")
+        throw runtime_error(ERR_BAD_REQ);
+
+    shared_ptr<User> user_ = find_by_name<User>(this->users, arg[ARG_T_NAME_IN_REGISTER]);
+    if (user_ == nullptr)
+        throw runtime_error(ERR_NOT_FOUND);
+    if (user_->check_pass(arg[ARG_PASS_IN_REGISTER]))
+        throw runtime_error(ERR_PERM);
+}
+
+void Data_base::register_admin(vector<string> &arg)
+{
+    check_register_admin_arg(arg);
+
+    this->current.acc = this->admin;
+    this->current.prem_state = ADMIN;
+}
+
+void Data_base::check_register_admin_arg(vector<string> &arg)
+{
+    if (this->current.acc == nullptr)
+        throw runtime_error(ERR_PERM);
+    if (arg[0] != ARG_CHAR)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_T_NAME_REGISTER] != "team_name")
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_PASS_REGISTER] != "password")
+        throw runtime_error(ERR_BAD_REQ);
+
+    if (admin->get_name() != arg[ARG_T_NAME_IN_REGISTER])
+        throw runtime_error(ERR_BAD_REQ); 
+    if (admin->check_pass(arg[ARG_PASS_IN_REGISTER]))
+        throw runtime_error(ERR_BAD_REQ); 
 }
 
 Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)

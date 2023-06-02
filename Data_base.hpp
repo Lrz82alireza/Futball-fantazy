@@ -53,15 +53,17 @@ enum
 
 enum
 {
-    ARG_T_NAME_SIGN = 1,
-    ARG_T_NAME_IN_SIGN,
-    ARG_PASS_SIGN,
-    ARG_PASS_IN_SIGN,
+    ARG_T_NAME_REGISTER = 1,
+    ARG_T_NAME_IN_REGISTER,
+    ARG_PASS_REGISTER,
+    ARG_PASS_IN_REGISTER,
 };
 
 const string ARG_CHAR = "?";
 const string ERR_PERM = "Permission Denied";
 const string ERR_BAD_REQ = "Bad Request";
+const string ERR_NOT_FOUND = "Not Found";
+
 
 class Data_base;
 
@@ -94,7 +96,13 @@ private:
 
     // Commands
     void signup(vector<string> &arg);
-    void check_signup(vector<string> &arg);
+    void check_signup_arg(vector<string> &arg);
+
+    void login(vector<string> &arg);
+    void check_login_arg(vector<string> &arg);
+
+    void register_admin(vector<string> &arg);
+    void check_register_admin_arg(vector<string> &arg);
 
     // Accessories
 
