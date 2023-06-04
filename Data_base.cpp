@@ -30,6 +30,7 @@ void Data_base::init_command_map()
 
     // DEFAULT
     temp[pair<int, int> (GET, USERS_RANKING)] = &Data_base::users_ranking;
+    temp[pair<int, int> (GET, LEAGUE_STANDINGS)] = &Data_base::league_standings;
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -261,7 +262,34 @@ void Data_base::users_ranking(vector<string> &arg)
 
 void Data_base::league_standings(vector<string> &arg)
 {
-    
+    vector<Team::Team_state> teams_state;
+
+    for_each(teams.begin(), teams.end(), [&](shared_ptr<Team> t){
+        teams_state.push_back(t->get_state());
+    });
+
+    sort(teams_state.begin(), teams_state.end(), [&](Team::Team_state t1, Team::Team_state t2){
+        if (t1.score > t2.score)
+            return true;
+        if (t1.score == t2.score)
+        {
+            if (t1.goals_for - t1.goals_against > t2.goals_for - t2.goals_against)
+                return true;
+            else if (t1.goals_for - t1.goals_against == t2.goals_for - t2.goals_against)
+            {
+                if (t1.name.compare(t2.name) < 0)
+                    return true;
+            }
+        }
+        return false;
+    });
+
+    for (int i = 0; i < teams_state.size(); i++)
+    {
+        cout << i << ". " << teams_state[i].name << ": score: " << 
+        teams_state[i].score << " | GF: " << teams_state[i].goals_for <<
+        " | GA: " << teams_state[i].goals_against << endl;
+    }
 }
 
 // Public

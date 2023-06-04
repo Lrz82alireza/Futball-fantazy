@@ -24,6 +24,16 @@ public:
         int goals_against = 0;
     };
 
+    struct Team_state
+    {
+        string name;
+        float score = 0;
+        int goals_for = 0;
+        int goals_against = 0;
+    };
+    
+    Team_state get_state();
+
     string get_name() { return this->name; }
     vector<shared_ptr<Player>> get_players() { return players; }
 

@@ -1,5 +1,21 @@
 #include "Team.hpp"
 
+Team::Team_state Team::get_state()
+{
+    Team::Team_state state;
+
+    state.name = this->name;
+    state.score = get_scores_sum();
+    for_each(weeks_info.begin(), weeks_info.end(), [&](Team::Week_info info){
+        state.goals_for += info.goals_for;
+    });
+    for_each(weeks_info.begin(), weeks_info.end(), [&](Team::Week_info info){
+        state.goals_against += info.goals_against;
+    });
+
+    return state;
+}
+
 float Team::get_scores_sum()
 {
     float sum = 0;
