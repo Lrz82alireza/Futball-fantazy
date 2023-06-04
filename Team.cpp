@@ -1,5 +1,15 @@
 #include "Team.hpp"
 
+float Team::get_scores()
+{
+    float sum = 0;
+    for (auto i : weeks_info)
+    {
+        sum += i.score;
+    }
+    return sum;
+}
+
 shared_ptr<Player> Team::find_player(string player_name)
 {
     return find_by_name<Player>(this->players, player_name);

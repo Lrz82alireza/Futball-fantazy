@@ -7,6 +7,7 @@
 #include "Functions.hpp"
 
 #include <map>
+#include <algorithm>
 
 enum
 {
@@ -106,6 +107,8 @@ private:
 
     void logout(vector<string> &arg);
     void check_logout_arg(vector<string> &arg);
+
+    void users_ranking(vector<string> &arg);
     // Accessories
 
 public:

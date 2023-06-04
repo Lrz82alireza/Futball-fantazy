@@ -29,7 +29,8 @@ void Data_base::init_command_map()
     temp.clear();
 
     // DEFAULT
-    //
+    temp[pair<int, int> (GET, USERS_RANKING)] = &Data_base::users_ranking;
+
     this->command_maps.push_back(temp);
     temp.clear();
 }
@@ -233,6 +234,33 @@ void Data_base::check_logout_arg(vector<string> &arg)
     if (current.acc == nullptr)
         throw runtime_error(ERR_BAD_REQ);
 }
+
+void Data_base::users_ranking(vector<string> &arg)
+{
+    vector<User::RANK> ranks;
+    for (auto i : this->users)
+    {
+        ranks.push_back(i->rank());
+    }
+
+    sort(ranks.begin(), ranks.end(),
+    [&](User::RANK r1, User::RANK r2){
+        if (r1.second > r2.second)
+            return true;
+        if (r1.second == r2.second && r1.first.compare(r2.first) < 0)
+            return true;
+        return false;
+    });
+
+    for (int i = 0; i < ranks.size(); i++)
+    {
+        cout << i << ". " << "team_name: " << ranks[i].first <<
+         " | point: " << ranks[i].second << endl;
+    }
+}
+
+
+// Public
 
 void Data_base::update_current_week()
 {
