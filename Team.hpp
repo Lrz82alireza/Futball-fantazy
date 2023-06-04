@@ -5,6 +5,14 @@
 #include "Functions.hpp"
 #include "Player.hpp"
 
+
+enum 
+{
+    LOSE_POINT = 0,
+    EQUAL_POINT = 1,
+    WIN_POINT = 3,  
+};
+
 class Team
 {
 

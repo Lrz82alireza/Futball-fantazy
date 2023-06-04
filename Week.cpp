@@ -100,7 +100,14 @@ void Week::update_team(shared_ptr<Team_match> team_match, int goals_for_, int go
     }
 
     Team::Week_info team_week_info;
-    // calculate score (algoritmesh yokhty) ////////////////////////////////////////////////
+    
+    if (goals_for_ > goals_against_)
+        team_week_info.score = WIN_POINT;
+    if (goals_for_ == goals_against_)
+        team_week_info.score = EQUAL_POINT;
+    if (goals_for_ < goals_against_)
+        team_week_info.score = LOSE_POINT;
+
     team_week_info.goals_for = goals_for_;
     team_week_info.goals_against = goals_against_;
 
