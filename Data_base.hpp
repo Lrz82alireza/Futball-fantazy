@@ -109,6 +109,8 @@ private:
     void check_logout_arg(vector<string> &arg);
 
     void users_ranking(vector<string> &arg);
+
+    void league_standings(vector<string> &arg);
     // Accessories
 
 public:

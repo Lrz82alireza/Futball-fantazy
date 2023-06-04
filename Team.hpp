@@ -27,7 +27,7 @@ public:
     string get_name() { return this->name; }
     vector<shared_ptr<Player>> get_players() { return players; }
 
-    float get_scores();
+    float get_scores_sum();
 
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
 

@@ -1,6 +1,6 @@
 #include "Team.hpp"
 
-float Team::get_scores()
+float Team::get_scores_sum()
 {
     float sum = 0;
     for (auto i : weeks_info)

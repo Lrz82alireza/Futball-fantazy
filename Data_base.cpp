@@ -259,6 +259,10 @@ void Data_base::users_ranking(vector<string> &arg)
     }
 }
 
+void Data_base::league_standings(vector<string> &arg)
+{
+    
+}
 
 // Public
 
