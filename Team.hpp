@@ -35,7 +35,7 @@ public:
     Team_state get_state();
 
     string get_name() { return this->name; }
-    vector<shared_ptr<Player>> get_players() { return players; }
+    vector<shared_ptr<Player>> get_players(int role = 0);
 
     float get_scores_sum();
 

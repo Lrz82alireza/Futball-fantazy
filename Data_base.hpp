@@ -56,7 +56,23 @@ enum
     ARG_T_NAME_IN_REGISTER,
     ARG_PASS_REGISTER,
     ARG_PASS_IN_REGISTER,
+    ARG_REGISTER_NUM = 5,
 };
+
+enum
+{
+    ARG_T_NAME_PLAYERS = 1,
+    ARG_T_NAME_IN_PLAYERS,
+    ARG_PLAYERS_NUM = 3,
+};
+
+struct Arg_get_players
+{
+    string name;
+    int role = 0;
+    bool sort_by_rank = false;
+};
+
 
 const string ARG_CHAR = "?";
 const string ERR_PERM = "Permission Denied";
@@ -111,6 +127,11 @@ private:
     void users_ranking(vector<string> &arg);
 
     void league_standings(vector<string> &arg);
+
+    void get_players(vector<string> &arg);
+    Arg_get_players make_arg_get_players(vector<string> &arg);
+    void check_get_players_arg(vector<string> &arg);
+
     // Accessories
 
 public:

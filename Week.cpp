@@ -148,7 +148,7 @@ shared_ptr<Player_score> find_best_player_by_role(vector<shared_ptr<Player_score
 {
     shared_ptr<Player_score> target_player = nullptr;
     float most_score = 0;
-    for (int i = 0; i < players.size(); i++)
+    for (vector<shared_ptr<Player_score>>::size_type i = 0; i < players.size(); i++)
     {
         if (players[i]->player->get_role() == role)
         {
@@ -159,7 +159,7 @@ shared_ptr<Player_score> find_best_player_by_role(vector<shared_ptr<Player_score
             }
         }
     }
-    for (int i = 0; i < players.size(); i++)
+    for (vector<shared_ptr<PLAYER_SCORE>>::size_type i = 0; i < players.size(); i++)
         if (players[i] == target_player)
             players.erase(players.begin() + i);
 

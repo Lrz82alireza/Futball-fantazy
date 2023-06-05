@@ -16,6 +16,21 @@ Team::Team_state Team::get_state()
     return state;
 }
 
+vector<shared_ptr<Player>> Team::get_players(int role)
+{
+    if (role == 0)
+        return players;
+    
+    vector<shared_ptr<Player>> players_;
+    for (auto i : players)
+    {
+        if (i->get_role() == role)
+            players_.push_back(i);
+    }
+
+    return players_;
+}
+
 float Team::get_scores_sum()
 {
     float sum = 0;

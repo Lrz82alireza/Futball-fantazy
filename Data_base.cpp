@@ -158,6 +158,8 @@ void Data_base::signup(vector<string> &arg)
 
 void Data_base::check_signup_arg(vector<string> &arg)
 {
+    if (arg.size() < ARG_REGISTER_NUM)
+        throw runtime_error(ERR_BAD_REQ);
     if (this->current.acc != nullptr)
         throw runtime_error(ERR_PERM);
     if (arg[0] != ARG_CHAR)
@@ -181,6 +183,8 @@ void Data_base::login(vector<string> &arg)
 
 void Data_base::check_login_arg(vector<string> &arg)
 {
+    if (arg.size() < ARG_REGISTER_NUM)
+        throw runtime_error(ERR_BAD_REQ);
     if (this->current.acc == nullptr)
         throw runtime_error(ERR_PERM);
     if (arg[0] != ARG_CHAR)
@@ -207,6 +211,8 @@ void Data_base::register_admin(vector<string> &arg)
 
 void Data_base::check_register_admin_arg(vector<string> &arg)
 {
+     if (arg.size() < ARG_REGISTER_NUM)
+        throw runtime_error(ERR_BAD_REQ);
     if (this->current.acc == nullptr)
         throw runtime_error(ERR_PERM);
     if (arg[0] != ARG_CHAR)
@@ -290,6 +296,32 @@ void Data_base::league_standings(vector<string> &arg)
         teams_state[i].score << " | GF: " << teams_state[i].goals_for <<
         " | GA: " << teams_state[i].goals_against << endl;
     }
+}
+
+void Data_base::get_players(vector<string> &arg)
+{
+    check_get_players_arg(arg);
+    
+    vector<Player> players_;
+
+
+}
+
+Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
+{
+
+
+    return Arg_get_players();
+}
+
+void Data_base::check_get_players_arg(vector<string> &arg)
+{
+    if (arg.size() < ARG_PLAYERS_NUM)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[0] != ARG_CHAR)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_T_NAME_PLAYERS] != "team_name")
+        throw runtime_error(ERR_BAD_REQ);
 }
 
 // Public

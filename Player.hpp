@@ -29,6 +29,7 @@ public:
     string get_name() { return this->name; }
     int get_role() {return role;};
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
+    float get_avg_scores();
 
     Player(const int &role_, const string &name_);
 
@@ -38,3 +39,5 @@ private:
 
     vector<Week_info> weeks_info;
 };
+
+string role_to_s(int role);
