@@ -46,6 +46,8 @@ public:
     Team(vector<vector<string>> input);
     Team(string name_);
 
+    
+
 private:
     string name;
     vector<float> score_in_week;
