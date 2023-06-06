@@ -5,7 +5,7 @@ void Data_base::init_command_map()
     Command_map temp;
 
     // ADMIN
-    
+
     this->command_maps.push_back(temp);
     temp.clear();
 
@@ -15,22 +15,22 @@ void Data_base::init_command_map()
     temp.clear();
 
     // IN_ACC
-    temp[pair<int, int> (POST, LOGOUT)] = &Data_base::logout;
+    temp[pair<int, int>(POST, LOGOUT)] = &Data_base::logout;
 
     this->command_maps.push_back(temp);
     temp.clear();
 
     // NO_ACC
-    temp[pair<int, int> (POST, SIGNUP)] = &Data_base::signup;
-    temp[pair<int, int> (POST, LOGIN)] = &Data_base::login;
-    temp[pair<int, int> (POST, REGISTER_ADMIN)] = &Data_base::register_admin;
+    temp[pair<int, int>(POST, SIGNUP)] = &Data_base::signup;
+    temp[pair<int, int>(POST, LOGIN)] = &Data_base::login;
+    temp[pair<int, int>(POST, REGISTER_ADMIN)] = &Data_base::register_admin;
 
     this->command_maps.push_back(temp);
     temp.clear();
 
     // DEFAULT
-    temp[pair<int, int> (GET, USERS_RANKING)] = &Data_base::users_ranking;
-    temp[pair<int, int> (GET, LEAGUE_STANDINGS)] = &Data_base::league_standings;
+    temp[pair<int, int>(GET, USERS_RANKING)] = &Data_base::users_ranking;
+    temp[pair<int, int>(GET, LEAGUE_STANDINGS)] = &Data_base::league_standings;
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -211,7 +211,7 @@ void Data_base::register_admin(vector<string> &arg)
 
 void Data_base::check_register_admin_arg(vector<string> &arg)
 {
-     if (arg.size() < ARG_REGISTER_NUM)
+    if (arg.size() < ARG_REGISTER_NUM)
         throw runtime_error(ERR_BAD_REQ);
     if (this->current.acc == nullptr)
         throw runtime_error(ERR_PERM);
@@ -223,9 +223,9 @@ void Data_base::check_register_admin_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
 
     if (admin->get_name() != arg[ARG_T_NAME_IN_REGISTER])
-        throw runtime_error(ERR_BAD_REQ); 
+        throw runtime_error(ERR_BAD_REQ);
     if (admin->check_pass(arg[ARG_PASS_IN_REGISTER]))
-        throw runtime_error(ERR_BAD_REQ); 
+        throw runtime_error(ERR_BAD_REQ);
 }
 
 void Data_base::logout(vector<string> &arg)
@@ -251,18 +251,19 @@ void Data_base::users_ranking(vector<string> &arg)
     }
 
     sort(ranks.begin(), ranks.end(),
-    [&](User::RANK r1, User::RANK r2){
-        if (r1.second > r2.second)
-            return true;
-        if (r1.second == r2.second && r1.first.compare(r2.first) < 0)
-            return true;
-        return false;
-    });
+         [&](User::RANK r1, User::RANK r2)
+         {
+             if (r1.second > r2.second)
+                 return true;
+             if (r1.second == r2.second && r1.first.compare(r2.first) < 0)
+                 return true;
+             return false;
+         });
 
     for (int i = 0; i < ranks.size(); i++)
     {
-        cout << i << ". " << "team_name: " << ranks[i].first <<
-         " | point: " << ranks[i].second << endl;
+        cout << i << ". "
+             << "team_name: " << ranks[i].first << " | point: " << ranks[i].second << endl;
     }
 }
 
@@ -270,11 +271,11 @@ void Data_base::league_standings(vector<string> &arg)
 {
     vector<Team::Team_state> teams_state;
 
-    for_each(teams.begin(), teams.end(), [&](shared_ptr<Team> t){
-        teams_state.push_back(t->get_state());
-    });
+    for_each(teams.begin(), teams.end(), [&](shared_ptr<Team> t)
+             { teams_state.push_back(t->get_state()); });
 
-    sort(teams_state.begin(), teams_state.end(), [&](Team::Team_state t1, Team::Team_state t2){
+    sort(teams_state.begin(), teams_state.end(), [&](Team::Team_state t1, Team::Team_state t2)
+         {
         if (t1.score > t2.score)
             return true;
         if (t1.score == t2.score)
@@ -287,31 +288,80 @@ void Data_base::league_standings(vector<string> &arg)
                     return true;
             }
         }
-        return false;
-    });
+        return false; });
 
     for (int i = 0; i < teams_state.size(); i++)
     {
-        cout << i << ". " << teams_state[i].name << ": score: " << 
-        teams_state[i].score << " | GF: " << teams_state[i].goals_for <<
-        " | GA: " << teams_state[i].goals_against << endl;
+        cout << i << ". " << teams_state[i].name << ": score: " << teams_state[i].score << " | GF: " << teams_state[i].goals_for << " | GA: " << teams_state[i].goals_against << endl;
     }
 }
 
-void Data_base::get_players(vector<string> &arg)
+string handle_team_name(string team_name)
 {
-    check_get_players_arg(arg);
-    
-    vector<Player> players_;
+    for (int i = 0; i < team_name.size(); i++)
+        if (team_name[i] == '_')
+            team_name[i] = ' ';
+    return team_name;
+}
 
-
+void make_roles_vec(string arg, Arg_get_players &args)
+{
+    vector<string> roles;
+    vector<int> output;
+    roles = seperate_words(arg, "/");
+    for (auto role : roles)
+    {
+        if (role == "gk")
+            output.push_back(GK);
+        if (role == "df")
+            output.push_back(DF);
+        if (role == "md")
+            output.push_back(MD);
+        if (role == "fw")
+            output.push_back(FW);
+    }
+    args.Iroles = output;
+    args.Sroles = roles;
 }
 
 Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
 {
+    Arg_get_players args;
+    string team_name = handle_team_name(arg[2]);
+    args.team = find_by_name(teams, team_name);
+    if (arg.size() == 5)
+        args.sort_by_rank = true;
+    make_roles_vec(arg[3], args);
+    return args;
+}
 
+void Data_base::get_players(vector<string> &arg)
+{
+    // check_get_players_arg(arg);
+    Arg_get_players args = make_arg_get_players(arg);
+    if (args.team == nullptr)
+        cout << "| " << ERR_NOT_FOUND << endl;
 
-    return Arg_get_players();
+    else
+    {
+        vector<vector<shared_ptr<Player>>> players = args.team->find_players(args.Iroles, args.sort_by_rank);
+        
+        for (int i = 0; i < players.size(); i++)
+        {
+            if (players[i][0] == nullptr)
+            {
+                cout << "| " << ERR_BAD_REQ << endl;
+                continue;
+            }
+            for (int j = 0; j < players[i].size(); j++)
+            {
+                cout << j << ". "
+                     << "name: " << players[i][j]->get_name() << " | "
+                     << "role: " << args.Sroles[i] << " | "
+                     << "score: " << players[i][j]->get_week_info().score << endl;
+            }
+        }
+    }
 }
 
 void Data_base::check_get_players_arg(vector<string> &arg)
@@ -345,7 +395,7 @@ Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_
         this->weeks.push_back(make_shared<Week>(*weeks_input[i], this->teams));
     }
 
-    this->admin = make_shared<Admin>(ADMIN_NAME, ADMIN_PASS); 
+    this->admin = make_shared<Admin>(ADMIN_NAME, ADMIN_PASS);
 
     init_command_map();
 }

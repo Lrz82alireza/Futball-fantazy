@@ -28,6 +28,7 @@ public:
 
     string get_name() { return this->name; }
     int get_role() {return role;};
+    Week_info get_week_info() {return weeks_info.back();}
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
     float get_avg_scores();
 
