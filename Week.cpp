@@ -100,7 +100,7 @@ void Week::update_team(shared_ptr<Team_match> team_match, int goals_for_, int go
     }
 
     Team::Week_info team_week_info;
-    
+
     if (goals_for_ > goals_against_)
         team_week_info.score = WIN_POINT;
     if (goals_for_ == goals_against_)
@@ -117,21 +117,24 @@ void Week::update_team(shared_ptr<Team_match> team_match, int goals_for_, int go
 void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_)
 {
     Player::Week_info player_week_info;
-    if (*find(team_match->injureds.begin(), team_match->injureds.end(), player_) == player_)
+    if (find(team_match->injureds.begin(), team_match->injureds.end(), player_) != team_match->injureds.end())
         player_week_info.injured = true;
 
-    if (*find(team_match->yellow_cards.begin(), team_match->yellow_cards.end(), player_) == player_)
+    if (find(team_match->yellow_cards.begin(), team_match->yellow_cards.end(), player_) != team_match->yellow_cards.end())
         player_week_info.yellow_card = true;
 
-    if (*find(team_match->red_cards.begin(), team_match->red_cards.end(), player_) == player_)
+    if (find(team_match->red_cards.begin(), team_match->red_cards.end(), player_) != team_match->red_cards.end())
         player_week_info.red_card = true;
 
-    shared_ptr<Player_score> player_score_ = *find_if(team_match->players_score.begin(), team_match->players_score.end(), [&](shared_ptr<Player_score> t)
-                                                      { return t->player == player_; });
 
-    if (player_score_->player == player_)
+    if (find_if(team_match->players_score.begin(), team_match->players_score.end(), [&](shared_ptr<Player_score> t)
+                    { return t->player == player_; }) != team_match->players_score.end())
+    {
+        shared_ptr<Player_score> player_score_ = *find_if(team_match->players_score.begin(), team_match->players_score.end(), [&](shared_ptr<Player_score> t)
+                                                          { return t->player == player_; });
         player_week_info.score = player_score_->score;
-
+    }
+    
     player_->new_week(player_week_info);
 }
 

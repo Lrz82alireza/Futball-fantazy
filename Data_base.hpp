@@ -69,8 +69,8 @@ enum
 struct Arg_get_players
 {
     shared_ptr<Team> team;
-    vector<int> Iroles;
-    vector<string> Sroles;
+    int Iroles;
+    string Sroles;
     bool sort_by_rank = false;
 };
 
@@ -139,12 +139,17 @@ public:
 
     void show()
     {
-        vector <string> args;
+        vector<string> args;
+
+        update_current_week();
+        update_current_week();
+        update_current_week();
+
         args.push_back("?");
         args.push_back("team");
         args.push_back("AFC_Bournemouth");
-        args.push_back("gk");
-        //args.push_back("ranks");
+        // args.push_back("df");
+        args.push_back("ranks");
         get_players(args);
     }
 

@@ -87,13 +87,3 @@ vector<shared_ptr<Player>> Team::find_players_by_role(int role, bool rank)
 
     return target_players;
 }
-
-vector<vector<shared_ptr<Player>>> Team::find_players(vector<int> roles, bool rank)
-{
-    vector<vector<shared_ptr<Player>>> players;
-    for (int i = 0; i < roles.size(); i++)
-    {
-        players.push_back(find_players_by_role(roles[i], rank));
-    }
-    return players;
-}

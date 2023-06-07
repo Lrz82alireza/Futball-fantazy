@@ -45,8 +45,7 @@ public:
 
     Team(vector<vector<string>> input);
     Team(string name_);
-    
-    vector<vector<shared_ptr<Player>>> find_players(vector<int> roles , bool rank);
+
 
 private:
     string name;

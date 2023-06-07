@@ -4,7 +4,14 @@
 int main()
 {
     Input input;
-
     Data_base data_base(input.get_league(), input.get_weeks());
-    data_base.show();
+
+    try
+    {
+        data_base.show();
+    }
+    catch (runtime_error &ex)
+    {
+        cout << ex.what() << '\n';
+    }
 }

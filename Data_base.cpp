@@ -31,6 +31,7 @@ void Data_base::init_command_map()
     // DEFAULT
     temp[pair<int, int>(GET, USERS_RANKING)] = &Data_base::users_ranking;
     temp[pair<int, int>(GET, LEAGUE_STANDINGS)] = &Data_base::league_standings;
+    temp[pair<int, int>(GET, PLAYERS)] = &Data_base::get_players;
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -262,7 +263,7 @@ void Data_base::users_ranking(vector<string> &arg)
 
     for (int i = 0; i < ranks.size(); i++)
     {
-        cout << i << ". "
+        cout << i + 1 << ". "
              << "team_name: " << ranks[i].first << " | point: " << ranks[i].second << endl;
     }
 }
@@ -292,7 +293,7 @@ void Data_base::league_standings(vector<string> &arg)
 
     for (int i = 0; i < teams_state.size(); i++)
     {
-        cout << i << ". " << teams_state[i].name << ": score: " << teams_state[i].score << " | GF: " << teams_state[i].goals_for << " | GA: " << teams_state[i].goals_against << endl;
+        cout << i + 1 << ". " << teams_state[i].name << ": score: " << teams_state[i].score << " | GF: " << teams_state[i].goals_for << " | GA: " << teams_state[i].goals_against << endl;
     }
 }
 
@@ -304,24 +305,20 @@ string handle_team_name(string team_name)
     return team_name;
 }
 
-void make_roles_vec(string arg, Arg_get_players &args)
+int stoi_role(string arg)
 {
-    vector<string> roles;
-    vector<int> output;
-    roles = seperate_words(arg, "/");
-    for (auto role : roles)
-    {
-        if (role == "gk")
-            output.push_back(GK);
-        if (role == "df")
-            output.push_back(DF);
-        if (role == "md")
-            output.push_back(MD);
-        if (role == "fw")
-            output.push_back(FW);
-    }
-    args.Iroles = output;
-    args.Sroles = roles;
+    int output;
+
+    if (arg == "gk")
+        output = GK;
+    else if (arg == "df")
+        output = DF;
+    else if (arg == "md")
+        output = MD;
+    else if (arg == "fw")
+        output = FW;
+    else
+        throw runtime_error(ERR_BAD_REQ);
 }
 
 Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
@@ -329,37 +326,29 @@ Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
     Arg_get_players args;
     string team_name = handle_team_name(arg[2]);
     args.team = find_by_name(teams, team_name);
+
     if (arg.size() == 5)
         args.sort_by_rank = true;
-    make_roles_vec(arg[3], args);
+    
     return args;
 }
 
 void Data_base::get_players(vector<string> &arg)
 {
-    // check_get_players_arg(arg);
+    check_get_players_arg(arg);
     Arg_get_players args = make_arg_get_players(arg);
     if (args.team == nullptr)
         cout << "| " << ERR_NOT_FOUND << endl;
-
     else
     {
-        vector<vector<shared_ptr<Player>>> players = args.team->find_players(args.Iroles, args.sort_by_rank);
-        
-        for (int i = 0; i < players.size(); i++)
+        vector<shared_ptr<Player>> players = args.team->find_players_by_role(args.Iroles, args.sort_by_rank);
+
+        for (int j = 0; j < players.size(); j++)
         {
-            if (players[i][0] == nullptr)
-            {
-                cout << "| " << ERR_BAD_REQ << endl;
-                continue;
-            }
-            for (int j = 0; j < players[i].size(); j++)
-            {
-                cout << j << ". "
-                     << "name: " << players[i][j]->get_name() << " | "
-                     << "role: " << args.Sroles[i] << " | "
-                     << "score: " << players[i][j]->get_week_info().score << endl;
-            }
+            cout << j + 1 << ". "
+                 << "name: " << players[j]->get_name() << " | "
+                 << "role: " << args.Sroles << " | "
+                 << "score: " << players[j]->get_week_info().score << endl;
         }
     }
 }
@@ -379,7 +368,7 @@ void Data_base::check_get_players_arg(vector<string> &arg)
 void Data_base::update_current_week()
 {
     current.week++;
-    this->weeks[current.week + 1]->update();
+    this->weeks[current.week - 1]->update();
 }
 
 Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)
