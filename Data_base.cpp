@@ -5,6 +5,9 @@ void Data_base::init_command_map()
     Command_map temp;
 
     // ADMIN
+    temp[pair<int, int>(POST, OPEN_TRANSFER_WINDOW)] = &Data_base::open_transfer_window;
+    temp[pair<int, int>(POST, CLOSE_TRANSFER_WINDOW)] = &Data_base::close_transfer_window;
+    temp[pair<int, int>(POST, PASS_WEEK)] = &Data_base::pass_week;
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -445,6 +448,27 @@ Arg_weeknum Data_base::make_arg_weeknum(vector<string> &arg)
     }
 
     return new_arg;
+}
+
+void Data_base::close_transfer_window(vector<string> &arg)
+{
+    this->transfer_window = false;
+    cout << "OK" << endl;
+}
+
+void Data_base::open_transfer_window(vector<string> &arg)
+{
+    this->transfer_window = true;
+    cout << "OK" << endl;
+}
+
+void Data_base::pass_week(vector<string> &arg)
+{
+    update_current_week();
+
+    /*update users team and stuff maybe*/
+
+    cout << "OK" << endl;
 }
 
 // Public

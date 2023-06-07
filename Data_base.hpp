@@ -116,6 +116,8 @@ private:
     vector<shared_ptr<User>> users;
     shared_ptr<Admin> admin;
 
+    bool transfer_window = true;
+
     vector<Command_map> command_maps;
     void init_command_map();
     bool call_command_func(pair<int, int> &key, Command_map &command_map, vector<string> &arg);
@@ -150,6 +152,12 @@ private:
     void matches_result_league(vector<string> &arg);
     void check_matches_result_league_arg(vector<string> &arg);
     Arg_weeknum make_arg_weeknum(vector<string> &arg);
+
+
+    // Admin
+    void close_transfer_window(vector<string> &arg);
+    void open_transfer_window(vector<string> &arg);
+    void pass_week(vector<string> &arg);
 
 
     // Accessories
