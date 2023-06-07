@@ -162,11 +162,9 @@ public:
         vector<string> args;
 
         args.push_back("?");
-        args.push_back("team");
-        args.push_back("AFC_Bournemouth");
-        args.push_back("df");
-        args.push_back("ranks");
-        get_players(args);
+        args.push_back("week_num");
+        args.push_back("1");
+        matches_result_league(args);
     }
 
     void update_current_week();

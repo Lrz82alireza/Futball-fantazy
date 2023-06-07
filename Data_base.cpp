@@ -267,7 +267,7 @@ void Data_base::users_ranking(vector<string> &arg)
              return false;
          });
 
-    for (vector<std::pair<std::__cxx11::basic_string<char>, float> >::size_type i = 0; i < ranks.size(); i++)
+    for (vector<std::pair<std::__cxx11::basic_string<char>, float>>::size_type i = 0; i < ranks.size(); i++)
     {
         cout << i + 1 << ". "
              << "team_name: " << ranks[i].first << " | point: " << ranks[i].second << endl;
@@ -335,7 +335,7 @@ Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
 
     new_arg.name = handle_team_name(arg[ARG_T_NAME_IN_PLAYERS]);
 
-    for (vector<std::__cxx11::basic_string<char> >::size_type i = ARG_PLAYERS_NUM; i < arg.size(); i++)
+    for (vector<std::__cxx11::basic_string<char>>::size_type i = ARG_PLAYERS_NUM; i < arg.size(); i++)
     {
         if (arg[i] == "gk")
             new_arg.role = GK;
@@ -377,7 +377,7 @@ void Data_base::get_players(vector<string> &arg)
              { return p1->get_avg_scores() > p2->get_avg_scores(); });
     }
 
-    for (vector<std::shared_ptr<Player> >::size_type i = 0; i < players_.size(); i++)
+    for (vector<std::shared_ptr<Player>>::size_type i = 0; i < players_.size(); i++)
     {
         cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
     }
@@ -407,8 +407,7 @@ void Data_base::matches_result_league(vector<string> &arg)
 
     for (auto i : matches)
     {
-        cout << i->teams_match.first->team->get_name() << " " << i->result.first << " | " <<
-        i->teams_match.second->team->get_name() << " " << i->result.second << endl;
+        cout << i->teams_match.first->team->get_name() << " " << i->result.first << " | " << i->teams_match.second->team->get_name() << " " << i->result.second << endl;
     }
 }
 
@@ -426,7 +425,7 @@ Arg_weeknum Data_base::make_arg_weeknum(vector<string> &arg)
 {
     Arg_weeknum new_arg;
 
-    for (vector<std::__cxx11::basic_string<char> >::size_type i = ARG_WEEKNUM_SIZE; i < arg.size(); i++)
+    for (vector<std::__cxx11::basic_string<char>>::size_type i = ARG_WEEKNUM_SIZE; i < arg.size(); i++)
     {
         if (arg[i] == "week_num")
             continue;
@@ -435,7 +434,7 @@ Arg_weeknum Data_base::make_arg_weeknum(vector<string> &arg)
             new_arg.weeknum = stoi(arg[i]) - 1;
 
             if (new_arg.weeknum > current.week ||
-                new_arg.weeknum < 1)
+                new_arg.weeknum < 0)
                 throw runtime_error(ERR_BAD_REQ);
             new_arg.has_weeknum = true;
         }
