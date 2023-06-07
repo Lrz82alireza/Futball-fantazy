@@ -33,6 +33,7 @@ public:
     };
     
     Team_state get_state();
+    Week_info get_week_info(int weeknum) { return weeks_info[weeknum]; }
 
     string get_name() { return this->name; }
     vector<shared_ptr<Player>> get_players(int role = 0);

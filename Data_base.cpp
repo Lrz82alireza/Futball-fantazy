@@ -32,6 +32,7 @@ void Data_base::init_command_map()
     temp[pair<int, int>(GET, USERS_RANKING)] = &Data_base::users_ranking;
     temp[pair<int, int>(GET, LEAGUE_STANDINGS)] = &Data_base::league_standings;
     temp[pair<int, int>(GET, PLAYERS)] = &Data_base::get_players;
+    temp[pair<int, int>(GET, MATCHES_RESULT_LEAGUE)] = &Data_base::matches_result_league;
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -243,6 +244,11 @@ void Data_base::check_logout_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
 }
 
+void Data_base::team_of_the_week()
+{
+    // code
+}
+
 void Data_base::users_ranking(vector<string> &arg)
 {
     vector<User::RANK> ranks;
@@ -330,15 +336,15 @@ Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
     for (int i = ARG_PLAYERS_NUM; i < arg.size(); i++)
     {
         if (arg[i] == "gk")
-        new_arg.role = GK;
+            new_arg.role = GK;
         else if (arg[i] == "df")
-        new_arg.role = DF;
+            new_arg.role = DF;
         else if (arg[i] == "md")
-        new_arg.role = MD;
+            new_arg.role = MD;
         else if (arg[i] == "fw")
-        new_arg.role = FW;
+            new_arg.role = FW;
         else if (arg[i] == "ranks")
-        new_arg.sort_by_rank = true;
+            new_arg.sort_by_rank = true;
         else
             throw runtime_error(ERR_BAD_REQ);
     }
@@ -351,7 +357,7 @@ void Data_base::get_players(vector<string> &arg)
     check_get_players_arg(arg);
 
     Arg_get_players arg_ = make_arg_get_players(arg);
-    
+
     vector<shared_ptr<Player>> players_;
 
     for (auto i : this->teams)
@@ -366,16 +372,12 @@ void Data_base::get_players(vector<string> &arg)
     if (arg_.sort_by_rank)
     {
         sort(players_.begin(), players_.end(), [&](shared_ptr<Player> p1, shared_ptr<Player> p2)
-        {
-            return p1->get_avg_scores() > p2->get_avg_scores();
-        });
+             { return p1->get_avg_scores() > p2->get_avg_scores(); });
     }
 
     for (int i = 0; i < players_.size(); i++)
     {
-        cout << i + 1 << ". name: " << players_[i]->get_name() <<
-        " | role: " << role_to_s(players_[i]->get_role()) <<
-        " | score: " << players_[i]->get_avg_scores() << endl;
+        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
     }
 }
 
@@ -389,12 +391,67 @@ void Data_base::check_get_players_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
 }
 
+void Data_base::matches_result_league(vector<string> &arg)
+{
+    check_matches_result_league_arg(arg);
+
+    Arg_weeknum arg_;
+    arg_ = make_arg_weeknum(arg);
+
+    if (!arg_.has_weeknum)
+        arg_.weeknum = current.week;
+
+    vector<shared_ptr<Match>> matches = this->weeks[arg_.weeknum]->get_matches();
+
+    for (auto i : matches)
+    {
+        cout << i->teams_match.first->team->get_name() << " " << i->result.first << " | " <<
+        i->teams_match.second->team->get_name() << " " << i->result.second << endl;
+    }
+}
+
+void Data_base::check_matches_result_league_arg(vector<string> &arg)
+{
+    if (arg.size() < ARG_WEEKNUM_SIZE)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[0] != ARG_CHAR)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_WEEKNUM] != "week_num")
+        throw runtime_error(ERR_BAD_REQ);
+}
+
+Arg_weeknum Data_base::make_arg_weeknum(vector<string> &arg)
+{
+    Arg_weeknum new_arg;
+
+    for (int i = ARG_WEEKNUM_SIZE; i < arg.size(); i++)
+    {
+        if (arg[i] == "week_num")
+            continue;
+        try
+        {
+            new_arg.weeknum = stoi(arg[i]) - 1;
+
+            if (new_arg.weeknum > current.week ||
+                new_arg.weeknum < 1)
+                throw runtime_error(ERR_BAD_REQ);
+            new_arg.has_weeknum = true;
+        }
+        catch (const std::exception &e)
+        {
+            throw runtime_error(ERR_BAD_REQ);
+        }
+    }
+
+    return new_arg;
+}
+
 // Public
 
 void Data_base::update_current_week()
 {
     current.week++;
-    this->weeks[current.week - 1]->update();
+    this->weeks[current.week]->update();
 }
 
 Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)
@@ -413,4 +470,5 @@ Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_
     this->admin = make_shared<Admin>(ADMIN_NAME, ADMIN_PASS);
 
     init_command_map();
+    update_current_week();
 }

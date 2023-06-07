@@ -66,12 +66,26 @@ enum
     ARG_PLAYERS_NUM = 3,
 };
 
+enum
+{
+    ARG_WEEKNUM = 1,
+    ARG_WEEKNUM_IN,
+    ARG_WEEKNUM_SIZE = 1,
+};
+
 struct Arg_get_players
 {
     string name;
     int role = 0;
     bool sort_by_rank = false;
 };
+
+struct Arg_weeknum
+{
+    bool has_weeknum = false;
+    int weeknum;
+};
+
 
 const string ARG_CHAR = "?";
 const string ERR_PERM = "Permission Denied";
@@ -89,7 +103,7 @@ typedef map<pair<int, int>, Command_func_ptr> Command_map;
 
 typedef struct CURRENT
 {
-    int week = 0;
+    int week = -1;
     int prem_state = DEFAULT;
     shared_ptr<Account> acc = nullptr;
 } Current;
@@ -123,6 +137,8 @@ private:
     void logout(vector<string> &arg);
     void check_logout_arg(vector<string> &arg);
 
+    void team_of_the_week();  // takmil shavad !!!
+
     void users_ranking(vector<string> &arg);
 
     void league_standings(vector<string> &arg);
@@ -130,6 +146,11 @@ private:
     void get_players(vector<string> &arg);
     Arg_get_players make_arg_get_players(vector<string> &arg);
     void check_get_players_arg(vector<string> &arg);
+
+    void matches_result_league(vector<string> &arg);
+    void check_matches_result_league_arg(vector<string> &arg);
+    Arg_weeknum make_arg_weeknum(vector<string> &arg);
+
 
     // Accessories
 
@@ -139,10 +160,6 @@ public:
     void show()
     {
         vector<string> args;
-
-        update_current_week();
-        update_current_week();
-        update_current_week();
 
         args.push_back("?");
         args.push_back("team");
