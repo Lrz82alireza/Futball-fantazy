@@ -13,6 +13,8 @@ float Player::get_avg_scores()
             avg += i.score;
         }
     }
+    if (counter == 0)
+        counter = 1;
     return avg / counter;
 }
 

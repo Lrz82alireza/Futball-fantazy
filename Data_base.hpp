@@ -68,9 +68,8 @@ enum
 
 struct Arg_get_players
 {
-    shared_ptr<Team> team;
-    int Iroles;
-    string Sroles;
+    string name;
+    int role = 0;
     bool sort_by_rank = false;
 };
 
@@ -148,7 +147,7 @@ public:
         args.push_back("?");
         args.push_back("team");
         args.push_back("AFC_Bournemouth");
-        // args.push_back("df");
+        args.push_back("df");
         args.push_back("ranks");
         get_players(args);
     }

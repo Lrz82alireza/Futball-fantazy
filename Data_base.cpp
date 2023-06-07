@@ -323,33 +323,59 @@ int stoi_role(string arg)
 
 Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
 {
-    Arg_get_players args;
-    string team_name = handle_team_name(arg[2]);
-    args.team = find_by_name(teams, team_name);
+    Arg_get_players new_arg;
 
-    if (arg.size() == 5)
-        args.sort_by_rank = true;
-    
-    return args;
+    new_arg.name = handle_team_name(arg[ARG_T_NAME_IN_PLAYERS]);
+
+    for (int i = ARG_PLAYERS_NUM; i < arg.size(); i++)
+    {
+        if (arg[i] == "gk")
+        new_arg.role = GK;
+        else if (arg[i] == "df")
+        new_arg.role = DF;
+        else if (arg[i] == "md")
+        new_arg.role = MD;
+        else if (arg[i] == "fw")
+        new_arg.role = FW;
+        else if (arg[i] == "ranks")
+        new_arg.sort_by_rank = true;
+        else
+            throw runtime_error(ERR_BAD_REQ);
+    }
+
+    return new_arg;
 }
 
 void Data_base::get_players(vector<string> &arg)
 {
     check_get_players_arg(arg);
-    Arg_get_players args = make_arg_get_players(arg);
-    if (args.team == nullptr)
-        cout << "| " << ERR_NOT_FOUND << endl;
-    else
-    {
-        vector<shared_ptr<Player>> players = args.team->find_players_by_role(args.Iroles, args.sort_by_rank);
 
-        for (int j = 0; j < players.size(); j++)
+    Arg_get_players arg_ = make_arg_get_players(arg);
+    
+    vector<shared_ptr<Player>> players_;
+
+    for (auto i : this->teams)
+    {
+        if (i->get_name() == arg_.name)
         {
-            cout << j + 1 << ". "
-                 << "name: " << players[j]->get_name() << " | "
-                 << "role: " << args.Sroles << " | "
-                 << "score: " << players[j]->get_week_info().score << endl;
+            players_ = i->get_players(arg_.role);
+            break;
         }
+    }
+
+    if (arg_.sort_by_rank)
+    {
+        sort(players_.begin(), players_.end(), [&](shared_ptr<Player> p1, shared_ptr<Player> p2)
+        {
+            return p1->get_avg_scores() > p2->get_avg_scores();
+        });
+    }
+
+    for (int i = 0; i < players_.size(); i++)
+    {
+        cout << i + 1 << ". name: " << players_[i]->get_name() <<
+        " | role: " << role_to_s(players_[i]->get_role()) <<
+        " | score: " << players_[i]->get_avg_scores() << endl;
     }
 }
 
@@ -359,7 +385,7 @@ void Data_base::check_get_players_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
     if (arg[0] != ARG_CHAR)
         throw runtime_error(ERR_BAD_REQ);
-    if (arg[ARG_T_NAME_PLAYERS] != "team_name")
+    if (arg[ARG_T_NAME_PLAYERS] != "team")
         throw runtime_error(ERR_BAD_REQ);
 }
 
