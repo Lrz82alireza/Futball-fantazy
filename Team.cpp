@@ -76,7 +76,7 @@ vector<shared_ptr<Player>> Team::find_players_by_role(int role, bool rank)
 {
     vector<shared_ptr<Player>> target_players;
 
-    for (int i = 0; i < players.size(); i++)
+    for (vector<std::shared_ptr<Player> >::size_type i = 0; i < players.size(); i++)
         if (players[i]->get_role() == role)
             target_players.push_back(players[i]);
     if (rank)

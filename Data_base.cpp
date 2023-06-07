@@ -267,7 +267,7 @@ void Data_base::users_ranking(vector<string> &arg)
              return false;
          });
 
-    for (int i = 0; i < ranks.size(); i++)
+    for (vector<std::pair<std::__cxx11::basic_string<char>, float> >::size_type i = 0; i < ranks.size(); i++)
     {
         cout << i + 1 << ". "
              << "team_name: " << ranks[i].first << " | point: " << ranks[i].second << endl;
@@ -297,7 +297,7 @@ void Data_base::league_standings(vector<string> &arg)
         }
         return false; });
 
-    for (int i = 0; i < teams_state.size(); i++)
+    for (vector<Team::Team_state>::size_type i = 0; i < teams_state.size(); i++)
     {
         cout << i + 1 << ". " << teams_state[i].name << ": score: " << teams_state[i].score << " | GF: " << teams_state[i].goals_for << " | GA: " << teams_state[i].goals_against << endl;
     }
@@ -305,7 +305,7 @@ void Data_base::league_standings(vector<string> &arg)
 
 string handle_team_name(string team_name)
 {
-    for (int i = 0; i < team_name.size(); i++)
+    for (std::__cxx11::basic_string<char>::size_type i = 0; i < team_name.size(); i++)
         if (team_name[i] == '_')
             team_name[i] = ' ';
     return team_name;
@@ -325,6 +325,8 @@ int stoi_role(string arg)
         output = FW;
     else
         throw runtime_error(ERR_BAD_REQ);
+
+    return output;
 }
 
 Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
@@ -333,7 +335,7 @@ Arg_get_players Data_base::make_arg_get_players(vector<string> &arg)
 
     new_arg.name = handle_team_name(arg[ARG_T_NAME_IN_PLAYERS]);
 
-    for (int i = ARG_PLAYERS_NUM; i < arg.size(); i++)
+    for (vector<std::__cxx11::basic_string<char> >::size_type i = ARG_PLAYERS_NUM; i < arg.size(); i++)
     {
         if (arg[i] == "gk")
             new_arg.role = GK;
@@ -375,7 +377,7 @@ void Data_base::get_players(vector<string> &arg)
              { return p1->get_avg_scores() > p2->get_avg_scores(); });
     }
 
-    for (int i = 0; i < players_.size(); i++)
+    for (vector<std::shared_ptr<Player> >::size_type i = 0; i < players_.size(); i++)
     {
         cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
     }
@@ -424,7 +426,7 @@ Arg_weeknum Data_base::make_arg_weeknum(vector<string> &arg)
 {
     Arg_weeknum new_arg;
 
-    for (int i = ARG_WEEKNUM_SIZE; i < arg.size(); i++)
+    for (vector<std::__cxx11::basic_string<char> >::size_type i = ARG_WEEKNUM_SIZE; i < arg.size(); i++)
     {
         if (arg[i] == "week_num")
             continue;
