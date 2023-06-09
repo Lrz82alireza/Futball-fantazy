@@ -24,6 +24,8 @@ public:
     void sell_player(string &player_name);
     map<string, string> get_squad();
 
+    shared_ptr<Team> get_team() {return team;};
+
     User(string &username_, string &pass);
 
     RANK rank();
