@@ -36,6 +36,7 @@ void Data_base::init_command_map()
     temp[pair<int, int>(GET, LEAGUE_STANDINGS)] = &Data_base::league_standings;
     temp[pair<int, int>(GET, PLAYERS)] = &Data_base::get_players;
     temp[pair<int, int>(GET, MATCHES_RESULT_LEAGUE)] = &Data_base::matches_result_league;
+    temp[pair<int, int>(GET, TEAM_OF_THE_WEEK)] = &Data_base::team_of_the_week;
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -247,9 +248,25 @@ void Data_base::check_logout_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
 }
 
-void Data_base::team_of_the_week()
+void Data_base::team_of_the_week(vector<string> &arg)
 {
-    // code
+    Arg_weeknum arg_ = make_arg_weeknum(arg);
+
+    if (!arg_.has_weeknum)
+        arg_.weeknum = current.week;
+
+    map<string, shared_ptr<Player_score>> team_ = weeks[arg_.weeknum]->team_of_the_week();
+
+    cout << "GoalKeeper: " << team_["GK"]->player->get_name() << " | score: " <<
+    team_["GK"]->score << endl <<
+    "Defender 1: " << team_["DF1"]->player->get_name() << " | score: " <<
+    team_["DF1"]->score << endl <<
+    "Defender 2: " << team_["DF2"]->player->get_name() << " | score: " <<
+    team_["DF2"]->score << endl <<
+    "Midfielder: " << team_["MD"]->player->get_name() << " | score: " <<
+    team_["MD"]->score << endl <<
+    "Forward: " << team_["FW"]->player->get_name() << " | score: " <<
+    team_["FW"]->score << endl;
 }
 
 void Data_base::users_ranking(vector<string> &arg)

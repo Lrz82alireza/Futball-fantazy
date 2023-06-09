@@ -86,7 +86,6 @@ struct Arg_weeknum
     int weeknum;
 };
 
-
 const string ARG_CHAR = "?";
 const string ERR_PERM = "Permission Denied";
 const string ERR_BAD_REQ = "Bad Request";
@@ -139,7 +138,7 @@ private:
     void logout(vector<string> &arg);
     void check_logout_arg(vector<string> &arg);
 
-    void team_of_the_week();  // takmil shavad !!!
+    void team_of_the_week(vector<string> &arg);
 
     void users_ranking(vector<string> &arg);
 
@@ -172,7 +171,7 @@ public:
         args.push_back("?");
         args.push_back("week_num");
         args.push_back("1");
-        matches_result_league(args);
+        team_of_the_week(args);
     }
 
     void update_current_week();
