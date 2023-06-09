@@ -13,6 +13,8 @@ void Data_base::init_command_map()
     temp.clear();
 
     // USER
+    temp[pair<int, int>(POST, SELL_PLAYER)] = &Data_base::sell_player;
+
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -122,6 +124,41 @@ pair<int, int> Data_base::make_command_code(pair<string, string> &command)
         throw runtime_error("Not Found");
 
     return command_code;
+}
+
+void Data_base::sell_player(vector<string> &arg)
+{
+    if (!transfer_window)
+        throw runtime_error(ERR_PERM);
+    check_trade_player_arg(arg);
+
+    string player_name = make_trade_player_name(arg);
+
+    this->users[distance(users.begin(), find(users.begin(), users.end(), current.acc))]->sell_player(player_name);
+    cout << "OK" << endl;
+}
+
+void Data_base::check_trade_player_arg(vector<string> &arg)
+{
+    if (arg.size() <= 3)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[0] != ARG_CHAR)
+        throw runtime_error(ERR_BAD_REQ);
+    if (arg[1] != "name")
+        throw runtime_error(ERR_BAD_REQ);
+}
+
+string Data_base::make_trade_player_name(vector<string> &arg)
+{
+    string name = "";
+
+    for (vector<string>::size_type i = 2; i < arg.size(); i++)
+    {
+        name += arg[i];
+        if (i != arg.size())
+            name += " ";
+    } 
+    return name;
 }
 
 void Data_base::manage_command(pair<string, string> &command, vector<string> &arg)

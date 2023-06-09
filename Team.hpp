@@ -43,6 +43,8 @@ public:
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
 
     shared_ptr<Player> find_player(string player_name);
+    void erase_player(shared_ptr<Player> &player);
+
 
     Team(vector<vector<string>> input);
     Team(string name_);
@@ -54,6 +56,4 @@ private:
     vector<shared_ptr<Player>> players;
 
     vector<Week_info> weeks_info;
-    
-    vector<shared_ptr<Player>> find_players_by_role(int role , bool rank);
 };

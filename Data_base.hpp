@@ -86,6 +86,8 @@ struct Arg_weeknum
     int weeknum;
 };
 
+
+
 const string ARG_CHAR = "?";
 const string ERR_PERM = "Permission Denied";
 const string ERR_BAD_REQ = "Bad Request";
@@ -126,6 +128,10 @@ private:
     pair<int, int> make_command_code(pair<string, string> &command);
 
     // Commands
+    void sell_player(vector<string> &arg);
+    void check_trade_player_arg(vector<string> &arg);
+    string make_trade_player_name(vector<string> &arg);
+
     void signup(vector<string> &arg);
     void check_signup_arg(vector<string> &arg);
 

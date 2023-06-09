@@ -44,6 +44,11 @@ shared_ptr<Player> Team::find_player(string player_name)
     return find_by_name<Player>(this->players, player_name);
 }
 
+void Team::erase_player(shared_ptr<Player> &player)
+{
+    players.erase(remove(players.begin(), players.end(), player), players.end());
+}
+
 Team::Team(vector<vector<string>> input)
 {
     this->name = input[0][0];
@@ -70,20 +75,4 @@ bool compare_by_score(const shared_ptr<Player> &player1, const shared_ptr<Player
 void sort_players_by_score(vector<shared_ptr<Player>> &players)
 {
     sort(players.begin(), players.end(), compare_by_score);
-}
-
-vector<shared_ptr<Player>> Team::find_players_by_role(int role, bool rank)
-{
-    vector<shared_ptr<Player>> target_players;
-
-    for (vector<std::shared_ptr<Player> >::size_type i = 0; i < players.size(); i++)
-        if (players[i]->get_role() == role)
-            target_players.push_back(players[i]);
-    if (rank)
-        sort_players_by_score(target_players);
-
-    if (target_players.size() == 0)
-        target_players.push_back(nullptr);
-
-    return target_players;
 }
