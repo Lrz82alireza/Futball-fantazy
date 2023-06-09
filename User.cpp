@@ -16,7 +16,7 @@ void User::buy_player(shared_ptr<Player> &player)
     team->add_player(player);
 }
 
-map<string, shared_ptr<Player>> User::get_squad()
+map<string, string> User::get_squad()
 {
     return team->get_players_of_team();
 }

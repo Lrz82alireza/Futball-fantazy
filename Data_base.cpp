@@ -186,8 +186,14 @@ void Data_base::get_squad(vector<string> &arg)
     if (user_ == nullptr)
         throw runtime_error(ERR_NOT_FOUND);
     
-    map<string, shared_ptr<Player>> squad = user_->get_squad();
-    ///////////////////
+    map<string, string> squad = user_->get_squad();
+    cout << "fantasy_team: " << user_->get_name() << endl
+    << "Goalkeeper: " <<  squad["GK"] << endl
+    << "Defender1: " << squad["DF1"] << endl
+    << "Defender2: " << squad["DF2"] << endl
+    << "Midfielder: " << squad["MD"] << endl
+    << "Striker: " << squad["FW"] << endl
+    << "Total Points: " << user_->get_team()->get_scores_sum() << endl;
 }
 
 string Data_base::make_get_squad_arg(vector<string> &arg)

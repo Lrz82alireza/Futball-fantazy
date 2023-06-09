@@ -108,18 +108,20 @@ void sort_players_alphabetically(vector<shared_ptr<Player>> &v)
     sort(v.begin(), v.end(), compair_alphabetically);
 }
 
-map<string, shared_ptr<Player>> Team::get_players_of_team()
+map<string, string> Team::get_players_of_team()
 {
-    map<string, shared_ptr<Player>> tmp;
+    map<string, string> tmp;
     if (players.size() < TEAM_SIZE)
         throw runtime_error(EMPTY_ERR);
-
-    tmp["GK"] = get_players(GK).back();
-    vector<shared_ptr<Player>> df = get_players(DF);
-    sort_players_alphabetically(df);
-    tmp["DF1"] = df.front();
-    tmp["DF2"] = df.back();
-    tmp["MD"] = get_players(MD).back();
-    tmp["FW"] = get_players(FW).back();
-    return tmp;
+    else
+    {
+        tmp["GK"] = get_players(GK).back()->get_name();
+        vector <shared_ptr<Player>> df = get_players(DF);
+        sort_players_alphabetically(df);
+        tmp["DF1"] = df.front()->get_name();
+        tmp["DF2"] = df.back()->get_name();
+        tmp["MD"] = get_players(MD).back()->get_name();
+        tmp["FW"] = get_players(FW).back()->get_name();
+        return tmp;
+    }
 }

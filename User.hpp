@@ -21,7 +21,9 @@ public:
     void sell_player(string &player_name);
     void buy_player(shared_ptr<Player> &player);
 
-    map<string, shared_ptr<Player>> get_squad();
+    map<string, string> get_squad();
+
+    shared_ptr<Team> get_team() {return team;};
 
     User(string &username_, string &pass);
 

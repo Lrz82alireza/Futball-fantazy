@@ -53,7 +53,7 @@ public:
     Team(vector<vector<string>> input);
     Team(string name_);
 
-    map<string, shared_ptr<Player>> get_players_of_team();
+    map<string, string> get_players_of_team();
 
 private:
     string name;
