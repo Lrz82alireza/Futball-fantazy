@@ -1,0 +1,121 @@
+Permission Denied
+Permission Denied
+Bad Request
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+OK
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+OK
+Bad Request
+Permission Denied
+OK
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Bad Request
+Bad Request
+Bad Request
+GoalKeeper: A. Lonergan | score: 9.8
+Defender 1: Junior Firpo | score: 9.9
+Defender 2: Lyanco | score: 9.9
+Midfielder: Conor Gallagher | score: 9.9
+Forward: Harvey Barnes | score: 9.9
+GoalKeeper: A. Lonergan | score: 9.8
+Defender 1: Junior Firpo | score: 9.9
+Defender 2: Lyanco | score: 9.9
+Midfielder: Conor Gallagher | score: 9.9
+Forward: Harvey Barnes | score: 9.9
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+1. Aston Villa: score: 3 | GF: 5 | GA: 0
+2. Man. City: score: 3 | GF: 4 | GA: 0
+3. Brighton FC: score: 3 | GF: 5 | GA: 2
+4. Leeds United: score: 3 | GF: 4 | GA: 2
+5. Liverpool FC: score: 3 | GF: 5 | GA: 3
+6. Manchester United: score: 3 | GF: 5 | GA: 3
+7. Southampton FC: score: 3 | GF: 2 | GA: 1
+8. AFC Bournemouth: score: 1 | GF: 1 | GA: 1
+9. Arsenal FC: score: 1 | GF: 0 | GA: 0
+10. Chelsea FC: score: 1 | GF: 2 | GA: 2
+11. Newcastle United: score: 1 | GF: 2 | GA: 2
+12. West Ham United: score: 1 | GF: 0 | GA: 0
+13. Wolves: score: 1 | GF: 1 | GA: 1
+14. Brentford FC: score: 0 | GF: 1 | GA: 2
+15. Crystal Palace: score: 0 | GF: 3 | GA: 5
+16. Fulham FC: score: 0 | GF: 3 | GA: 5
+17. Leicester City: score: 0 | GF: 2 | GA: 4
+18. Nottingham Forest: score: 0 | GF: 2 | GA: 5
+19. Everton FC: score: 0 | GF: 0 | GA: 4
+20. Tottenham Hotspur: score: 0 | GF: 0 | GA: 5
+1. team_name: taham | point: 0
+Not Found
+AFC Bournemouth 1 | Wolves 1
+Arsenal FC 0 | West Ham United 0
+Aston Villa 5 | Tottenham Hotspur 0
+Brentford FC 1 | Southampton FC 2
+Brighton FC 5 | Nottingham Forest 2
+Chelsea FC 2 | Newcastle United 2
+Crystal Palace 3 | Manchester United 5
+Everton FC 0 | Man. City 4
+Fulham FC 3 | Liverpool FC 5
+Leeds United 4 | Leicester City 2
+Bad Request
+Bad Request
+Not Found
+Bad Request
+Not Found
+Not Found
+OK
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+Permission Denied
+1. team_name: taham | point: 0
+Permission Denied

@@ -1,0 +1,85 @@
+POST register_admin ? username admin password 12345
+POST register_admin ? username admi password 123456
+POST register_admin ? username admin password
+POST register_admin ? username admin passwor 123456
+POST register_admin ? usernam admin password 123456
+POST register_admin ? username admin password 123456
+POST register_admin ? username admin password 123456
+POST logout
+POST signup ? team_name taham password 
+POST signup ? team_name taham passwor 123
+POST signup ? team_nam taham password 123
+POST signup ? team_name taham
+POST signup ? team_name password 123
+POST signup ? 
+POST signup ? team_name taham password 123
+POST signup ? team_name taham password 123
+POST logout
+POST signup ? team_name taham password 123
+POST logout
+POST login ? team_name taham password 
+POST login ? team_name taham passwor 123
+POST login ? team_nam taham password 123
+POST login ? team_name taham
+POST login ? team_name password 123
+POST login ? 
+POST login ? team_name taham password 123
+POST login ? team_name taham password 123
+GET team_of_the_week ? week_num 10
+GET team_of_the_week ? week_num epjgk
+GET team_of_the_week ? week 1
+GET team_of_the_week ? week_num 1
+GET team_of_the_week ?
+GET players ? team_name AFC_Bournemouth
+GET players ? team_name AFC_Bournemouth gk
+GET players ? team_name AFC_Bournemouth rank
+GET players ? team_name AFC_Bournemouth gk rank
+GET players ? team_name AFC_Bournemouth rank gk
+GET players ? team_name AFC_Bournemouth g rank
+GET players ? team_name AFC_Bournemouth gk ank
+GET players ? team_name AFC_Bournemout gk rank
+GET players ? team_nam AFC_Bournemouth gk rank
+GET league_standings
+GET users_ranking
+GET users_rankin
+GET matches_result_league ? week_num 1
+GET matches_result_league ? week_num 2
+GET matches_result_league ? week_nu 1
+POST buy_player ? name D. Rlp
+POST buy_player ? nam D. Randolph
+POST buy_player ? name D. Sadi
+POST buy_player ? name D. Randolph
+POST logout
+POST register_admin ? username admin password 123456
+POST close_transfer_window
+POST logout
+POST login ? team_name taham password 123
+POST buy_player ? name L. Cook
+POST sell_player ? name D. Randolph
+POST logout
+POST register_admin ? username admin password 123456
+POST open_transfer_window
+POST logout
+POST login ? team_name taham password 123
+POST buy_player ? name L. Cook
+POST sell_player ? name L. Coo
+POST sell_player ? name Smith
+POST sell_player ? name L. Cook
+POST sell_player ? name D. Randolph
+POST buy_player ? name D. Randolph
+POST buy_player ? name L. Kelly
+POST buy_player ? name Jack Stacey
+POST buy_player ? name J. Stanislas
+POST buy_player ? name H. Traore
+POST buy_player ? name T. Cairney
+GET squad ? fantasy_team man
+GET squad ? fantasy_team taham
+GET squad ?
+POST pass_week
+POST logout
+POST register_admin ? username admin password 123456
+POST pass_week
+POST logout
+POST login ? team_name taham password 123
+GET users_ranking
+GET squad ?

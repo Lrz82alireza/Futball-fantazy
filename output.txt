@@ -1,0 +1,188 @@
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+OK
+Bad Request
+OK
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+OK
+Bad Request
+OK
+Bad Request
+Permission Denied
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+OK
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+team of the week:
+GoalKeeper: A. Areola | 0.0
+Defender 1: A. Bella-Kotchap | 0.0
+Defender 2: A. Cresswell | 0.0
+Midfielder: A. Doucoure | 0.0
+Forward: A. Ayew | 0.0
+list of players:
+1. name: A. Semenyo | role: fw | score: 0.0
+2. name: A. Smith | role: df | score: 0.0
+3. name: C. Mepham | role: df | score: 0.0
+4. name: C. Plain | role: gk | score: 0.0
+5. name: D. Brooks | role: fw | score: 0.0
+6. name: D. Ouattara | role: fw | score: 0.0
+7. name: D. Randolph | role: gk | score: 0.0
+8. name: D. Sadi | role: fw | score: 0.0
+9. name: Daniel Adu-Adjei | role: fw | score: 0.0
+10. name: Dominic Solanke | role: fw | score: 0.0
+11. name: E. Pollock | role: mf | score: 0.0
+12. name: H. Traore | role: mf | score: 0.0
+13. name: I. Zabarnyi | role: df | score: 0.0
+14. name: J. Anthony | role: fw | score: 0.0
+15. name: J. Lerma | role: mf | score: 0.0
+16. name: J. Stanislas | role: fw | score: 0.0
+17. name: J. Zemura | role: df | score: 0.0
+18. name: Jack Stacey | role: df | score: 0.0
+19. name: Jack Stephens | role: df | score: 0.0
+20. name: Joe Rothwell | role: mf | score: 0.0
+21. name: K. Moore | role: fw | score: 0.0
+22. name: L. Cook | role: mf | score: 0.0
+23. name: L. Kelly | role: df | score: 0.0
+24. name: M. Senesi | role: df | score: 0.0
+25. name: M. Tavernier | role: mf | score: 0.0
+26. name: M. Travers | role: gk | score: 0.0
+27. name: M. Vina | role: df | score: 0.0
+28. name: Michael Dacosta | role: fw | score: 0.0
+29. name: Neto | role: gk | score: 0.0
+30. name: P. Billing | role: mf | score: 0.0
+31. name: R. Christie | role: mf | score: 0.0
+32. name: R. Fredericks | role: df | score: 0.0
+list of players:
+1. name: C. Plain | role: gk | score: 0.0
+2. name: D. Randolph | role: gk | score: 0.0
+3. name: M. Travers | role: gk | score: 0.0
+4. name: Neto | role: gk | score: 0.0
+list of players:
+1. name: A. Semenyo | role: fw | score: 0.0
+2. name: A. Smith | role: df | score: 0.0
+3. name: C. Mepham | role: df | score: 0.0
+4. name: C. Plain | role: gk | score: 0.0
+5. name: D. Brooks | role: fw | score: 0.0
+6. name: D. Ouattara | role: fw | score: 0.0
+7. name: D. Randolph | role: gk | score: 0.0
+8. name: D. Sadi | role: fw | score: 0.0
+9. name: Daniel Adu-Adjei | role: fw | score: 0.0
+10. name: Dominic Solanke | role: fw | score: 0.0
+11. name: E. Pollock | role: mf | score: 0.0
+12. name: H. Traore | role: mf | score: 0.0
+13. name: I. Zabarnyi | role: df | score: 0.0
+14. name: J. Anthony | role: fw | score: 0.0
+15. name: J. Lerma | role: mf | score: 0.0
+16. name: J. Stanislas | role: fw | score: 0.0
+17. name: J. Zemura | role: df | score: 0.0
+18. name: Jack Stacey | role: df | score: 0.0
+19. name: Jack Stephens | role: df | score: 0.0
+20. name: Joe Rothwell | role: mf | score: 0.0
+21. name: K. Moore | role: fw | score: 0.0
+22. name: L. Cook | role: mf | score: 0.0
+23. name: L. Kelly | role: df | score: 0.0
+24. name: M. Senesi | role: df | score: 0.0
+25. name: M. Tavernier | role: mf | score: 0.0
+26. name: M. Travers | role: gk | score: 0.0
+27. name: M. Vina | role: df | score: 0.0
+28. name: Michael Dacosta | role: fw | score: 0.0
+29. name: Neto | role: gk | score: 0.0
+30. name: P. Billing | role: mf | score: 0.0
+31. name: R. Christie | role: mf | score: 0.0
+32. name: R. Fredericks | role: df | score: 0.0
+list of players:
+1. name: C. Plain | role: gk | score: 0.0
+2. name: D. Randolph | role: gk | score: 0.0
+3. name: M. Travers | role: gk | score: 0.0
+4. name: Neto | role: gk | score: 0.0
+Bad Request
+Bad Request
+Bad Request
+Not Found
+Bad Request
+league standings:
+1. AFC Bournemouth: score: 0.0 | GF: 0 | GA: 0
+2. Arsenal FC: score: 0.0 | GF: 0 | GA: 0
+3. Aston Villa: score: 0.0 | GF: 0 | GA: 0
+4. Brentford FC: score: 0.0 | GF: 0 | GA: 0
+5. Brighton FC: score: 0.0 | GF: 0 | GA: 0
+6. Chelsea FC: score: 0.0 | GF: 0 | GA: 0
+7. Crystal Palace: score: 0.0 | GF: 0 | GA: 0
+8. Everton FC: score: 0.0 | GF: 0 | GA: 0
+9. Fulham FC: score: 0.0 | GF: 0 | GA: 0
+10. Leeds United: score: 0.0 | GF: 0 | GA: 0
+11. Leicester City: score: 0.0 | GF: 0 | GA: 0
+12. Liverpool FC: score: 0.0 | GF: 0 | GA: 0
+13. Man. City: score: 0.0 | GF: 0 | GA: 0
+14. Manchester United: score: 0.0 | GF: 0 | GA: 0
+15. Newcastle United: score: 0.0 | GF: 0 | GA: 0
+16. Nottingham Forest: score: 0.0 | GF: 0 | GA: 0
+17. Southampton FC: score: 0.0 | GF: 0 | GA: 0
+18. Tottenham Hotspur: score: 0.0 | GF: 0 | GA: 0
+19. West Ham United: score: 0.0 | GF: 0 | GA: 0
+20. Wolves: score: 0.0 | GF: 0 | GA: 0
+Empty
+Bad Request
+Bad Request
+Bad Request
+Bad Request
+Not Found
+Bad Request
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+Permission Denied
+Permission Denied
+OK
+OK
+OK
+OK
+OK
+OK
+Not Found
+Not Found
+OK
+OK
+OK
+OK
+OK
+Bad Request
+OK
+Bad Request
+Not Found
+Empty
+Empty
+Permission Denied
+OK
+OK
+OK
+OK
+OK
+1. team_name: taham | point: 13.9
+fantasy_team: taham
+Goalkeeper: D. Randolph
+Defender1: L. Kelly
+Defender2: Jack Stacey
+Midfielder: H. Traore
+Striker: D. Sadi
+Total Points: 13.9
