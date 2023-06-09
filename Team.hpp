@@ -50,6 +50,8 @@ public:
     shared_ptr<Player> find_player(string player_name);
     void erase_player(shared_ptr<Player> &player);
 
+    void players_set_availability();
+
     Team(vector<vector<string>> input);
     Team(string name_);
 

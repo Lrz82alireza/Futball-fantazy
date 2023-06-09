@@ -165,6 +165,9 @@ private:
 
     // Accessories
     shared_ptr<Player> find_player(string &name);
+    void update_current_week();
+
+    void players_set_availability();
 
 public:
     void manage_command(pair<string, string> &command, vector<string> &arg);
@@ -179,7 +182,6 @@ public:
         team_of_the_week(args);
     }
 
-    void update_current_week();
 
     Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input);
 };

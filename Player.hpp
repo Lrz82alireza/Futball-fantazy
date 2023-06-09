@@ -29,9 +29,11 @@ public:
     string get_name() { return this->name; }
     int get_role() {return role;};
     Week_info get_week_info() {return weeks_info.back();}
-    void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
+    void new_week(Week_info &new_info);
     float get_avg_scores();
     bool is_available() { return available; }
+
+    void set_availability();
 
     Player(const int &role_, const string &name_);
 
@@ -39,6 +41,7 @@ private:
     string name;
     int role;
     bool available = true;
+    int counter_yellow_card = 0;
 
     vector<Week_info> weeks_info;
 };
