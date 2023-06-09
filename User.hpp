@@ -2,7 +2,9 @@
 
 #include "Account.hpp"
 #include "Team.hpp"
+
 #include <memory>
+#include <map>
 
 const int DEF_TRADE = 2;
 
@@ -20,6 +22,7 @@ public:
     typedef pair<string, float> RANK;
 
     void sell_player(string &player_name);
+    map<string, shared_ptr<Player>> get_squad();
 
     User(string &username_, string &pass);
 
