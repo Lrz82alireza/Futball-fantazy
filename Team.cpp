@@ -77,9 +77,9 @@ void sort_players_by_score(vector<shared_ptr<Player>> &players)
     sort(players.begin(), players.end(), compare_by_score);
 }
 
-bool compair_alphabetically(const string s1, const string s2)
+bool compair_alphabetically(const shared_ptr<Player> &p1, const shared_ptr<Player> &p2)
 {
-    return s1 < s2;
+    return p1->get_name() < p2->get_name();
 }
 
 void sort_players_alphabetically(vector<shared_ptr<Player>> &v)
