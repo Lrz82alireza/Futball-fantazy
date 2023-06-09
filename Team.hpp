@@ -43,6 +43,8 @@ public:
     vector<shared_ptr<Player>> get_players(int role = 0);
     float get_scores_sum();
 
+    float players_score_sum();
+
     void add_player(shared_ptr<Player> &player);
 
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }

@@ -33,6 +33,8 @@ public:
     float get_avg_scores();
     bool is_available() { return available; }
 
+    float scores_sum();
+
     void set_availability();
 
     Player(const int &role_, const string &name_);

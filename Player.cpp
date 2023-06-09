@@ -29,6 +29,16 @@ float Player::get_avg_scores()
     return avg / counter;
 }
 
+float Player::scores_sum()
+{
+    float sum = 0;
+    for (auto i : weeks_info)
+    {
+        sum += i.score;
+    }
+    return sum;
+}
+
 void Player::set_availability()
 {
     if (weeks_info.back().red_card)

@@ -41,6 +41,16 @@ float Team::get_scores_sum()
     return sum;
 }
 
+float Team::players_score_sum()
+{
+    float sum = 0;
+    for (auto i : players)
+    {
+        sum += i->scores_sum();
+    }
+    return sum;
+}
+
 void Team::add_player(shared_ptr<Player> &player)
 {
     if (find_player(player->get_name()) != nullptr)

@@ -31,5 +31,5 @@ User::User(string &username_, string &pass)
 
 pair<string, float> User::rank()
 {
-    return RANK(this->username, team->get_scores_sum());
+    return RANK(this->username, team->players_score_sum());
 }

@@ -17,7 +17,6 @@ void Data_base::init_command_map()
     temp[pair<int, int>(POST, SELL_PLAYER)] = &Data_base::sell_player;
     temp[pair<int, int>(POST, BUY_PLAYER)] = &Data_base::buy_player;
 
-
     this->command_maps.push_back(temp);
     temp.clear();
 
@@ -139,7 +138,7 @@ void Data_base::buy_player(vector<string> &arg)
     shared_ptr<Player> player = find_player(player_name);
     if (player == nullptr)
         throw runtime_error(ERR_NOT_FOUND);
-    
+
     this->users[distance(users.begin(), find(users.begin(), users.end(), current.acc))]->buy_player(player);
     cout << "OK" << endl;
 }
@@ -158,7 +157,7 @@ void Data_base::sell_player(vector<string> &arg)
 
 void Data_base::check_trade_player_arg(vector<string> &arg)
 {
-    if (arg.size() <= 3)
+    if (arg.size() < 3)
         throw runtime_error(ERR_BAD_REQ);
     if (arg[0] != ARG_CHAR)
         throw runtime_error(ERR_BAD_REQ);
@@ -173,9 +172,9 @@ string Data_base::make_trade_player_name(vector<string> &arg)
     for (vector<string>::size_type i = 2; i < arg.size(); i++)
     {
         name += arg[i];
-        if (i != arg.size())
+        if (i != arg.size() - 1)
             name += " ";
-    } 
+    }
     return name;
 }
 
@@ -183,24 +182,26 @@ void Data_base::get_squad(vector<string> &arg)
 {
     string user_name = make_get_squad_arg(arg);
 
-    shared_ptr<User> user_ = find_by_name<User>(users, user_name); 
+    shared_ptr<User> user_ = find_by_name<User>(users, user_name);
     if (user_ == nullptr)
         throw runtime_error(ERR_NOT_FOUND);
-    
+
     map<string, string> squad = user_->get_squad();
     cout << "fantasy_team: " << user_->get_name() << endl
-    << "Goalkeeper: " <<  squad["GK"] << endl
-    << "Defender1: " << squad["DF1"] << endl
-    << "Defender2: " << squad["DF2"] << endl
-    << "Midfielder: " << squad["MD"] << endl
-    << "Striker: " << squad["FW"] << endl
-    << "Total Points: " << user_->get_team()->get_scores_sum() << endl;
+         << "Goalkeeper: " << squad["GK"] << endl
+         << "Defender1: " << squad["DF1"] << endl
+         << "Defender2: " << squad["DF2"] << endl
+         << "Midfielder: " << squad["MD"] << endl
+         << "Striker: " << squad["FW"] << endl
+         << "Total Points: " << user_->get_team()->players_score_sum() << endl;
 }
 
 string Data_base::make_get_squad_arg(vector<string> &arg)
 {
     if (arg.size() != 3)
         return current.acc->get_name();
+    if (arg[1] != "fantasy_team")
+        throw runtime_error(ERR_BAD_REQ);
     return arg[2];
 }
 
@@ -229,18 +230,18 @@ void Data_base::manage_command(pair<string, string> &command, vector<string> &ar
         {
         case ADMIN:
             if (!call_command_func(command_code, this->command_maps[ADMIN], arg))
-                throw runtime_error(ERR_PERM);
+                throw runtime_error(ERR_BAD_REQ);
             break;
         case USER:
             if (!call_command_func(command_code, this->command_maps[USER], arg))
-                throw runtime_error(ERR_PERM);
+                throw runtime_error(ERR_BAD_REQ);
             break;
         }
     }
     else
     {
         if (!call_command_func(command_code, this->command_maps[NO_ACC], arg))
-            throw runtime_error(ERR_PERM);
+            throw runtime_error(ERR_BAD_REQ);
     }
 }
 
@@ -269,6 +270,8 @@ void Data_base::check_signup_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
     if (arg[ARG_PASS_REGISTER] != "password")
         throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_PASS_IN_REGISTER] == "")
+        throw runtime_error(ERR_BAD_REQ);
 
     if (find_by_name<User>(this->users, arg[ARG_T_NAME_IN_REGISTER]) != nullptr)
         throw runtime_error(ERR_BAD_REQ);
@@ -295,6 +298,8 @@ void Data_base::check_login_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
     if (arg[ARG_PASS_REGISTER] != "password")
         throw runtime_error(ERR_BAD_REQ);
+    if (arg[ARG_PASS_IN_REGISTER] == "")
+        throw runtime_error(ERR_BAD_REQ);
 
     shared_ptr<User> user_ = find_by_name<User>(this->users, arg[ARG_T_NAME_IN_REGISTER]);
     if (user_ == nullptr)
@@ -316,18 +321,18 @@ void Data_base::check_register_admin_arg(vector<string> &arg)
 {
     if (arg.size() < ARG_REGISTER_NUM)
         throw runtime_error(ERR_BAD_REQ);
-    if (this->current.acc == nullptr)
+    if (this->current.acc != nullptr)
         throw runtime_error(ERR_PERM);
     if (arg[0] != ARG_CHAR)
         throw runtime_error(ERR_BAD_REQ);
-    if (arg[ARG_T_NAME_REGISTER] != "team_name")
+    if (arg[ARG_T_NAME_REGISTER] != "username")
         throw runtime_error(ERR_BAD_REQ);
     if (arg[ARG_PASS_REGISTER] != "password")
         throw runtime_error(ERR_BAD_REQ);
 
     if (admin->get_name() != arg[ARG_T_NAME_IN_REGISTER])
         throw runtime_error(ERR_BAD_REQ);
-    if (admin->check_pass(arg[ARG_PASS_IN_REGISTER]))
+    if (!admin->check_pass(arg[ARG_PASS_IN_REGISTER]))
         throw runtime_error(ERR_BAD_REQ);
 }
 
@@ -348,23 +353,20 @@ void Data_base::check_logout_arg(vector<string> &arg)
 
 void Data_base::team_of_the_week(vector<string> &arg)
 {
+    if (current.week < 0)
+        throw runtime_error(ERR_BAD_REQ);
     Arg_weeknum arg_ = make_arg_weeknum(arg);
 
     if (!arg_.has_weeknum)
         arg_.weeknum = current.week;
 
     map<string, shared_ptr<Player_score>> team_ = weeks[arg_.weeknum]->team_of_the_week();
-
-    cout << "GoalKeeper: " << team_["GK"]->player->get_name() << " | score: " <<
-    team_["GK"]->score << endl <<
-    "Defender 1: " << team_["DF1"]->player->get_name() << " | score: " <<
-    team_["DF1"]->score << endl <<
-    "Defender 2: " << team_["DF2"]->player->get_name() << " | score: " <<
-    team_["DF2"]->score << endl <<
-    "Midfielder: " << team_["MD"]->player->get_name() << " | score: " <<
-    team_["MD"]->score << endl <<
-    "Forward: " << team_["FW"]->player->get_name() << " | score: " <<
-    team_["FW"]->score << endl;
+    cout << "team of the week:" << endl;
+    cout << "GoalKeeper: " << team_["GK"]->player->get_name() << " | score: " << team_["GK"]->score << endl
+         << "Defender 1: " << team_["DF1"]->player->get_name() << " | score: " << team_["DF1"]->score << endl
+         << "Defender 2: " << team_["DF2"]->player->get_name() << " | score: " << team_["DF2"]->score << endl
+         << "Midfielder: " << team_["MD"]->player->get_name() << " | score: " << team_["MD"]->score << endl
+         << "Forward: " << team_["FW"]->player->get_name() << " | score: " << team_["FW"]->score << endl;
 }
 
 void Data_base::users_ranking(vector<string> &arg)
@@ -415,6 +417,7 @@ void Data_base::league_standings(vector<string> &arg)
         }
         return false; });
 
+    cout << "league standings:" << endl;
     for (vector<Team::Team_state>::size_type i = 0; i < teams_state.size(); i++)
     {
         cout << i + 1 << ". " << teams_state[i].name << ": score: " << teams_state[i].score << " | GF: " << teams_state[i].goals_for << " | GA: " << teams_state[i].goals_against << endl;
@@ -498,10 +501,10 @@ void Data_base::get_players(vector<string> &arg)
              { return p1->get_avg_scores() > p2->get_avg_scores(); });
     }
 
+    cout << "list of players:" << endl;
     for (vector<std::shared_ptr<Player>>::size_type i = 0; i < players_.size(); i++)
     {
-        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " <<
-        role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
+        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
     }
 }
 
@@ -511,12 +514,14 @@ void Data_base::check_get_players_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
     if (arg[0] != ARG_CHAR)
         throw runtime_error(ERR_BAD_REQ);
-    if (arg[ARG_T_NAME_PLAYERS] != "team")
+    if (arg[ARG_T_NAME_PLAYERS] != "team_name")
         throw runtime_error(ERR_BAD_REQ);
 }
 
 void Data_base::matches_result_league(vector<string> &arg)
 {
+    if (current.week < 0)
+        throw runtime_error(ERR_BAD_REQ);
     check_matches_result_league_arg(arg);
 
     Arg_weeknum arg_;
