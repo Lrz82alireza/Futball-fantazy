@@ -11,6 +11,11 @@ void User::sell_player(string &player_name)
     team->erase_player(player);
 }
 
+map<string, string> User::get_squad()
+{
+    return team->get_players_of_team();
+}
+
 User::User(string &username_, string &pass)
     : Account(username_, pass)
 {

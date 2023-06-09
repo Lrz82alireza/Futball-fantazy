@@ -13,6 +13,7 @@ void Data_base::init_command_map()
     temp.clear();
 
     // USER
+    temp[pair<int, int>(GET, SQUAD)] = &Data_base::get_squad;
     temp[pair<int, int>(POST, SELL_PLAYER)] = &Data_base::sell_player;
 
 
@@ -161,14 +162,35 @@ string Data_base::make_trade_player_name(vector<string> &arg)
     return name;
 }
 
+void Data_base::get_squad(vector<string> &arg)
+{
+    string user_name = make_get_squad_arg(arg);
+
+    shared_ptr<User> user_ = find_by_name<User>(users, user_name); 
+    if (user_ == nullptr)
+        throw runtime_error(ERR_NOT_FOUND);
+    
+    map<string, string> squad = user_->get_squad();
+    /////
+}
+
+string Data_base::make_get_squad_arg(vector<string> &arg)
+{
+    if (arg.size() != 3)
+        return current.acc->get_name();
+    return arg[2];
+}
+
 void Data_base::manage_command(pair<string, string> &command, vector<string> &arg)
 {
     pair<int, int> command_code = make_command_code(command);
 
-    call_command_func(command_code, this->command_maps[DEFAULT], arg);
+    if (call_command_func(command_code, this->command_maps[DEFAULT], arg))
+        return;
     if (this->current.acc != nullptr)
     {
-        call_command_func(command_code, this->command_maps[IN_ACC], arg);
+        if (call_command_func(command_code, this->command_maps[IN_ACC], arg))
+            return;
         switch (this->current.prem_state)
         {
         case ADMIN:

@@ -77,14 +77,14 @@ void sort_players_by_score(vector<shared_ptr<Player>> &players)
     sort(players.begin(), players.end(), compare_by_score);
 }
 
-bool compair_alphabetically(const string s1 , const string s2)
+bool compair_alphabetically(const string s1, const string s2)
 {
     return s1 < s2;
 }
 
-void sort_players_alphabetically(vector<shared_ptr<Player>> & v)
+void sort_players_alphabetically(vector<shared_ptr<Player>> &v)
 {
-    sort(v.begin() , v.end() , compair_alphabetically);
+    sort(v.begin(), v.end(), compair_alphabetically);
 }
 
 map<string, string> Team::get_players_of_team()
