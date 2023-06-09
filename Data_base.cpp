@@ -15,6 +15,7 @@ void Data_base::init_command_map()
     // USER
     temp[pair<int, int>(GET, SQUAD)] = &Data_base::get_squad;
     temp[pair<int, int>(POST, SELL_PLAYER)] = &Data_base::sell_player;
+    temp[pair<int, int>(POST, BUY_PLAYER)] = &Data_base::buy_player;
 
 
     this->command_maps.push_back(temp);
@@ -127,6 +128,22 @@ pair<int, int> Data_base::make_command_code(pair<string, string> &command)
     return command_code;
 }
 
+void Data_base::buy_player(vector<string> &arg)
+{
+    if (!transfer_window)
+        throw runtime_error(ERR_PERM);
+    check_trade_player_arg(arg);
+
+    string player_name = make_trade_player_name(arg);
+
+    shared_ptr<Player> player = find_player(player_name);
+    if (player == nullptr)
+        throw runtime_error(ERR_NOT_FOUND);
+    
+    this->users[distance(users.begin(), find(users.begin(), users.end(), current.acc))]->buy_player(player);
+    cout << "OK" << endl;
+}
+
 void Data_base::sell_player(vector<string> &arg)
 {
     if (!transfer_window)
@@ -185,6 +202,17 @@ string Data_base::make_get_squad_arg(vector<string> &arg)
     if (arg.size() != 3)
         return current.acc->get_name();
     return arg[2];
+}
+
+shared_ptr<Player> Data_base::find_player(string &name)
+{
+    for (auto i : this->teams)
+    {
+        shared_ptr<Player> player = i->find_player(name);
+        if (player != nullptr)
+            return player;
+    }
+    return nullptr;
 }
 
 void Data_base::manage_command(pair<string, string> &command, vector<string> &arg)
@@ -546,20 +574,28 @@ void Data_base::open_transfer_window(vector<string> &arg)
 
 void Data_base::pass_week(vector<string> &arg)
 {
-    update_current_week();
+    players_set_availability();
 
-    /*update users team and stuff maybe*/
+    update_current_week();
 
     cout << "OK" << endl;
 }
-
-// Public
 
 void Data_base::update_current_week()
 {
     current.week++;
     this->weeks[current.week]->update();
 }
+
+void Data_base::players_set_availability()
+{
+    for (auto i : this->teams)
+    {
+        i->players_set_availability();
+    }
+}
+
+// Public
 
 Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)
 {

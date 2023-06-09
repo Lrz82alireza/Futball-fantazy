@@ -86,13 +86,6 @@ struct Arg_weeknum
     int weeknum;
 };
 
-
-
-const string ARG_CHAR = "?";
-const string ERR_PERM = "Permission Denied";
-const string ERR_BAD_REQ = "Bad Request";
-const string ERR_NOT_FOUND = "Not Found";
-
 const string ADMIN_NAME = "admin";
 const string ADMIN_PASS = "123456";
 
@@ -128,9 +121,11 @@ private:
     pair<int, int> make_command_code(pair<string, string> &command);
 
     // Commands
+    void buy_player(vector<string> &arg);
     void sell_player(vector<string> &arg);
     void check_trade_player_arg(vector<string> &arg);
     string make_trade_player_name(vector<string> &arg);
+
 
     void get_squad(vector<string> &arg);
     string make_get_squad_arg(vector<string> &arg);
@@ -169,6 +164,10 @@ private:
 
 
     // Accessories
+    shared_ptr<Player> find_player(string &name);
+    void update_current_week();
+
+    void players_set_availability();
 
 public:
     void manage_command(pair<string, string> &command, vector<string> &arg);
@@ -183,7 +182,6 @@ public:
         team_of_the_week(args);
     }
 
-    void update_current_week();
 
     Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input);
 };

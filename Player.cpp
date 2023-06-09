@@ -1,5 +1,16 @@
 #include "Player.hpp"
 
+void Player::new_week(Week_info &new_info)
+{
+    if (!this->available && counter_yellow_card == 3)
+        counter_yellow_card = 0;
+
+    if (new_info.yellow_card)
+        this->counter_yellow_card++;
+
+    weeks_info.push_back(new_info);
+}
+
 float Player::get_avg_scores()
 {
     float avg = 0.0;
@@ -16,6 +27,32 @@ float Player::get_avg_scores()
     if (counter == 0)
         counter = 1;
     return avg / counter;
+}
+
+void Player::set_availability()
+{
+    if (weeks_info.back().red_card)
+    {
+        this->available = false;
+        return;
+    }
+
+    for (int i = weeks_info.size() - 1; weeks_info.size() - 4 < i && i > 0; i--)
+    {
+        if (weeks_info[i].injured)
+        {
+            this->available = false;
+            return;
+        }
+    }
+
+    if (counter_yellow_card == 3)
+    {
+        this->available = false;
+        return;
+    }
+
+    this->available = true;
 }
 
 Player::Player(const int &role_, const string &name_)

@@ -10,6 +10,11 @@
 
 using namespace std;
 
+const string ARG_CHAR = "?";
+const string ERR_PERM = "Permission Denied";
+const string ERR_BAD_REQ = "Bad Request";
+const string ERR_NOT_FOUND = "Not Found";
+
 vector<string> seperate_words(const string line, string separate_char);
 
 template <typename T>

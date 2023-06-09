@@ -39,6 +39,27 @@ float Team::get_scores_sum()
     return sum;
 }
 
+void Team::add_player(shared_ptr<Player> &player)
+{
+    if (find_player(player->get_name()) != nullptr)
+        throw runtime_error(ERR_BAD_REQ);
+
+    vector<shared_ptr<Player>> players_ = this->get_players(player->get_role());
+
+    if (player->get_role() == DF)
+    {
+        if (players_.size() == 2)
+            throw runtime_error(ERR_BAD_REQ);
+    }
+    else if (players_.size() != 0)
+        throw runtime_error(ERR_BAD_REQ);
+
+    if (!player->is_available())
+        throw runtime_error(ERR_PLAYER_NOT_AVAILABLE);
+
+    this->players.push_back(player);
+}
+
 shared_ptr<Player> Team::find_player(string player_name)
 {
     return find_by_name<Player>(this->players, player_name);
@@ -47,6 +68,14 @@ shared_ptr<Player> Team::find_player(string player_name)
 void Team::erase_player(shared_ptr<Player> &player)
 {
     players.erase(remove(players.begin(), players.end(), player), players.end());
+}
+
+void Team::players_set_availability()
+{
+    for (auto i : this->players)
+    {
+        i->set_availability();
+    }
 }
 
 Team::Team(vector<vector<string>> input)
@@ -95,7 +124,7 @@ map<string, string> Team::get_players_of_team()
     else
     {
         tmp["GK"] = get_players(GK).back()->get_name();
-        vector <shared_ptr<Player>> df = get_players(DF);
+        vector<shared_ptr<Player>> df = get_players(DF);
         sort_players_alphabetically(df);
         tmp["DF1"] = df.front()->get_name();
         tmp["DF2"] = df.back()->get_name();

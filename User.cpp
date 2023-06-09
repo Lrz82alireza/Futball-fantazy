@@ -4,11 +4,16 @@ void User::sell_player(string &player_name)
 {
     shared_ptr<Player> player = team->find_player(player_name);
     if (player == nullptr)
-        throw runtime_error(ERR_NOT_FOUND_USER);
+        throw runtime_error(ERR_NOT_FOUND);
     if (!is_new && trade.second <= 0)
-        throw runtime_error(ERR_PERM_USER);
+        throw runtime_error(ERR_PERM);
 
     team->erase_player(player);
+}
+
+void User::buy_player(shared_ptr<Player> &player)
+{
+    team->add_player(player);
 }
 
 map<string, string> User::get_squad()
