@@ -23,7 +23,9 @@ vector<shared_ptr<Player>> Team::get_players(int role)
     for (auto i : players)
     {
         if (i->get_role() == role)
+        {
             players_.push_back(i);
+        }
     }
 
     return players_;

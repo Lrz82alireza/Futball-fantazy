@@ -501,9 +501,11 @@ void Data_base::get_players(vector<string> &arg)
              { return p1->get_avg_scores() > p2->get_avg_scores(); });
     }
 
+    cout << players_.back()->get_name() << endl;
     for (vector<std::shared_ptr<Player>>::size_type i = 0; i < players_.size(); i++)
     {
-        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
+        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " <<
+        role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
     }
 }
 
