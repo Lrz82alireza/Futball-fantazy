@@ -37,7 +37,7 @@ void Player::set_availability()
         return;
     }
 
-    for (int i = weeks_info.size() - 1; weeks_info.size() - 4 < i && i > 0; i--)
+    for (vector<Player::Week_info>::size_type i = weeks_info.size() - 1; weeks_info.size() - 4 < i && i > 0; i--)
     {
         if (weeks_info[i].injured)
         {

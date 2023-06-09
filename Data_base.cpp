@@ -253,6 +253,8 @@ void Data_base::signup(vector<string> &arg)
     this->users.push_back(make_shared<User>(arg[ARG_T_NAME_IN_REGISTER], arg[ARG_PASS_IN_REGISTER]));
     this->current.acc = users.back();
     this->current.prem_state = USER;
+
+    cout << "OK" << endl;
 }
 
 void Data_base::check_signup_arg(vector<string> &arg)
@@ -278,13 +280,14 @@ void Data_base::login(vector<string> &arg)
 
     this->current.prem_state = USER;
     this->current.acc = find_by_name<User>(this->users, arg[ARG_T_NAME_IN_REGISTER]);
+    cout << "OK" << endl;
 }
 
 void Data_base::check_login_arg(vector<string> &arg)
 {
     if (arg.size() < ARG_REGISTER_NUM)
         throw runtime_error(ERR_BAD_REQ);
-    if (this->current.acc == nullptr)
+    if (this->current.acc != nullptr)
         throw runtime_error(ERR_PERM);
     if (arg[0] != ARG_CHAR)
         throw runtime_error(ERR_BAD_REQ);
@@ -296,8 +299,11 @@ void Data_base::check_login_arg(vector<string> &arg)
     shared_ptr<User> user_ = find_by_name<User>(this->users, arg[ARG_T_NAME_IN_REGISTER]);
     if (user_ == nullptr)
         throw runtime_error(ERR_NOT_FOUND);
-    if (user_->check_pass(arg[ARG_PASS_IN_REGISTER]))
+    if (!user_->check_pass(arg[ARG_PASS_IN_REGISTER]))
+    {
+        cout << "307" << endl;
         throw runtime_error(ERR_PERM);
+    }
 }
 
 void Data_base::register_admin(vector<string> &arg)
@@ -306,6 +312,7 @@ void Data_base::register_admin(vector<string> &arg)
 
     this->current.acc = this->admin;
     this->current.prem_state = ADMIN;
+    cout << "OK" << endl;
 }
 
 void Data_base::check_register_admin_arg(vector<string> &arg)
@@ -333,6 +340,7 @@ void Data_base::logout(vector<string> &arg)
 
     this->current.acc = nullptr;
     this->current.prem_state = NO_ACC;
+    cout << "OK" << endl;
 }
 
 void Data_base::check_logout_arg(vector<string> &arg)
@@ -483,6 +491,9 @@ void Data_base::get_players(vector<string> &arg)
             break;
         }
     }
+
+    if (players_.size() == 0)
+        throw runtime_error(ERR_NOT_FOUND);
 
     if (arg_.sort_by_rank)
     {

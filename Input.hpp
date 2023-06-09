@@ -18,13 +18,13 @@ class Input
 {
 public:
     Input() { init_csv_data(); };
-    void set();
+    bool set();
     void init_csv_data();
     void clear();
 
     bool is_running_() { return is_running; }
-    pair<string, string> command_() { return command; }
-    vector<string> value_() { return value; }
+    pair<string, string> &command_() { return command; }
+    vector<string> &value_() { return value; }
 
     const CSV_input & get_league() {return *league;}
     const vector<shared_ptr<CSV_input>> & get_weeks() {return weeks;}
