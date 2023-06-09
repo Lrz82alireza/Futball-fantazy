@@ -539,8 +539,6 @@ void Data_base::check_matches_result_league_arg(vector<string> &arg)
         throw runtime_error(ERR_BAD_REQ);
     if (arg[0] != ARG_CHAR)
         throw runtime_error(ERR_BAD_REQ);
-    if (arg[ARG_WEEKNUM] != "week_num")
-        throw runtime_error(ERR_BAD_REQ);
 }
 
 Arg_weeknum Data_base::make_arg_weeknum(vector<string> &arg)
