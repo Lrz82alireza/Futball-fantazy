@@ -4,7 +4,10 @@
 
 #include "Functions.hpp"
 #include "Player.hpp"
+#include <map>
 
+const int TEAM_SIZE = 5;
+const string EMPTY_ERR = "Empty";
 
 enum 
 {
@@ -49,6 +52,7 @@ public:
     Team(vector<vector<string>> input);
     Team(string name_);
 
+    map<string, shared_ptr<Player>> get_players_of_team();
 
 private:
     string name;
@@ -56,4 +60,5 @@ private:
     vector<shared_ptr<Player>> players;
 
     vector<Week_info> weeks_info;
+    
 };
