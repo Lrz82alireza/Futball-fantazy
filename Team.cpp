@@ -44,6 +44,11 @@ shared_ptr<Player> Team::find_player(string player_name)
     return find_by_name<Player>(this->players, player_name);
 }
 
+void Team::erase_player(shared_ptr<Player> &player)
+{
+    players.erase(remove(players.begin(), players.end(), player), players.end());
+}
+
 Team::Team(vector<vector<string>> input)
 {
     this->name = input[0][0];

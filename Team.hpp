@@ -46,6 +46,8 @@ public:
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
 
     shared_ptr<Player> find_player(string player_name);
+    void erase_player(shared_ptr<Player> &player);
+
 
     Team(vector<vector<string>> input);
     Team(string name_);
