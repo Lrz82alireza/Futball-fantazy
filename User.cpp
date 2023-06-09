@@ -14,6 +14,8 @@ void User::sell_player(string &player_name)
 void User::buy_player(shared_ptr<Player> &player)
 {
     team->add_player(player);
+    if (!is_new && this->team->get_players().size() == TEAM_SIZE)
+        is_new = false;
 }
 
 map<string, string> User::get_squad()
