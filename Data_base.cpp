@@ -300,10 +300,7 @@ void Data_base::check_login_arg(vector<string> &arg)
     if (user_ == nullptr)
         throw runtime_error(ERR_NOT_FOUND);
     if (!user_->check_pass(arg[ARG_PASS_IN_REGISTER]))
-    {
-        cout << "307" << endl;
         throw runtime_error(ERR_PERM);
-    }
 }
 
 void Data_base::register_admin(vector<string> &arg)
@@ -501,7 +498,6 @@ void Data_base::get_players(vector<string> &arg)
              { return p1->get_avg_scores() > p2->get_avg_scores(); });
     }
 
-    cout << players_.back()->get_name() << endl;
     for (vector<std::shared_ptr<Player>>::size_type i = 0; i < players_.size(); i++)
     {
         cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " <<
