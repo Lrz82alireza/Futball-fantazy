@@ -9,6 +9,8 @@
 const int TEAM_SIZE = 5;
 const string EMPTY_ERR = "Empty";
 
+const string ERR_PLAYER_NOT_AVAILABLE = "This player is not available for next week";
+
 enum 
 {
     LOSE_POINT = 0,
@@ -37,17 +39,16 @@ public:
     
     Team_state get_state();
     Week_info get_week_info(int weeknum) { return weeks_info[weeknum]; }
-
     string get_name() { return this->name; }
     vector<shared_ptr<Player>> get_players(int role = 0);
-
     float get_scores_sum();
+
+    void add_player(shared_ptr<Player> &player);
 
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
 
     shared_ptr<Player> find_player(string player_name);
     void erase_player(shared_ptr<Player> &player);
-
 
     Team(vector<vector<string>> input);
     Team(string name_);

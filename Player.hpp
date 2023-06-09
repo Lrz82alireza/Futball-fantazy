@@ -31,12 +31,14 @@ public:
     Week_info get_week_info() {return weeks_info.back();}
     void new_week(Week_info &new_info) { weeks_info.push_back(new_info); }
     float get_avg_scores();
+    bool is_available() { return available; }
 
     Player(const int &role_, const string &name_);
 
 private:
     string name;
     int role;
+    bool available = true;
 
     vector<Week_info> weeks_info;
 };

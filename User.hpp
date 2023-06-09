@@ -8,9 +8,6 @@
 
 const int DEF_TRADE = 2;
 
-const string ERR_PERM_USER = "Permission Denied";
-const string ERR_NOT_FOUND_USER = "Not Found";
-
 class User : public Account
 {
 private:
@@ -22,6 +19,8 @@ public:
     typedef pair<string, float> RANK;
 
     void sell_player(string &player_name);
+    void buy_player(shared_ptr<Player> &player);
+
     map<string, shared_ptr<Player>> get_squad();
 
     User(string &username_, string &pass);

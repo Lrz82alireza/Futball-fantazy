@@ -127,6 +127,22 @@ pair<int, int> Data_base::make_command_code(pair<string, string> &command)
     return command_code;
 }
 
+void Data_base::buy_player(vector<string> &arg)
+{
+    if (!transfer_window)
+        throw runtime_error(ERR_PERM);
+    check_trade_player_arg(arg);
+
+    string player_name = make_trade_player_name(arg);
+
+    shared_ptr<Player> player = find_player(player_name);
+    if (player == nullptr)
+        throw runtime_error(ERR_NOT_FOUND);
+    
+    this->users[distance(users.begin(), find(users.begin(), users.end(), current.acc))]->buy_player(player);
+    cout << "OK" << endl;
+}
+
 void Data_base::sell_player(vector<string> &arg)
 {
     if (!transfer_window)
@@ -171,7 +187,7 @@ void Data_base::get_squad(vector<string> &arg)
         throw runtime_error(ERR_NOT_FOUND);
     
     map<string, shared_ptr<Player>> squad = user_->get_squad();
-    /////
+    ///////////////////
 }
 
 string Data_base::make_get_squad_arg(vector<string> &arg)
@@ -179,6 +195,17 @@ string Data_base::make_get_squad_arg(vector<string> &arg)
     if (arg.size() != 3)
         return current.acc->get_name();
     return arg[2];
+}
+
+shared_ptr<Player> Data_base::find_player(string &name)
+{
+    for (auto i : this->teams)
+    {
+        shared_ptr<Player> player = i->find_player(name);
+        if (player != nullptr)
+            return player;
+    }
+    return nullptr;
 }
 
 void Data_base::manage_command(pair<string, string> &command, vector<string> &arg)
