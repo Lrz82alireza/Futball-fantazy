@@ -65,10 +65,13 @@ void Player::set_availability()
     this->available = true;
 }
 
-Player::Player(const int &role_, const string &name_)
+Player::Player(const int &role_, const string &name_and_price)
 {
     this->role = role_;
-    this->name = name_;
+    vector<string> player_ = seperate_words(name_and_price, ":");
+
+    this->name = player_[NAME];
+    this->price = stof(player_[PRICE].substr(0, player_[PRICE].size() - 1));
 }
 
 string role_to_s(int role)

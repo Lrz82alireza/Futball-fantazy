@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "Functions.hpp"
+
 using namespace std;
 
 enum
@@ -40,10 +42,17 @@ public:
     Player(const int &role_, const string &name_);
 
 private:
+    enum
+    {
+        NAME,
+        PRICE,
+    };
+
     string name;
     int role;
     bool available = true;
     int counter_yellow_card = 0;
+    float price = 0;
 
     vector<Week_info> weeks_info;
 };
