@@ -1,21 +1,26 @@
 #pragma once
 
+#include <map>
+#include <any>
 #include <algorithm>
 
 #include "Functions.hpp"
 #include "Player.hpp"
-#include <map>
+#include "Gk.hpp"
+#include "Md.hpp"
+#include "Fw.hpp"
+#include "Df.hpp"
 
 const int TEAM_SIZE = 5;
 const string EMPTY_ERR = "Empty";
 
 const string ERR_PLAYER_NOT_AVAILABLE = "This player is not available for next week";
 
-enum 
+enum
 {
     LOSE_POINT = 0,
     EQUAL_POINT = 1,
-    WIN_POINT = 3,  
+    WIN_POINT = 3,
 };
 
 class Team
@@ -36,7 +41,7 @@ public:
         int goals_for = 0;
         int goals_against = 0;
     };
-    
+
     Team_state get_state();
     Week_info get_week_info(int weeknum) { return weeks_info[weeknum]; }
     string get_name() { return this->name; }
@@ -65,5 +70,4 @@ private:
     vector<shared_ptr<Player>> players;
 
     vector<Week_info> weeks_info;
-    
 };

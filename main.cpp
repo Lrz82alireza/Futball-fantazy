@@ -1,5 +1,6 @@
 #include "Input.hpp"
 #include "Data_base.hpp"
+#include <typeinfo>
 
 int main()
 {
