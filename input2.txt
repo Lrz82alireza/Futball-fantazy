@@ -1,0 +1,51 @@
+POST signup ? team_name Sharks password 021021
+POST logout
+POST login ? team_name Sharks password 021021
+POST logout
+POST register_admin ? username admin password 123456
+POST close_transfer_window
+POST pass_week
+POST pass_week
+POST pass_week
+POST logout
+POST login ? team_name Sharks password 021021
+POST buy_player ? name Neto
+POST buy_player ? name Jose Sa
+POST buy_player ? name N. Semedo
+POST buy_player ? name M. Senesi
+POST buy_player ? name P. Billing
+POST buy_player ? name Chiquinho
+POST sell_player ? name Chiquinho
+POST sell_player ? name Sam Greenwood
+POST buy_player ? name Chiquinho
+POST logout
+POST register_admin ? username admin password 123456
+POST open_transfer_window
+POST logout
+POST login ? team_name Sharks password 021021
+POST buy_player ? name Neto
+POST buy_player ? name Jose Sa
+POST buy_player ? name N. Semedo
+POST buy_player ? name M. Senesi
+POST buy_player ? name P. Billing
+POST buy_player ? name Chiquinho
+POST sell_player ? name Chiquinho
+POST sell_player ? name Sam Greenwood
+POST buy_player ? name Chiquinho
+GET squad ?
+GET matches_result_league ? week_num 1
+POST logout
+POST signup ? team_name anghezy password 021021
+POST buy_player ? name Neto
+POST buy_player ? name Jose Sa
+POST buy_player ? name N. Semedo
+POST buy_player ? name M. Senesi
+POST buy_player ? name P. Billing
+POST buy_player ? name Chiquinho
+POST sell_player ? name Chiquinho
+POST sell_player ? name Sam Greenwood
+POST buy_player ? name Chiquinho
+POST logout
+GET users_ranking
+GET league_standings
+GET players ? team_name Wolves mf ranks
