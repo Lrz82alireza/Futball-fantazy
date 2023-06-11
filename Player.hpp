@@ -41,7 +41,7 @@ public:
 
     Player(const int &role_, const string &name_);
 
-private:
+protected:
     enum
     {
         NAME,

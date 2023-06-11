@@ -12,7 +12,9 @@ enum
     ARG_INJURED_WEEK,
     ARG_YELLOW_CARD_WEEK,
     ARG_RED_CARD_WEEK,
-    ARG_SCORES_WEEK
+    ARG_GOAL_WITH_ASSIST_WEEK,
+    ARG_TEAM_1,
+    ARG_TEAM_2,
 };
 
 const string MATCH_SEPERATOR_CHAR = ":";
@@ -38,7 +40,8 @@ typedef struct TEAM_MATCH
     vector<shared_ptr<Player>> injureds;
     vector<shared_ptr<Player>> yellow_cards;
     vector<shared_ptr<Player>> red_cards;
-    vector<shared_ptr<Player_score>> players_score;
+    vector<pair<shared_ptr<Player>, shared_ptr<Player>>> goal_assist;
+    vector<shared_ptr<Player>> composition;
 }Team_match;
 
 typedef struct MATCH
@@ -55,7 +58,8 @@ typedef struct ARG_MATCH_INPUT
     vector<string> injured;
     vector<string> yellow_cards;
     vector<string> red_cards;
-    vector<pair<string, float>> players_score;
+    vector<pair<string, string>> goal_assist;
+    vector<string> team_composition;
 } Arg_match_input;
 
 class Week
