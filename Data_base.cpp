@@ -361,13 +361,13 @@ void Data_base::team_of_the_week(vector<string> &arg)
     if (!arg_.has_weeknum)
         arg_.weeknum = current.week;
 
-    map<string, shared_ptr<Player_score>> team_ = weeks[arg_.weeknum]->team_of_the_week();
+    map<string, shared_ptr<Player>> team_ = weeks[arg_.weeknum]->team_of_the_week();
     cout << "team of the week:" << endl;
-    cout << "GoalKeeper: " << team_["GK"]->player->get_name() << " | score: " << team_["GK"]->score << endl
-         << "Defender 1: " << team_["DF1"]->player->get_name() << " | score: " << team_["DF1"]->score << endl
-         << "Defender 2: " << team_["DF2"]->player->get_name() << " | score: " << team_["DF2"]->score << endl
-         << "Midfielder: " << team_["MD"]->player->get_name() << " | score: " << team_["MD"]->score << endl
-         << "Forward: " << team_["FW"]->player->get_name() << " | score: " << team_["FW"]->score << endl;
+    cout << "GoalKeeper: " << team_["GK"]->get_name() << " | score: " << team_["GK"]->get_score(arg_.weeknum) << endl
+         << "Defender 1: " << team_["DF1"]->get_name() << " | score: " << team_["DF1"]->get_score(arg_.weeknum) << endl
+         << "Defender 2: " << team_["DF2"]->get_name() << " | score: " << team_["DF2"]->get_score(arg_.weeknum) << endl
+         << "Midfielder: " << team_["MD"]->get_name() << " | score: " << team_["MD"]->get_score(arg_.weeknum) << endl
+         << "Forward: " << team_["FW"]->get_name() << " | score: " << team_["FW"]->get_score(arg_.weeknum) << endl;
 }
 
 void Data_base::users_ranking(vector<string> &arg)
