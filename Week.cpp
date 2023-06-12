@@ -78,6 +78,14 @@ void Week::fill_team_match_fields(shared_ptr<Team_match> team_match, Arg_match_i
     //          });
 }
 
+void Week::set_players_score(shared_ptr<Team_match> t1, shared_ptr<Team_match> t2)
+{
+    for (auto i : t1->composition)
+    {
+        i->set_score(t2->composition);
+    }
+}
+
 // public
 
 Week::Week(const CSV_input &week_input, vector<shared_ptr<Team>> &teams)
@@ -171,7 +179,11 @@ void Week::update()
         update_team(i->teams_match.second, i->result.second, i->result.first);
     }
 
-    // calculate score
+    for (auto i : matches)
+    {
+        set_players_score(i->teams_match.first, i->teams_match.second);
+        set_players_score(i->teams_match.second, i->teams_match.first);
+    }
 }
 
 shared_ptr<Player_score> find_best_player_by_role(vector<shared_ptr<Player_score>> &players, int role)

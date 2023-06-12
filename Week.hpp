@@ -70,6 +70,8 @@ private:
     Arg_match_input make_Arg_match_input(const vector<vector<string>> &match_input);
     void fill_team_match_field(shared_ptr<Team> team, vector<shared_ptr<Player>> &team_match_field, vector<string> &players_name);
     void fill_team_match_fields(shared_ptr<Team_match> team, Arg_match_input &arg);
+
+    void set_players_score(shared_ptr<Team_match> t1, shared_ptr<Team_match> t2);
 public:
     Week(const CSV_input &week_input, vector<shared_ptr<Team>> &teams);
 

@@ -45,6 +45,7 @@ public:
     void set_availability();
     virtual bool is_clean_sheet();
     virtual void set_position(int pos) = 0;
+    virtual void set_score(vector<shared_ptr<Player>> &enemy_compos) = 0;
 
 
     Player(const int &role_, const string &name_);
