@@ -136,13 +136,13 @@ void Week::update_team(shared_ptr<Team_match> team_match, int goals_for_, int go
     team_match->team->new_week(team_week_info);
 }
 
-void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_, pair<int ,int> result)
+void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_, pair<int, int> result)
 {
     Player::Week_info player_week_info;
     if (result.second == 0)
         if (find(team_match->composition.begin(), team_match->composition.end(), player_) != team_match->composition.end())
             player_week_info.clean_sheet = player_->is_clean_sheet();
-        
+
     if (find(team_match->injureds.begin(), team_match->injureds.end(), player_) != team_match->injureds.end())
         player_week_info.injured = true;
 
@@ -186,17 +186,17 @@ void Week::update()
     }
 }
 
-shared_ptr<Player_score> find_best_player_by_role(vector<shared_ptr<Player_score>> &players, int role)
+shared_ptr<Player> find_best_player_by_role(vector<shared_ptr<Player>> &players, int role)
 {
-    shared_ptr<Player_score> target_player = nullptr;
+    shared_ptr<Player> target_player = nullptr;
     float most_score = 0;
-    for (vector<shared_ptr<Player_score>>::size_type i = 0; i < players.size(); i++)
+    for (vector<shared_ptr<Player>>::size_type i = 0; i < players.size(); i++)
     {
-        if (players[i]->player->get_role() == role)
+        if (players[i]->get_role() == role)
         {
-            if (players[i]->score >= most_score)
+            if (players[i]->get_week_info().score >= most_score)
             {
-                most_score = players[i]->score;
+                most_score = players[i]->get_week_info().score;
                 target_player = players[i];
             }
         }
@@ -208,16 +208,14 @@ shared_ptr<Player_score> find_best_player_by_role(vector<shared_ptr<Player_score
     return target_player;
 }
 
-map<string, shared_ptr<Player_score>> Week::team_of_the_week()
+map<string, shared_ptr<Player>> Week::team_of_the_week()
 {
-    map<string, shared_ptr<Player_score>> tmp;
-    vector<shared_ptr<Player_score>> players;
+    map<string, shared_ptr<Player>> tmp;
+    vector<shared_ptr<Player>> players;
     for (auto x : matches)
     {
-        for (auto y : x->teams_match.first->players_score) // will change to composition
-            players.push_back(y);
-        for (auto z : x->teams_match.second->players_score)
-            players.push_back(z);
+        players.insert(players.end() , x->teams_match.first->composition.begin() , x->teams_match.first->composition.end());
+        players.insert(players.end() , x->teams_match.second->composition.begin() , x->teams_match.first->composition.end());
     }
     tmp["GK"] = find_best_player_by_role(players, GK);
     tmp["DF1"] = find_best_player_by_role(players, DF);

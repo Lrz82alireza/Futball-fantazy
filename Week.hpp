@@ -82,5 +82,5 @@ public:
     
     vector<shared_ptr<Match>> get_matches() { return matches; }
 
-    map<string, shared_ptr<Player_score>> team_of_the_week();
+    map<string, shared_ptr<Player>> Week::team_of_the_week();
 };
