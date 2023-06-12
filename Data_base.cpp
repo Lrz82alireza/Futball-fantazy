@@ -13,6 +13,7 @@ void Data_base::init_command_map()
     temp.clear();
 
     // USER
+    temp[pair<int, int>(GET, SHOW_BUDGET)] = &Data_base::show_budget;
     temp[pair<int, int>(GET, SQUAD)] = &Data_base::get_squad;
     temp[pair<int, int>(POST, SELL_PLAYER)] = &Data_base::sell_player;
     temp[pair<int, int>(POST, BUY_PLAYER)] = &Data_base::buy_player;
@@ -571,6 +572,14 @@ Arg_weeknum Data_base::make_arg_weeknum(vector<string> &arg)
 
     return new_arg;
 }
+
+void Data_base::show_budget(vector<string> &arg)
+{
+    shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
+    cout << user_->get_budget() << endl;
+}
+
+// Admin
 
 void Data_base::close_transfer_window(vector<string> &arg)
 {

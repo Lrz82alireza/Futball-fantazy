@@ -33,6 +33,7 @@ enum
     SELL_PLAYER,
     BUY_PLAYER,
     SQUAD,
+    SHOW_BUDGET,
     // ADMIN
     CLOSE_TRANSFER_WINDOW,
     OPEN_TRANSFER_WINDOW,
@@ -156,6 +157,7 @@ private:
     void check_matches_result_league_arg(vector<string> &arg);
     Arg_weeknum make_arg_weeknum(vector<string> &arg);
 
+    void show_budget(vector<string> &arg);
 
     // Admin
     void close_transfer_window(vector<string> &arg);
