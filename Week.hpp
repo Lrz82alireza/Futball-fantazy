@@ -76,7 +76,7 @@ public:
     // accessories
     void update();
     void update_team(shared_ptr<Team_match> team_match, int goals_for_, int goals_against_);
-    void update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_);
+    void update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_, pair<int ,int> result);
     
     vector<shared_ptr<Match>> get_matches() { return matches; }
 

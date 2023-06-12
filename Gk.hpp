@@ -3,12 +3,13 @@
 class Gk : public Player
 {
 private:
-    /* data */
+    enum
+    {
+        POS
+    };
+
 public:
-    Gk(/* args */);
+    Gk(int &role, string &name);
+
+    virtual void set_position(int pos);
 };
-
-Gk::Gk(/* args */)
-{
-}
-

@@ -25,7 +25,12 @@ public:
         float score = 0;
         bool injured = false;
         bool yellow_card = false;
-        bool red_card = false;
+        bool red_card = false;  
+        bool clean_sheet = false;
+        int goal = 0;
+        int assist = 0;
+        int own_goal = 0;
+        int position = 0;
     };
 
     string get_name() { return this->name; }
@@ -38,6 +43,9 @@ public:
     float scores_sum();
 
     void set_availability();
+    virtual bool is_clean_sheet();
+    virtual void set_position(int pos) = 0;
+
 
     Player(const int &role_, const string &name_);
 
@@ -46,6 +54,12 @@ protected:
     {
         NAME,
         PRICE,
+    };
+    enum
+    {
+        RIGHT_POS,
+        MID_POS,
+        LEFT_POS,
     };
 
     string name;

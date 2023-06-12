@@ -98,7 +98,7 @@ Team::Team(vector<vector<string>> input)
     {
         for (vector<string>::size_type j = 0; j < input[i].size(); j++)
         {
-            players.push_back(make_shared<Player>((int)i, input[i][j]));
+            players.push_back(Player_creator(input[i][j], int(i)));
         }
     }
 }
@@ -143,5 +143,27 @@ map<string, string> Team::get_players_of_team()
         tmp["MD"] = get_players(MD).back()->get_name();
         tmp["FW"] = get_players(FW).back()->get_name();
         return tmp;
+    }
+}
+
+shared_ptr<Player> Team::Player_creator(string &name_, int role)
+{
+    switch (role)
+    {
+    case GK:
+        return make_shared<Gk>(role, name_);
+        break;
+    case MD:
+        return make_shared<Md>(role, name_);
+        break;
+    case DF:
+        return make_shared<Df>(role, name_);
+        break;
+    case FW:
+        return make_shared<Fw>(role, name_);
+        break;
+    default:
+        return make_shared<Player>(role, name_);
+        break;
     }
 }

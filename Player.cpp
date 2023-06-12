@@ -65,6 +65,11 @@ void Player::set_availability()
     this->available = true;
 }
 
+bool Player::is_clean_sheet()
+{
+    return true;
+}
+
 Player::Player(const int &role_, const string &name_and_price)
 {
     this->role = role_;

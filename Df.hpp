@@ -3,12 +3,14 @@
 class Df : public Player
 {
 private:
-    /* data */
+    enum
+    {
+        LEFT_POS_DF = 1,
+        RIGHT_POS_DF = 4,
+    };
 public:
-    Df(/* args */);
-};
+    Df(int &role, string &name);
 
-Df::Df(/* args */)
-{
-}
+    virtual void set_position(int pos);
+};
 

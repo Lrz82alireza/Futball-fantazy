@@ -3,11 +3,13 @@
 class Md : public Player
 {
 private:
-    /* data */
+    enum
+    {
+        LEFT_POS_MD = 5,
+        RIGHT_POS_MD = 7,
+    };
 public:
-    Md(/* args */);
-};
+    Md(int &role, string &name);
 
-Md::Md(/* args */)
-{
-}
+    virtual void set_position(int pos);
+};

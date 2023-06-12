@@ -3,13 +3,16 @@
 class Fw : public Player
 {
 private:
-    /* data */
+    enum
+    {
+        LEFT_POS_FW = 8,
+        RIGHT_POS_FW = 10,
+    };
 public:
-    Fw(/* args */);
-};
+    Fw(int &role, string &name);
 
-Fw::Fw(/* args */)
-{
-}
+    virtual bool is_clean_sheet(){ return false; }
+    virtual void set_position(int pos);
+};
 
 

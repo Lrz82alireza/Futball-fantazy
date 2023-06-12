@@ -61,12 +61,9 @@ void Week::fill_team_match_fields(shared_ptr<Team_match> team_match, Arg_match_i
         pair<shared_ptr<Player>, shared_ptr<Player>> goal_assist;
         goal_assist.first = team_match->team->find_player(i.first);
         goal_assist.second = team_match->team->find_player(i.second);
-        
+
         team_match->goal_assist.push_back(goal_assist);
     }
-
-
-
 
     // calculationg score
     // for_each(arg.players_score.begin(), arg.players_score.end(),
@@ -113,7 +110,7 @@ void Week::update_team(shared_ptr<Team_match> team_match, int goals_for_, int go
 
     for (auto i : team_players)
     {
-        update_player(team_match, i);
+        update_player(team_match, i, pair<int, int>(goals_for_, goals_against_));
     }
 
     Team::Week_info team_week_info;
@@ -131,9 +128,13 @@ void Week::update_team(shared_ptr<Team_match> team_match, int goals_for_, int go
     team_match->team->new_week(team_week_info);
 }
 
-void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_)
+void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_, pair<int ,int> result)
 {
     Player::Week_info player_week_info;
+    if (result.second == 0)
+        if (find(team_match->composition.begin(), team_match->composition.end(), player_) != team_match->composition.end())
+            player_week_info.clean_sheet = player_->is_clean_sheet();
+        
     if (find(team_match->injureds.begin(), team_match->injureds.end(), player_) != team_match->injureds.end())
         player_week_info.injured = true;
 
@@ -143,19 +144,23 @@ void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> p
     if (find(team_match->red_cards.begin(), team_match->red_cards.end(), player_) != team_match->red_cards.end())
         player_week_info.red_card = true;
 
-
-    if (find_if(team_match->players_score.begin(), team_match->players_score.end(), [&](shared_ptr<Player_score> t)
-                    { return t->player == player_; }) != team_match->players_score.end())
+    for (auto i : team_match->goal_assist)
     {
-        shared_ptr<Player_score> player_score_ = *find_if(team_match->players_score.begin(), team_match->players_score.end(), [&](shared_ptr<Player_score> t)
-                                                          { return t->player == player_; });
-        player_week_info.score = player_score_->score;
+        if (i.second == nullptr)
+            player_week_info.own_goal++;
+        else if (i.first == player_)
+            player_week_info.goal++;
+        else if (i.second == player_)
+            player_week_info.assist++;
     }
-    
-
-    // calculate score
 
     player_->new_week(player_week_info);
+
+    for (vector<shared_ptr<Player>>::size_type i = 0; i < team_match->composition.size(); i++)
+    {
+        if (team_match->composition[i] == player_)
+            player_->set_position(i);
+    }
 }
 
 void Week::update()
@@ -165,6 +170,8 @@ void Week::update()
         update_team(i->teams_match.first, i->result.first, i->result.second);
         update_team(i->teams_match.second, i->result.second, i->result.first);
     }
+
+    // calculate score
 }
 
 shared_ptr<Player_score> find_best_player_by_role(vector<shared_ptr<Player_score>> &players, int role)
@@ -195,7 +202,7 @@ map<string, shared_ptr<Player_score>> Week::team_of_the_week()
     vector<shared_ptr<Player_score>> players;
     for (auto x : matches)
     {
-        for (auto y : x->teams_match.first->players_score) // will change to composition 
+        for (auto y : x->teams_match.first->players_score) // will change to composition
             players.push_back(y);
         for (auto z : x->teams_match.second->players_score)
             players.push_back(z);

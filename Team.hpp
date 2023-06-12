@@ -70,4 +70,5 @@ private:
     vector<shared_ptr<Player>> players;
 
     vector<Week_info> weeks_info;
+    shared_ptr<Player> Player_creator(string &name_, int role = 0);
 };
