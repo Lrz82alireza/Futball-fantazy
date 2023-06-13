@@ -17,6 +17,7 @@ void Data_base::init_command_map()
     temp[pair<int, int>(GET, SQUAD)] = &Data_base::get_squad;
     temp[pair<int, int>(POST, SELL_PLAYER)] = &Data_base::sell_player;
     temp[pair<int, int>(POST, BUY_PLAYER)] = &Data_base::buy_player;
+    temp[pair<int, int>(POST, SET_CAPTAIN)] = &Data_base::set_captain;
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -140,8 +141,11 @@ void Data_base::buy_player(vector<string> &arg)
     if (player == nullptr)
         throw runtime_error(ERR_NOT_FOUND);
 
-    this->users[distance(users.begin(), find(users.begin(), users.end(), current.acc))]->buy_player(player);
-    cout << "OK" << endl;
+    shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
+    if (user_->buy_player(player))
+        cout << "OK" << endl;
+    else
+        cout << ERR_BAD_REQ << endl;
 }
 
 void Data_base::sell_player(vector<string> &arg)
@@ -152,7 +156,8 @@ void Data_base::sell_player(vector<string> &arg)
 
     string player_name = make_trade_player_name(arg);
 
-    this->users[distance(users.begin(), find(users.begin(), users.end(), current.acc))]->sell_player(player_name);
+    shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
+    user_->sell_player(player_name);
     cout << "OK" << endl;
 }
 
@@ -194,7 +199,8 @@ void Data_base::get_squad(vector<string> &arg)
          << "Defender2: " << squad["DF2"] << endl
          << "Midfielder: " << squad["MD"] << endl
          << "Striker: " << squad["FW"] << endl
-         << "Total Points: " << user_->get_team()->players_score_sum() << endl;
+         << "Total Points: " << user_->get_team()->players_score_sum() << endl
+         << "Team Cost: " << user_->get_team()->get_costs_sum() << endl;
 }
 
 string Data_base::make_get_squad_arg(vector<string> &arg)
@@ -505,7 +511,10 @@ void Data_base::get_players(vector<string> &arg)
     cout << "list of players:" << endl;
     for (vector<std::shared_ptr<Player>>::size_type i = 0; i < players_.size(); i++)
     {
-        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
+        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() <<
+        "cost: " << players_[i]->get_price() << "goals: " << players_[i]->get_goals() << "assists: " << players_[i]->get_assists() << endl;
+        if (players_[i]->get_role() != GK)
+            cout << "clean sheets: " << players_[i]->get_clean_sheets() << endl;
     }
 }
 
@@ -579,6 +588,16 @@ void Data_base::show_budget(vector<string> &arg)
     cout << user_->get_budget() << endl;
 }
 
+void Data_base::set_captain(vector<string> &arg)
+{
+    string cap_name = make_trade_player_name(arg);
+    shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
+    if (user_->set_captain(cap_name))
+        cout << "Ok" << endl;
+    else
+        cout << ERR_NOT_FOUND << endl;
+}
+
 // Admin
 
 void Data_base::close_transfer_window(vector<string> &arg)
@@ -599,6 +618,7 @@ void Data_base::pass_week(vector<string> &arg)
 
     update_current_week();
 
+    update_users();
     cout << "OK" << endl;
 }
 
@@ -613,6 +633,14 @@ void Data_base::players_set_availability()
     for (auto i : this->teams)
     {
         i->players_set_availability();
+    }
+}
+
+void Data_base::update_users()
+{
+    for (auto i : users)
+    {
+        i->update();
     }
 }
 

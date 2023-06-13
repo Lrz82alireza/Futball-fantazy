@@ -29,6 +29,37 @@ float Player::get_avg_scores()
     return avg / counter;
 }
 
+int Player::get_goals()
+{
+    int sum = 0;
+    for (auto i : weeks_info)
+    {
+        sum += i.goal;
+    }
+    return sum;
+}
+
+int Player::get_assists()
+{
+    int sum = 0;
+    for (auto i : weeks_info)
+    {
+        sum += i.assist;
+    }
+    return sum;
+}
+
+int Player::get_clean_sheets()
+{
+    int sum = 0;
+    for (auto i : weeks_info)
+    {
+        sum += i.clean_sheet;
+    }
+    return sum;
+}
+
+
 float Player::scores_sum()
 {
     float sum = 0;

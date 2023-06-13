@@ -43,6 +43,7 @@ public:
         int position = 0;
     };
 
+    float get_price() { return this->price; }
     float get_score(int week_num) { return weeks_info[week_num].score; }
     string get_name() { return this->name; }
     int get_role() {return role;};
@@ -51,6 +52,9 @@ public:
     float get_avg_scores();
     bool is_available() { return available; }
     int get_pos() {return weeks_info.back().position;}
+    int get_goals();
+    int get_assists();
+    int get_clean_sheets();
 
     float scores_sum();
 
