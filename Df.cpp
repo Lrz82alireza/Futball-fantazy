@@ -21,3 +21,29 @@ void Df::set_position(int pos)
         break;
     }
 }
+
+void Df::set_score(vector<shared_ptr<Player>> against_composition, int goals_for, int goals_against)
+{
+    add_score(DEAFAULT_POINT);
+    Player::set_score(against_composition, goals_for, goals_against);
+    if (goals_against == 0)
+        add_score(CLEAN_SHEET_POINT);
+    int players_goal = this->weeks_info.back().goal;
+    for (auto i = 0; i < players_goal; i++)
+        add_score(GOAl_POINT);
+    int players_assist = this->weeks_info.back().assist;
+    for (auto i = 0; i < players_goal; i++)
+        add_score(ASSIST_POINT);
+    //calculate special scores
+}
+
+int calculate_special_point(vector<shared_ptr<Player>> against_composition)
+{
+    for (auto player : against_composition)
+    {
+        if (player->get_role() == DF || player->get_role() == FW)
+        {
+            if (player->get_pos == )
+        }
+    }
+}

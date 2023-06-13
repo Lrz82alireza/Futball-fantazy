@@ -95,3 +95,13 @@ string role_to_s(int role)
         return "fw";
     return NULL;
 }
+
+void Player::set_score(vector<shared_ptr<Player>> against_composition , int goals_for , int goals_against)
+{
+    if (goals_for > goals_against)
+        this->add_score(WIN_POINT);
+    else if (goals_for < goals_against)
+        this->add_score(LOSE_POINT);
+    else
+        this->add_score(EQUAL_POINT);
+}

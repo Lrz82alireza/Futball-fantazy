@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Functions.hpp"
+#include "Team.hpp"
 
 using namespace std;
 
@@ -15,6 +16,13 @@ enum
     DF,
     MD,
     FW
+};
+
+enum
+{
+    LOSE_POINT = -1,
+    EQUAL_POINT = 1,
+    WIN_POINT = 5,
 };
 
 class Player
@@ -41,6 +49,7 @@ public:
     void new_week(Week_info &new_info);
     float get_avg_scores();
     bool is_available() { return available; }
+    int get_pos() {return weeks_info.back().position;}
 
     float scores_sum();
 
@@ -48,6 +57,8 @@ public:
     virtual bool is_clean_sheet();
     virtual void set_position(int pos);
 
+    virtual void set_score(vector<shared_ptr<Player>> against_composition , int goals_for , int goals_against);
+    void add_score(float score) {weeks_info.back().score += score;};
 
     Player(const int &role_, const string &name_);
 
