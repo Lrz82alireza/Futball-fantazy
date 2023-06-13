@@ -33,4 +33,5 @@ void Fw::set_score(vector<shared_ptr<Player>> against_composition, int goals_for
         add_score(ASSIST_POINT);
     if (this->get_week_info().goal == 0)
         add_score(DEMERIT_POINT);
+    this->score_algorithm();
 }

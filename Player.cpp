@@ -138,3 +138,12 @@ void Player::set_score(vector<shared_ptr<Player>> against_composition , int goal
     if (this->get_week_info().own_goal != 0)
         this->add_score(OWN_GOAL);
 }
+
+void Player::score_algorithm()
+{
+    float score = weeks_info.back().score;
+    float exponent = -(score / 6);
+    float denominator = 1 + exp(exponent);
+    float result = (1 / denominator);
+    weeks_info.back().score = result;
+}

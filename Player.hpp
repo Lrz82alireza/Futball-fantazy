@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <cmath>
 
 #include "Functions.hpp"
 
@@ -55,6 +56,7 @@ public:
 
     virtual void set_score(vector<shared_ptr<Player>> against_composition, int goals_for, int goals_against);
     void add_score(float score) { weeks_info.back().score += score; };
+    void score_algorithm();
 
     Player(const int &role_, const string &name_);
 

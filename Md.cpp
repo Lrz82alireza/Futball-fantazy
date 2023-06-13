@@ -34,6 +34,7 @@ void Md::set_score(vector<shared_ptr<Player>> against_composition, int goals_for
     for (auto i = 0; i < players_assist; i++)
         add_score(ASSIST_POINT);
     set_special_point(against_composition);
+    this->score_algorithm();
 }
 
 void Md::demerit_score(vector<shared_ptr<Player>> against_composition, int pos)

@@ -21,4 +21,5 @@ void Gk::set_score(vector<shared_ptr<Player>> against_composition , int goals_fo
         for (auto i = 0 ; i < goals_against ; i++)
             this->add_score(DEMERIT_POINT);
     }
+    this->score_algorithm();
 }
