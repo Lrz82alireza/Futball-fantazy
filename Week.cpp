@@ -32,6 +32,8 @@ Arg_match_input Week::make_Arg_match_input(const vector<vector<string>> &match_i
     for (auto goal_assist : match_input[ARG_GOAL_WITH_ASSIST_WEEK])
     {
         vector<string> goal_assist_ = seperate_words(goal_assist, MATCH_SEPERATOR_CHAR);
+        if (goal_assist_.size() != 2)
+            continue;
         arg.goal_assist.push_back(pair<string, string>(goal_assist_[0], goal_assist_[1]));
     }
 
@@ -64,18 +66,6 @@ void Week::fill_team_match_fields(shared_ptr<Team_match> team_match, Arg_match_i
 
         team_match->goal_assist.push_back(goal_assist);
     }
-
-    // calculationg score
-    // for_each(arg.players_score.begin(), arg.players_score.end(),
-    //          [&](pair<string, float> player_score_)
-    //          {
-    //              shared_ptr<Player> temp_player = team_match->team->find_player(player_score_.first);
-    //              if (temp_player != nullptr)
-    //              {
-    //                  shared_ptr<Player_score> temp(new Player_score(temp_player, player_score_.second));
-    //                  team_match->players_score.push_back(temp);
-    //              }
-    //          });
 }
 
 // public
@@ -163,6 +153,14 @@ void Week::update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> p
     }
 }
 
+void Week::update_players_score(vector<shared_ptr<Player>> team_composition, vector<shared_ptr<Player>> against_composition, pair<int, int> match_result)
+{
+    for (auto i : team_composition)
+    {
+        i->set_score(against_composition, match_result.first, match_result.second);
+    }
+}
+
 void Week::update()
 {
     for (auto i : matches)
@@ -171,7 +169,12 @@ void Week::update()
         update_team(i->teams_match.second, i->result.second, i->result.first);
     }
 
-    // calculate score
+    for (auto i : matches)
+    {
+        update_players_score(i->teams_match.first->composition, i->teams_match.second->composition, i->result);
+        update_players_score(i->teams_match.second->composition, i->teams_match.first->composition,
+                             pair<int, int>(i->result.second, i->result.first));
+    }
 }
 
 shared_ptr<Player> find_best_player_by_role(vector<shared_ptr<Player>> &players, int role)
@@ -200,10 +203,11 @@ map<string, shared_ptr<Player>> Week::team_of_the_week()
 {
     map<string, shared_ptr<Player>> tmp;
     vector<shared_ptr<Player>> players;
+
     for (auto x : matches)
     {
-        players.insert(players.end() , x->teams_match.first->composition.begin() , x->teams_match.first->composition.end());
-        players.insert(players.end() , x->teams_match.second->composition.begin() , x->teams_match.first->composition.end());
+        players.insert(players.end(), x->teams_match.first->composition.begin(), x->teams_match.first->composition.end());
+        players.insert(players.end(), x->teams_match.second->composition.begin(), x->teams_match.second->composition.end());
     }
     tmp["GK"] = find_best_player_by_role(players, GK);
     tmp["DF1"] = find_best_player_by_role(players, DF);

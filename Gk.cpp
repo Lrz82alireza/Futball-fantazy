@@ -12,6 +12,7 @@ void Gk::set_position(int pos)
 
 void Gk::set_score(vector<shared_ptr<Player>> against_composition , int goals_for , int goals_against)
 {
+
     add_score(DEAFAULT_POINT);
     Player::set_score(against_composition , goals_for , goals_against);
     if (goals_against == 0)

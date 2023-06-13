@@ -77,7 +77,8 @@ public:
     void update();
     void update_team(shared_ptr<Team_match> team_match, int goals_for_, int goals_against_);
     void update_player(shared_ptr<Team_match> team_match, shared_ptr<Player> player_, pair<int ,int> result);
-    
+    void update_players_score(vector<shared_ptr<Player>> team_composition, vector<shared_ptr<Player>> against_composition, pair<int, int> match_result);
+
     vector<shared_ptr<Match>> get_matches() { return matches; }
 
     map<string, shared_ptr<Player>> team_of_the_week();

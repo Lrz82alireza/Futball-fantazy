@@ -56,6 +56,7 @@ void Df::set_special_point(vector<shared_ptr<Player>> against_composition)
         MID_FW,
         RIGHT_FW,
     };
+
     int pos = this->get_pos();
     switch (pos)
     {
@@ -63,17 +64,20 @@ void Df::set_special_point(vector<shared_ptr<Player>> against_composition)
     {
         demerit_score(against_composition, RIGHT_FW);
         demerit_score(against_composition, RIGHT_DF);
+        break;
     }
     case RIGHT_POS:
     {
         demerit_score(against_composition, LEFT_FW);
         demerit_score(against_composition, LEFT_DF);
+        break;
     }
     case MID_POS:
     {
         demerit_score(against_composition, LEFT_MID_DF);
         demerit_score(against_composition, RIGHT_MID_DF);
         demerit_score(against_composition, MID_FW);
+        break;
     }
     }
 }

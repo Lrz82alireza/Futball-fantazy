@@ -58,6 +58,8 @@ float Team::players_score_sum()
     {
         sum += i->scores_sum();
     }
+    if (this->captain != nullptr)
+        sum += captain->scores_sum();
     return sum;
 }
 

@@ -113,6 +113,12 @@ pair<int, int> Data_base::make_command_code(pair<string, string> &command)
     else if (command.second == "squad")
         command_code.second = SQUAD;
 
+    else if (command.second == "show_budget")
+        command_code.second = SHOW_BUDGET;
+    
+    else if (command.second == "set_captain")
+        command_code.second = SET_CAPTAIN;
+
     // admin
     else if (command.second == "close_transfer_window")
         command_code.second = CLOSE_TRANSFER_WINDOW;
@@ -648,7 +654,6 @@ void Data_base::update_users()
 
 Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_input>> &weeks_input)
 {
-
     for (CSV_input::size_type i = 0; i < league_input.size(); i++)
     {
         teams.push_back(make_shared<Team>(league_input[i]));
@@ -659,7 +664,9 @@ Data_base::Data_base(const CSV_input &league_input, const vector<shared_ptr<CSV_
         this->weeks.push_back(make_shared<Week>(*weeks_input[i], this->teams));
     }
 
+
     this->admin = make_shared<Admin>(ADMIN_NAME, ADMIN_PASS);
+
 
     init_command_map();
     update_current_week();

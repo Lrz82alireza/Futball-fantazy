@@ -38,7 +38,7 @@ shared_ptr<CSV_input> Input::read_info_from_csv(string file_name)
     getline(data, line); // first row
     while (getline(data, line))
     {
-        line.resize(line.size() - 1);
+        // line.resize(line.size() - 1);
         input->resize(row + 1);
         stringstream lineStream(line);
         string cell;
