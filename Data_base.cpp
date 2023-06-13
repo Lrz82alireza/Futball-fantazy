@@ -141,8 +141,11 @@ void Data_base::buy_player(vector<string> &arg)
     if (player == nullptr)
         throw runtime_error(ERR_NOT_FOUND);
 
-    this->users[distance(users.begin(), find(users.begin(), users.end(), current.acc))]->buy_player(player);
-    cout << "OK" << endl;
+    shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
+    if (user_->buy_player(player))
+        cout << "OK" << endl;
+    else
+        cout << ERR_BAD_REQ << endl;
 }
 
 void Data_base::sell_player(vector<string> &arg)
@@ -153,7 +156,8 @@ void Data_base::sell_player(vector<string> &arg)
 
     string player_name = make_trade_player_name(arg);
 
-    this->users[distance(users.begin(), find(users.begin(), users.end(), current.acc))]->sell_player(player_name);
+    shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
+    user_->sell_player(player_name);
     cout << "OK" << endl;
 }
 
@@ -586,8 +590,8 @@ void Data_base::set_captain(vector<string> &arg)
     shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
     if (user_->set_captain(cap_name))
         cout << "Ok" << endl;
-    else 
-    cout << ERR_NOT_FOUND << endl;
+    else
+        cout << ERR_NOT_FOUND << endl;
 }
 
 // Admin

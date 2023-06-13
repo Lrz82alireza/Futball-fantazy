@@ -11,11 +11,19 @@ void User::sell_player(string &player_name)
     team->erase_player(player);
 }
 
-void User::buy_player(shared_ptr<Player> &player)
+bool User::buy_player(shared_ptr<Player> &player)
 {
-    team->add_player(player);
-    if (!is_new && this->team->get_players().size() == TEAM_SIZE)
-        is_new = false;
+    if (this->budget >= player->get_price())
+    {
+        team->add_player(player);
+        this->budget -= player->get_price();
+        
+        if (!is_new && this->team->get_players().size() == TEAM_SIZE)
+            is_new = false;
+
+        return true;
+    }
+    return false;
 }
 
 map<string, string> User::get_squad()

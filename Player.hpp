@@ -34,6 +34,7 @@ public:
         int position = 0;
     };
 
+    float get_price() { return this->price; }
     float get_score(int week_num) { return weeks_info[week_num].score; }
     string get_name() { return this->name; }
     int get_role() {return role;};

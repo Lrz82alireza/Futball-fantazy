@@ -25,7 +25,7 @@ public:
     shared_ptr<Team> get_team() {return team;};
 
     void sell_player(string &player_name);
-    void buy_player(shared_ptr<Player> &player);
+    bool buy_player(shared_ptr<Player> &player);
     bool set_captain(string name_) { return team->set_captain(name_); }
 
 
