@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <memory>
 
-#include "Team.hpp"
+#include "Player.hpp"
 
 using namespace std;
 

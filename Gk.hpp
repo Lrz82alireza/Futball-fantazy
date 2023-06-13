@@ -1,5 +1,7 @@
 #include "Player.hpp"
 
+#include <string>
+
 class Gk : public Player
 {
 private:

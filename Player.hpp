@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <memory>
 
 #include "Functions.hpp"
 
@@ -45,7 +46,7 @@ public:
 
     void set_availability();
     virtual bool is_clean_sheet();
-    virtual void set_position(int pos) = 0;
+    virtual void set_position(int pos);
 
 
     Player(const int &role_, const string &name_);

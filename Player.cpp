@@ -70,6 +70,10 @@ bool Player::is_clean_sheet()
     return true;
 }
 
+void Player::set_position(int pos)
+{
+}
+
 Player::Player(const int &role_, const string &name_and_price)
 {
     this->role = role_;
