@@ -34,6 +34,7 @@ enum
     BUY_PLAYER,
     SQUAD,
     SHOW_BUDGET,
+    SET_CAPTAIN,
     // ADMIN
     CLOSE_TRANSFER_WINDOW,
     OPEN_TRANSFER_WINDOW,
@@ -158,6 +159,8 @@ private:
     Arg_weeknum make_arg_weeknum(vector<string> &arg);
 
     void show_budget(vector<string> &arg);
+
+    void set_captain(vector<string> &arg);
 
     // Admin
     void close_transfer_window(vector<string> &arg);

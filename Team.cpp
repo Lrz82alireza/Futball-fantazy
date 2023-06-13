@@ -90,6 +90,15 @@ void Team::players_set_availability()
     }
 }
 
+bool Team::set_captain(string name_)
+{
+    shared_ptr<Player> cap = find_by_name(this->players, name_);
+    if (cap == nullptr)
+        return false;
+    this->captain = cap;
+    return true;
+}
+
 Team::Team(vector<vector<string>> input)
 {
     this->name = input[0][0];

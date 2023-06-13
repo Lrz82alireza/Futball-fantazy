@@ -21,13 +21,13 @@ public:
     typedef pair<string, float> RANK;
 
     float get_budget() { return budget; }
+    map<string, string> get_squad();
+    shared_ptr<Team> get_team() {return team;};
 
     void sell_player(string &player_name);
     void buy_player(shared_ptr<Player> &player);
+    bool set_captain(string name_) { return team->set_captain(name_); }
 
-    map<string, string> get_squad();
-
-    shared_ptr<Team> get_team() {return team;};
 
     User(string &username_, string &pass);
 

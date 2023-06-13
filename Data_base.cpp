@@ -17,6 +17,7 @@ void Data_base::init_command_map()
     temp[pair<int, int>(GET, SQUAD)] = &Data_base::get_squad;
     temp[pair<int, int>(POST, SELL_PLAYER)] = &Data_base::sell_player;
     temp[pair<int, int>(POST, BUY_PLAYER)] = &Data_base::buy_player;
+    temp[pair<int, int>(POST, SET_CAPTAIN)] = &Data_base::set_captain;
 
     this->command_maps.push_back(temp);
     temp.clear();
@@ -577,6 +578,16 @@ void Data_base::show_budget(vector<string> &arg)
 {
     shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
     cout << user_->get_budget() << endl;
+}
+
+void Data_base::set_captain(vector<string> &arg)
+{
+    string cap_name = make_trade_player_name(arg);
+    shared_ptr<User> user_ = *find(users.begin(), users.end(), current.acc);
+    if (user_->set_captain(cap_name))
+        cout << "Ok" << endl;
+    else 
+    cout << ERR_NOT_FOUND << endl;
 }
 
 // Admin

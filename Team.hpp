@@ -58,6 +58,8 @@ public:
 
     void players_set_availability();
 
+    bool set_captain(string name_);
+
     Team(vector<vector<string>> input);
     Team(string name_);
 
@@ -67,6 +69,7 @@ private:
     string name;
     vector<float> score_in_week;
     vector<shared_ptr<Player>> players;
+    shared_ptr<Player> captain;
 
     vector<Week_info> weeks_info;
     shared_ptr<Player> Player_creator(string &name_, int role = 0);
