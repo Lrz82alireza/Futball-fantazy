@@ -18,7 +18,8 @@ private:
         DEMERIT_POINT = -1,
     };
 
-    int calculate_special_point(vector<shared_ptr<Player>> against_composition);
+    void set_special_point(vector<shared_ptr<Player>> against_composition);
+    void demerit_score(vector<shared_ptr<Player>> against_composition , int pos);
 
 public:
     Df(int &role, string &name);

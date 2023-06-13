@@ -23,6 +23,7 @@ enum
     LOSE_POINT = -1,
     EQUAL_POINT = 1,
     WIN_POINT = 5,
+    OWN_GOAL = -3
 };
 
 class Player

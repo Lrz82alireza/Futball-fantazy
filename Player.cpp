@@ -104,4 +104,6 @@ void Player::set_score(vector<shared_ptr<Player>> against_composition , int goal
         this->add_score(LOSE_POINT);
     else
         this->add_score(EQUAL_POINT);
+    if (this->get_week_info().own_goal != 0)
+        this->add_score(OWN_GOAL);
 }

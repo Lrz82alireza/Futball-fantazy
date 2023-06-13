@@ -32,18 +32,47 @@ void Df::set_score(vector<shared_ptr<Player>> against_composition, int goals_for
     for (auto i = 0; i < players_goal; i++)
         add_score(GOAl_POINT);
     int players_assist = this->weeks_info.back().assist;
-    for (auto i = 0; i < players_goal; i++)
+    for (auto i = 0; i < players_assist; i++)
         add_score(ASSIST_POINT);
-    //calculate special scores
+    set_special_point(against_composition);
 }
 
-int calculate_special_point(vector<shared_ptr<Player>> against_composition)
+void Df::demerit_score(vector<shared_ptr<Player>> against_composition, int pos)
 {
-    for (auto player : against_composition)
+    for (int i = 0; i < against_composition[pos]->get_week_info().goal; i++)
+        add_score(DEMERIT_POINT);
+}
+
+void Df::set_special_point(vector<shared_ptr<Player>> against_composition)
+{
+    enum
     {
-        if (player->get_role() == DF || player->get_role() == FW)
-        {
-            if (player->get_pos == )
-        }
+        LEFT_DF = 1,
+        LEFT_MID_DF,
+        RIGHT_MID_DF,
+        RIGHT_DF,
+        LEFT_FW = 8,
+        MID_FW,
+        RIGHT_FW,
+    };
+    int pos = this->get_pos();
+    switch (pos)
+    {
+    case LEFT_POS:
+    {
+        demerit_score(against_composition, RIGHT_FW);
+        demerit_score(against_composition, RIGHT_DF);
+    }
+    case RIGHT_POS:
+    {
+        demerit_score(against_composition, LEFT_FW);
+        demerit_score(against_composition, LEFT_DF);
+    }
+    case MID_POS:
+    {
+        demerit_score(against_composition, LEFT_MID_DF);
+        demerit_score(against_composition, RIGHT_MID_DF);
+        demerit_score(against_composition, MID_FW);
+    }
     }
 }
