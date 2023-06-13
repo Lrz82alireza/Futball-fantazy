@@ -42,6 +42,9 @@ public:
     void new_week(Week_info &new_info);
     float get_avg_scores();
     bool is_available() { return available; }
+    int get_goals();
+    int get_assists();
+    int get_clean_sheets();
 
     float scores_sum();
 

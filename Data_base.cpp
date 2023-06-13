@@ -511,7 +511,10 @@ void Data_base::get_players(vector<string> &arg)
     cout << "list of players:" << endl;
     for (vector<std::shared_ptr<Player>>::size_type i = 0; i < players_.size(); i++)
     {
-        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() << endl;
+        cout << i + 1 << ". name: " << players_[i]->get_name() << " | role: " << role_to_s(players_[i]->get_role()) << " | score: " << players_[i]->get_avg_scores() <<
+        "cost: " << players_[i]->get_price() << "goals: " << players_[i]->get_goals() << "assists: " << players_[i]->get_assists() << endl;
+        if (players_[i]->get_role() != GK)
+            cout << "clean sheets: " << players_[i]->get_clean_sheets() << endl;
     }
 }
 
