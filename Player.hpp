@@ -6,7 +6,6 @@
 #include <memory>
 
 #include "Functions.hpp"
-#include "Team.hpp"
 
 using namespace std;
 
@@ -18,14 +17,6 @@ enum
     FW
 };
 
-enum
-{
-    LOSE_POINT = -1,
-    EQUAL_POINT = 1,
-    WIN_POINT = 5,
-    OWN_GOAL = -3
-};
-
 class Player
 {
 
@@ -35,7 +26,7 @@ public:
         float score = 0;
         bool injured = false;
         bool yellow_card = false;
-        bool red_card = false;  
+        bool red_card = false;
         bool clean_sheet = false;
         int goal = 0;
         int assist = 0;
@@ -46,12 +37,12 @@ public:
     float get_price() { return this->price; }
     float get_score(int week_num) { return weeks_info[week_num].score; }
     string get_name() { return this->name; }
-    int get_role() {return role;};
-    Week_info get_week_info() {return weeks_info.back();}
+    int get_role() { return role; };
+    Week_info get_week_info() { return weeks_info.back(); }
     void new_week(Week_info &new_info);
     float get_avg_scores();
     bool is_available() { return available; }
-    int get_pos() {return weeks_info.back().position;}
+    int get_pos() { return weeks_info.back().position; }
     int get_goals();
     int get_assists();
     int get_clean_sheets();
@@ -62,8 +53,8 @@ public:
     virtual bool is_clean_sheet();
     virtual void set_position(int pos);
 
-    virtual void set_score(vector<shared_ptr<Player>> against_composition , int goals_for , int goals_against);
-    void add_score(float score) {weeks_info.back().score += score;};
+    virtual void set_score(vector<shared_ptr<Player>> against_composition, int goals_for, int goals_against);
+    void add_score(float score) { weeks_info.back().score += score; };
 
     Player(const int &role_, const string &name_);
 
@@ -78,6 +69,13 @@ protected:
         RIGHT_POS,
         MID_POS,
         LEFT_POS,
+    };
+    enum
+    {
+        LOSE_POINT = -1,
+        EQUAL_POINT = 1,
+        WIN_POINT = 5,
+        OWN_GOAL = -3
     };
 
     string name;

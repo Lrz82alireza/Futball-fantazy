@@ -15,6 +15,13 @@ const string EMPTY_ERR = "Empty";
 const string ERR_PLAYER_NOT_AVAILABLE = "This player is not available for next week";
 const string CAPTAIN = "(CAPTAIN)";
 
+enum
+{
+    LOSE_POINT = 0,
+    EQUAL_POINT = 1,
+    WIN_POINT = 3,
+};
+
 class Team
 {
 
