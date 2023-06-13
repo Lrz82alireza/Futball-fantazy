@@ -168,6 +168,7 @@ map<string, string> Team::get_players_of_team()
             if (this->captain == i)
                 p_name += " " + CAPTAIN;
             tmp[GET_PLAYERS_ORDER[counter]] = p_name;
+            counter++;
         }
     }
     return tmp;

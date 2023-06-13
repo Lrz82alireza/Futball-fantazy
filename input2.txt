@@ -10,12 +10,16 @@ POST pass_week
 POST logout
 POST login ? team_name Sharks password 021021
 GET show_budget 
-GET team_of_the_week ?
-POST buy_player ? name Neto
-POST buy_player ? name Jose Sa
+POST buy_player ? name A. Ramsdale
+GET show_budget 
+POST buy_player ? name Isaac Price
+GET show_budget 
 POST buy_player ? name N. Semedo
+GET show_budget 
 POST buy_player ? name M. Senesi
+GET show_budget 
 POST buy_player ? name P. Billing
+GET show_budget 
 POST buy_player ? name Chiquinho
 GET squad ?
 POST sell_player ? name Chiquinho

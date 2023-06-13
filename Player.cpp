@@ -144,6 +144,7 @@ void Player::score_algorithm()
     float score = weeks_info.back().score;
     float exponent = -(score / 6);
     float denominator = 1 + exp(exponent);
-    float result = (1 / denominator);
+    float result = (1 / denominator) * 10;
+    result = round(result * 10.0) / 10.0;
     weeks_info.back().score = result;
 }
