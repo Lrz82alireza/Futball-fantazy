@@ -36,7 +36,7 @@ public:
     };
 
     float get_price() { return this->price; }
-    float get_score(int week_num) { return weeks_info[week_num].score; }
+    float get_score(int week_num) { return round(weeks_info[week_num].score * 10.0)/10.0; }
     string get_name() { return this->name; }
     int get_role() { return role; };
     Week_info get_week_info() { return weeks_info.back(); }
