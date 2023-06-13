@@ -17,7 +17,7 @@ bool User::buy_player(shared_ptr<Player> &player)
 {
     if (!is_new && trade.first <= 0)
         return false;
-    if (this->budget >= player->get_price())
+    if (this->budget > player->get_price())
     {
         trade.first--;
         team->add_player(player);

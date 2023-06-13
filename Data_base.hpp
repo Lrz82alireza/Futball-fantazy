@@ -128,7 +128,6 @@ private:
     void check_trade_player_arg(vector<string> &arg);
     string make_trade_player_name(vector<string> &arg);
 
-
     void get_squad(vector<string> &arg);
     string make_get_squad_arg(vector<string> &arg);
 

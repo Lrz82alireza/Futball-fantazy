@@ -12,8 +12,8 @@
 
 const int TEAM_SIZE = 5;
 const string EMPTY_ERR = "Empty";
-
 const string ERR_PLAYER_NOT_AVAILABLE = "This player is not available for next week";
+const string CAPTAIN = "(CAPTAIN)";
 
 enum
 {
@@ -46,6 +46,7 @@ public:
     string get_name() { return this->name; }
     vector<shared_ptr<Player>> get_players(int role = 0);
     float get_scores_sum();
+    float get_costs_sum();
 
     float players_score_sum();
 
@@ -66,6 +67,8 @@ public:
     map<string, string> get_players_of_team();
 
 private:
+    const vector<string> GET_PLAYERS_ORDER = {"GK", "DF1", "DF2", "MD", "FW"}; 
+
     string name;
     vector<float> score_in_week;
     vector<shared_ptr<Player>> players;

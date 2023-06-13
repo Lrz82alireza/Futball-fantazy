@@ -199,7 +199,8 @@ void Data_base::get_squad(vector<string> &arg)
          << "Defender2: " << squad["DF2"] << endl
          << "Midfielder: " << squad["MD"] << endl
          << "Striker: " << squad["FW"] << endl
-         << "Total Points: " << user_->get_team()->players_score_sum() << endl;
+         << "Total Points: " << user_->get_team()->players_score_sum() << endl
+         << "Team Cost: " << user_->get_team()->get_costs_sum() << endl;
 }
 
 string Data_base::make_get_squad_arg(vector<string> &arg)

@@ -41,6 +41,16 @@ float Team::get_scores_sum()
     return sum;
 }
 
+float Team::get_costs_sum()
+{
+    float sum = 0;
+    for (auto i : this->players)
+    {
+        sum += i->get_price();
+    }
+    return sum;
+}
+
 float Team::players_score_sum()
 {
     float sum = 0;
@@ -141,20 +151,24 @@ void sort_players_alphabetically(vector<shared_ptr<Player>> &v)
 
 map<string, string> Team::get_players_of_team()
 {
+    int counter = 0;
     map<string, string> tmp;
     if (players.size() < TEAM_SIZE)
         throw runtime_error(EMPTY_ERR);
-    else
+
+    for (int i = GK; i <= FW; i++)
     {
-        tmp["GK"] = get_players(GK).back()->get_name();
-        vector<shared_ptr<Player>> df = get_players(DF);
-        sort_players_alphabetically(df);
-        tmp["DF1"] = df.front()->get_name();
-        tmp["DF2"] = df.back()->get_name();
-        tmp["MD"] = get_players(MD).back()->get_name();
-        tmp["FW"] = get_players(FW).back()->get_name();
-        return tmp;
+        vector<shared_ptr<Player>> players_ = get_players(i);
+        sort_players_alphabetically(players_);
+        for (auto i : players_)
+        {
+            string p_name = i->get_name();
+            if (this->captain == i)
+                p_name += " " + CAPTAIN;
+            tmp[GET_PLAYERS_ORDER[counter]] = p_name;
+        }
     }
+    return tmp;
 }
 
 shared_ptr<Player> Team::Player_creator(string &name_, int role)
