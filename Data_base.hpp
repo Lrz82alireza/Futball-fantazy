@@ -171,8 +171,8 @@ private:
     // Accessories
     shared_ptr<Player> find_player(string &name);
     void update_current_week();
-
     void players_set_availability();
+    void update_users();
 
 public:
     void manage_command(pair<string, string> &command, vector<string> &arg);

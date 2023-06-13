@@ -28,6 +28,7 @@ public:
     bool buy_player(shared_ptr<Player> &player);
     bool set_captain(string name_) { return team->set_captain(name_); }
 
+    void update();
 
     User(string &username_, string &pass);
 

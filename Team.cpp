@@ -79,6 +79,8 @@ shared_ptr<Player> Team::find_player(string player_name)
 
 void Team::erase_player(shared_ptr<Player> &player)
 {
+    if (this->captain == player)
+        this->captain = nullptr;
     players.erase(remove(players.begin(), players.end(), player), players.end());
 }
 

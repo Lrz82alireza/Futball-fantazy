@@ -8,16 +8,21 @@ void User::sell_player(string &player_name)
     if (!is_new && trade.second <= 0)
         throw runtime_error(ERR_PERM);
 
+    this->budget += player->get_price();
+    trade.second--;
     team->erase_player(player);
 }
 
 bool User::buy_player(shared_ptr<Player> &player)
 {
+    if (!is_new && trade.first <= 0)
+        return false;
     if (this->budget >= player->get_price())
     {
+        trade.first--;
         team->add_player(player);
         this->budget -= player->get_price();
-        
+
         if (!is_new && this->team->get_players().size() == TEAM_SIZE)
             is_new = false;
 
@@ -29,6 +34,11 @@ bool User::buy_player(shared_ptr<Player> &player)
 map<string, string> User::get_squad()
 {
     return team->get_players_of_team();
+}
+
+void User::update()
+{
+    this->trade = {DEF_TRADE, DEF_TRADE};
 }
 
 User::User(string &username_, string &pass)

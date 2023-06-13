@@ -614,6 +614,7 @@ void Data_base::pass_week(vector<string> &arg)
 
     update_current_week();
 
+    update_users();
     cout << "OK" << endl;
 }
 
@@ -628,6 +629,14 @@ void Data_base::players_set_availability()
     for (auto i : this->teams)
     {
         i->players_set_availability();
+    }
+}
+
+void Data_base::update_users()
+{
+    for (auto i : users)
+    {
+        i->update();
     }
 }
 
